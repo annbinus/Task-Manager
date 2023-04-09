@@ -14,7 +14,7 @@ const userSchema = new Schema({
         type: String,
         required: true,
         trim: true,
-        minlength: 8
+        minlength: 3
     },
 }, {
     timestamps: true,

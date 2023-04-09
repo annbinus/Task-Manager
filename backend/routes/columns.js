@@ -1,22 +1,24 @@
 const router = require('express').Router();
-let User = require('../models/user.model');
+const { Collection } = require('mongoose');
+let User = require('../models/column.model');
+const Column = require('../models/column.model');
 
 router.route('/').get((req, res) =>
 {
     User.find()
-        .then(users => res.json(users))
+        .then(columns => res.json(columns))
         .catch(err => res.status(400).json('Error: ' + err));
 });
 
 router.route('/add').post((req, res) =>
 {
     const username = req.body.username;
-    const password = req.body.password;
+    const description = req.body.description;
 
-    const newUser = new User({ username, password });
+    const newColumn = new Column({ username, description });
 
     newUser.save()
-        .then(() => res.json('User added!'))
+        .then(() => res.json('Column added!'))
         .catch(err => res.status(400).json('Error: ' + err));
 });
 
