@@ -20,9 +20,11 @@ connection.once('open', () =>
 
 const usersRouter = require('./routes/users');
 const subjectsRouter = require('./routes/subjects');
+const tasksRouter = require('./routes/tasks');
 
 app.use('/users', usersRouter);
 app.use('/subjects', subjectsRouter);
+app.use('/tasks', tasksRouter);
 
 app.listen(port, () =>
 {
