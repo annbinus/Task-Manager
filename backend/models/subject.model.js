@@ -8,6 +8,9 @@ const subjectSchema = new Schema({
         required: true,
         unique: true,
     },
+    tasks: {
+        type: [Number],
+    }
 }, {
     timestamps: true,
 });

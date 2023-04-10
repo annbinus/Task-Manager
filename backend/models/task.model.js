@@ -9,11 +9,18 @@ const taskSchema = new Schema({
         unique: true,
     },
     start: {
-        type: String,
+        type: Date,
         required: true,
+    },
+    deadline:{
+        type: Date,
     },
     completed: {
         type: String,
+        required: true,
+    },
+    subjectID: {
+        type: Number,
         required: true,
     }
 }, {
