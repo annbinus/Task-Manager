@@ -10,10 +10,9 @@ router.route('/').get((req, res) =>
 
 router.route('/add').post((req, res) =>
 {
-    const username = req.body.username;
-    const description = req.body.description;
+    const name = req.body.name;
 
-    const newSubject = new Subject({ username, description });
+    const newSubject = new Subject({ name });
 
     newSubject.save()
         .then(() => res.json('Subject added!'))
