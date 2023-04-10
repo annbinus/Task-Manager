@@ -20,9 +20,11 @@ connection.once('open', () =>
 
 const usersRouter = require('./routes/users');
 const columnsRouter = require('./routes/columns');
+const cardsRouter = require('./routes/cards');
 
 app.use('/users', usersRouter);
 app.use('/columns', columnsRouter);
+app.use('/cards', cardsRouter);
 
 app.listen(port, () =>
 {
