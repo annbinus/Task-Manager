@@ -11,7 +11,7 @@ app.use(cors());
 app.use(express.json());
 
 const uri = process.env.ATLAS_URI;
-mongoose.connect(uri);
+mongoose.connect(uri, { dbName: 'Score' });
 const connection = mongoose.connection;
 connection.once('open', () =>
 {
@@ -19,12 +19,12 @@ connection.once('open', () =>
 })
 
 const usersRouter = require('./routes/users');
-const columnsRouter = require('./routes/columns');
-const cardsRouter = require('./routes/cards');
+const subjectsRouter = require('./routes/subjects');
+const tasksRouter = require('./routes/tasks');
 
 app.use('/users', usersRouter);
-app.use('/columns', columnsRouter);
-app.use('/cards', cardsRouter);
+app.use('/subjects', subjectsRouter);
+app.use('/tasks', tasksRouter);
 
 app.listen(port, () =>
 {

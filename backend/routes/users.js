@@ -1,6 +1,7 @@
 const router = require('express').Router();
 let User = require('../models/user.model');
 
+// GET endpoint for all users
 router.route('/').get((req, res) =>
 {
     User.find()
@@ -8,6 +9,7 @@ router.route('/').get((req, res) =>
         .catch(err => res.status(400).json('Error: ' + err));
 });
 
+// POST endpoint for registering a new user
 router.route('/add').post((req, res) =>
 {
     const username = req.body.username;
@@ -17,6 +19,37 @@ router.route('/add').post((req, res) =>
 
     newUser.save()
         .then(() => res.json('User added!'))
+        .catch(err => res.status(400).json('Error: ' + err));
+});
+
+// GET endpoint for a specific user
+router.route('/:id').get((req, res) =>
+{
+    User.findById(req.params.id)
+        .then(user => res.json(user))
+        .catch(err => res.status(400).json('Error: ' + err));
+});
+
+// DELETE endpoint for a specific user
+router.route('/:id').delete((req, res) =>
+{
+    User.findByIdAndDelete(req.params.id)
+        .then(() => res.json('User deleted.'))
+        .catch(err => res.status(400).json('Error: ' + err));
+});
+
+// POST endpoint for updating a user's username
+router.route('/update/:id').post((req, res) =>
+{
+    User.findById(req.params.id)
+        .then(user =>
+        {
+            user.username = req.body.username;
+
+            user.save()
+                .then(() => res.json('User updated!'))
+                .catch(err => res.status(400).json('Error: ' + err));
+        })
         .catch(err => res.status(400).json('Error: ' + err));
 });
 

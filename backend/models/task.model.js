@@ -2,20 +2,24 @@ const mongoose = require('mongoose');
 
 const Schema = mongoose.Schema;
 
-const columnSchema = new Schema({
-    username: {
+const taskSchema = new Schema({
+    name: {
         type: String,
         required: true,
         unique: true,
     },
-    description: {
+    start: {
         type: String,
         required: true,
     },
+    completed: {
+        type: String,
+        required: true,
+    }
 }, {
     timestamps: true,
 });
 
-const Column = mongoose.model('Column', columnSchema);
+const Task = mongoose.model('Task', taskSchema);
 
-module.exports = Column;
+module.exports = Task;
