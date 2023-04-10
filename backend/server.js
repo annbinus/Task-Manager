@@ -19,10 +19,10 @@ connection.once('open', () =>
 })
 
 const usersRouter = require('./routes/users');
-const columnsRouter = require('./routes/columns');
+const subjectsRouter = require('./routes/subjects');
 
 app.use('/users', usersRouter);
-app.use('/columns', columnsRouter);
+app.use('/subjects', subjectsRouter);
 
 app.listen(port, () =>
 {
