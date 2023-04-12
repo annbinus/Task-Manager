@@ -27,16 +27,16 @@ const Navbar = () => {
       }
   ];
     return (
-    
+   <header>
     <nav>
       <div className="nav-logo-container">
 
       </div>
 
       <div className="navbar-links-container">
-        <a href="" className="font">Home</a>
-        <a href="">Sign In</a>
-        <a href="">Sign Up</a>
+        <a href="/" className="font">Home</a>
+        <a href="/signin">Sign In</a>
+        <a href="/signup">Sign Up</a>
         </div>
       <div className="navbar-menu-container">
         <HiOutlineBars3 onClick={() => setOpenMenu(true)} />
@@ -62,6 +62,7 @@ const Navbar = () => {
         </Box>
       </Drawer>
     </nav>
+    </header> 
   );
 };
 
