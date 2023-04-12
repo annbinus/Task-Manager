@@ -3,8 +3,14 @@
   width: 100vw;
   height: 100vh;
   
+  align-items: center;
+
   /* Color of background */
   background-color: white;
+
+  /* Changes icon to be in row with the name */
+  display: flex;
+  flex-direction: row;
 }
 
 * {
@@ -79,4 +85,53 @@ body {
 .SidebarRow #SidebarName {
   /* Aligns names left of 70% */
   flex: 70%;
+}
+
+.Subject {
+  /* Size of subject area */
+  width: 100%;
+  height: 100%;
+
+  /* Color of subject area */
+  background-color: white;
+}
+
+.SubjectList {
+  /* Changes subjects to be in row with other subjects */
+  display: flex;
+  flex-direction: row;
+
+  /* Removes other aspects of a basic list */
+  list-style-type: none;
+}
+
+.Subject .SubjectRow {
+  /* Size of subject */
+  width: 400px;
+  height: 800px;
+
+  margin-left: 8%;
+  margin-top: 4%;
+  border-radius: 50px;
+  justify-content: center;
+}
+
+.SubjectRow #SubjectName {
+  /* Centers name */
+  display: grid;
+  place-items: center;
+  margin-top: 3%;
+
+  /* Color of name*/
+  color: white;
+
+  font-size: xx-large;
+  font-weight: 1000;
+}
+
+.SubjectRow #SubjectTasks {
+  /* Centers tasks */
+  display: grid;
+  place-items: center;
+  margin-top: 3%;
 }
