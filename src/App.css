@@ -19,12 +19,11 @@ body {
   overflow-x: hidden;
   --tw-bg-opacity: 1;
   background-color: rgb(21 23 25 / var(--tw-bg-opacity));
+  background-image: url('/public/bg-gradient.jpg');
+  background-position: right top;
 }
 
-body {
-  --tw-bg-opacity: 1;
-  background-color: rgb(21 23 25 / var(--tw-bg-opacity));
-}
+
 
 .home{
   overflow: hidden;
@@ -105,30 +104,17 @@ h1{
   line-height: 1.25;
   letter-spacing: -.02em;
   margin-bottom: 1rem;
-  --tw-text-opacity: 1;
-  color: rgb(217 227 234/var(--tw-text-opacity));
+  color: #D9E3EA
 }
 
 p{
-  --tw-text-opacity: 1;
-  color: rgb(155 169 180/var(--tw-text-opacity));
+  color: #9BA9B4;
   font-size: 1.25rem;
   margin-bottom: 2rem;
   text-align: center;
-  
 }
-.primary-heading {
-  font-size: clamp(2rem, 5vw, 4rem);
-  color: #4c4c4c;
-  /* line-height: 5rem; */
-  max-width: 600px;
-}
-.primary-text {
-  font-size: clamp(1rem, 3vw, 1.5rem);
-  max-width: 500px;
-  color: #6a6a6a;
-  margin: 1.5rem 0rem;
-}
+
+
 .secondary-button {
   padding: 1rem 2.5rem;
   background-color: #fe9e0d;
