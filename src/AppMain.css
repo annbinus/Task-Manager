@@ -1,0 +1,48 @@
+.App {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+  }
+  
+  .navbar {
+    background-color: black;
+    color: white;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    padding: 0 20px;
+  }
+  
+  .navbar ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+  }
+  
+  .navbar li {
+    margin-right: 20px;
+    cursor: pointer;
+  }
+  
+  .content {
+    background-color: lightcyan;
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    padding: 20px;
+  }
+  
+  .content h1 {
+    margin-bottom: 20px;
+    color: white;
+    text-align: center;
+  }
+  
+  .content p {
+    color: white;
+    text-align: center;
+  }
+  
