@@ -38,8 +38,8 @@ const Navbar = () => {
         <a href="/signin">Sign In</a>
         <a href="/signup">Sign Up</a>
         </div>
-      <div className="navbar-menu-container">
-        <HiOutlineBars3 onClick={() => setOpenMenu(true)} />
+      <div className="navbar-menu-container" style={{color: 'white'}}>
+        <HiOutlineBars3 size={40} onClick={() => setOpenMenu(true)} />
       </div>
       <Drawer open={openMenu} onClose={() => setOpenMenu(false)} anchor="right">
         <Box
