@@ -1,19 +1,12 @@
 import React from 'react';
-
-import Header from './Header';
+import "./App.css";
+import Home from "./Components/Home";
 
 
 function App() {
     return(
-        <div className="flex flex-col min-h-screen overflow-hidden">
-            <Header />
-
-            <main className="grow">
-                <div>
-            
-                  
-                </div>
-            </main>
+        <div className="App">
+            <Home/>
         </div>
     );
 }
