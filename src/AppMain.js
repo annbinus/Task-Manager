@@ -1,22 +1,13 @@
 import React from 'react';
 import './AppMain.css';
+import Sidebar from './Components/Sidebar' // Importing sidebar
 
-function App() {
+function AppMain() {
   return (
-    <div className="App">
-      <nav className="navbar">
-        <ul>
-          <li>Home</li>
-          <li>About</li>
-          <li>Contact</li>
-        </ul>
-      </nav>
-      <div className="content">
-        <h1>Welcome to my website!</h1>
-        <p>This is some sample text.</p>
-      </div>
+    <div className="AppMain">
+      <Sidebar />
     </div>
   );
 }
 
-export default App;
+export default AppMain;
