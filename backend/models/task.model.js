@@ -10,7 +10,6 @@ const taskSchema = new Schema({
     },
     start: {
         type: Date,
-        required: true,
     },
     deadline:{
         type: Date,
@@ -20,7 +19,7 @@ const taskSchema = new Schema({
         required: true,
     },
     subjectID: {
-        type: Number,
+        type: String,
         required: true,
     }
 }, {

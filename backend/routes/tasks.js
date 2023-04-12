@@ -53,10 +53,10 @@ router.route('/update/:id').post((req, res) =>
 });
 
 router.route('/move/:CardID/:ColumnID').put((req, res) => {
+
     //Sets task to new columnID
     Task.findById(req.params.CardID)
     .then(task => {
-        var oldID = task.subjectID;
 
         task.subjectID = req.params.ColumnID;
         task.save()
@@ -64,24 +64,14 @@ router.route('/move/:CardID/:ColumnID').put((req, res) => {
                 .catch(err => res.status(400).json('Error: ' + err));
     })
     .catch(err => res.status(400).json('Error: ' + err));
+});
 
-    //Adds taskID to new column
-    Subject.findById(req.params.ColumnID)
-    .then(subject => {
-        subject.tasks.push(req.params.CardID);
-        subject.save()
-            .then(() => res.json('Subject updated!'))
-            .catch(err => res.status(400).json('Error: ' + err));
-    })
+router.route('/bySubject/:subjectID').put((req, res) => {
+
+    //Sets task to new columnID
+    Task.find({subjectID: req.params.subjectID})
+    .then(tasks => res.json(tasks))
     .catch(err => res.status(400).json('Error: ' + err));
-
-    //FIXME: figure out how to remove from array
-    //Removes task from old column
-    /*Subject.findById(oldID)
-    .then(subject => {
-
-    })
-    .catch(err => res.status(400).json('Error: ' + err));*/
 });
 
 module.exports = router;
