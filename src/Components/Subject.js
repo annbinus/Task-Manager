@@ -13,7 +13,6 @@ function Subject() {
                         className='SubjectRow'
                         style={{ backgroundColor: val.color }} /* Applies subject's color */
                         >
-    
                             <div id='SubjectName'>{val.name}</div> {/* Applies subject's name */}
                             <div id='SubjectTasks'>{val.tasks}</div> {/* Applies subject's tasks */}
                         </li>
