@@ -55,11 +55,11 @@ router.route('/update/:id').post((req, res) =>
 
 router.route('/Login').post((req, res) =>
 {
-    User.find({username: req.body.username, password: req.body.password})
+    User.find({username: req.body.username, password: req.body.password}, )
         .then(user =>
         {
-            req.session.userID = user.id;
-            res.status(200).send('Login succesful!' + req.session.userID);
+            req.session.userID = user[0].id;
+            res.status(200).send('Login succesful!');
         })
         .catch(err => res.status(404).json('Error: ' + err));
 });
