@@ -1,4 +1,5 @@
 const express = require('express');
+const session = require('express-session');
 const cors = require('cors');
 const mongoose = require('mongoose');
 
@@ -9,6 +10,7 @@ const port = process.env.PORT || 5000;
 
 app.use(cors());
 app.use(express.json());
+app.use(session({secret: "Group 5"}))
 
 const uri = process.env.ATLAS_URI;
 mongoose.connect(uri, { dbName: 'Score' });
@@ -21,10 +23,12 @@ connection.once('open', () =>
 const usersRouter = require('./routes/users');
 const subjectsRouter = require('./routes/subjects');
 const tasksRouter = require('./routes/tasks');
+const boardRouter = require('./routes/board')
 
 app.use('/users', usersRouter);
 app.use('/subjects', subjectsRouter);
 app.use('/tasks', tasksRouter);
+app.use('/board', boardRouter)
 
 app.listen(port, () =>
 {

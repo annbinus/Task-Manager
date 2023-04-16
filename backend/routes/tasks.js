@@ -14,8 +14,9 @@ router.route('/add').post((req, res) =>
     const name = req.body.name;
     const start = req.body.start;
     const completed = req.body.completed;
+    const subjectID = req.body.subjectID;
 
-    const newTask = new Task({ name, start, completed });
+    const newTask = new Task({ name, start, completed, subjectID });
 
     newTask.save()
         .then(() => res.json('Task added!'))
@@ -66,7 +67,7 @@ router.route('/move/:CardID/:ColumnID').put((req, res) => {
     .catch(err => res.status(400).json('Error: ' + err));
 });
 
-router.route('/bySubject/:subjectID').put((req, res) => {
+router.route('/bySubject/:subjectID').get((req, res) => {
 
     //Sets task to new columnID
     Task.find({subjectID: req.params.subjectID})
