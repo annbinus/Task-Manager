@@ -1,68 +1,82 @@
-import React, { useState } from "react";
-import { HiOutlineBars3 } from "react-icons/hi2";
-import Box from "@mui/material/Box";
-import Drawer from "@mui/material/Drawer";
-import List from "@mui/material/List";
-import Divider from "@mui/material/Divider";
-import ListItem from "@mui/material/ListItem";
-import ListItemButton from "@mui/material/ListItemButton";
-import ListItemIcon from "@mui/material/ListItemIcon";
-import ListItemText from "@mui/material/ListItemText";
-import HomeIcon from "@mui/icons-material/Home";
+import React, { useState, useRef, useEffect } from "react";
+import { Link } from 'react-router-dom';
+
+
 
 const Navbar = () => {
-    const [openMenu, setOpenMenu] = useState(false);
-    const menuOptions = [
-      {
-        text: "Home",
-        icon: <HomeIcon />,
-      },
-      {
-        text: "Sign In",
-        icon: <ListItemIcon/>,
-      },
-      {
-        text: "Sign Up",
-        icon: <ListItemIcon/>,
-      }
-  ];
+  const [mobileNavOpen, setMobileNavOpen] = useState(false);
+
+  const trigger = useRef(null);
+  const mobileNav = useRef(null);
+
+  // close the mobile menu on click outside
+  useEffect(() => {
+    const clickHandler = ({ target }) => {
+      if (!mobileNav.current || !trigger.current) return;
+      if (!mobileNavOpen || mobileNav.current.contains(target) || trigger.current.contains(target)) return;
+      setMobileNavOpen(false);
+    };
+    document.addEventListener('click', clickHandler);
+    return () => document.removeEventListener('click', clickHandler);
+  });
     return (
-   <header>
-    <nav>
-      <div className="nav-logo-container">
+      <header className="absolute w-full z-30">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6">
+        <div className="flex items-center justify-between h-20">
 
-      </div>
+          {/* Site branding */}
+          <div className="shrink-0 mr-4">
+            {/* Logo */}
+            <Link to="/" className="block">
+              {/* Logo Link */}
+            </Link>
+          </div>
 
-      <div className="navbar-links-container">
-        <a href="/" className="font">Home</a>
-        <a href="/signin">Sign In</a>
-        <a href="/signup">Sign Up</a>
+          {/* Desktop navigation */}
+          <nav className="hidden md:flex md:grow">
+
+            {/* Desktop sign in links */}
+            <ul className="flex grow justify-end flex-wrap items-center">
+              <li>
+                <Link to="/signin" className="font-medium text-purple-600 hover:text-gray-200 px-4 py-3 flex items-center transition duration-150 ease-in-out">Sign in</Link>
+              </li>
+              <li>
+                <Link to="/signup" className="btn-sm text-white bg-purple-600 hover:bg-purple-700 ml-3">Sign up</Link>
+              </li>
+            </ul>
+
+          </nav>
+
+          {/* Mobile menu */}
+          <div className="md:hidden">
+
+            {/* Hamburger button */}
+            <button ref={trigger} className={`hamburger ${mobileNavOpen && 'active'}`} aria-controls="mobile-nav" aria-expanded={mobileNavOpen} onClick={() => setMobileNavOpen(!mobileNavOpen)}>
+              <span className="sr-only">Menu</span>
+              <svg className="w-6 h-6 fill-current text-gray-300 hover:text-gray-200 transition duration-150 ease-in-out" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <rect y="4" width="24" height="2" rx="1" />
+                <rect y="11" width="24" height="2" rx="1" />
+                <rect y="18" width="24" height="2" rx="1" />
+              </svg>
+            </button>
+
+            {/*Mobile navigation */}
+            <nav id="mobile-nav" ref={mobileNav} className="absolute top-full z-20 left-0 w-full px-4 sm:px-6 overflow-hidden transition-all duration-300 ease-in-out" style={mobileNavOpen ? { maxHeight: mobileNav.current.scrollHeight, opacity: 1 } : { maxHeight: 0, opacity: .8 } }>
+              <ul className="bg-gray-800 px-4 py-2">
+                <li>
+                  <Link to="/signin" className="flex font-medium w-full text-purple-600 hover:text-gray-200 py-2 justify-center">Sign in</Link>
+                </li>
+                <li>
+                  <Link to="/signup" className="font-medium w-full inline-flex items-center justify-center border border-transparent px-4 py-2 my-2 rounded-sm text-white bg-purple-600 hover:bg-purple-700 transition duration-150 ease-in-out">Sign up</Link>
+                </li>
+              </ul>
+            </nav>
+
+          </div>
+
         </div>
-      <div className="navbar-menu-container" style={{color: 'white'}}>
-        <HiOutlineBars3 size={40} onClick={() => setOpenMenu(true)} />
       </div>
-      <Drawer open={openMenu} onClose={() => setOpenMenu(false)} anchor="right">
-        <Box
-          sx={{ width: 250 }}
-          role="presentation"
-          onClick={() => setOpenMenu(false)}
-          onKeyDown={() => setOpenMenu(false)}
-        >
-          <List>
-            {menuOptions.map((item) => (
-              <ListItem key={item.text} disablePadding>
-                <ListItemButton>
-                  <ListItemIcon>{item.icon}</ListItemIcon>
-                  <ListItemText primary={item.text} />
-                </ListItemButton>
-              </ListItem>
-            ))}
-          </List>
-          <Divider />
-        </Box>
-      </Drawer>
-    </nav>
-    </header> 
+    </header>
   );
 };
 

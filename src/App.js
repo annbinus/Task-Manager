@@ -1,5 +1,6 @@
 import React, {useEffect} from 'react';
-import "./App.css";
+
+import './dist/output.css';
 import {
     Routes,
     Route,
@@ -10,6 +11,7 @@ import SignIn from './SignIn';
 import SignUp from './SignUp';
 
 import 'aos/dist/aos.css';
+import "./dist/output.css";
 import AOS from 'aos';
 
 function App() {
