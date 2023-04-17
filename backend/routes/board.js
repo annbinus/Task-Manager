@@ -11,7 +11,7 @@ router.route('/').get((req, res) =>
 router.route('/add').post((req, res) =>
 {
     const name = req.body.name;
-    const userID = req.body.userID;
+    const userID = req.session.userID;
 
     const newSubject = new Board({ name, userID });
 
@@ -34,7 +34,7 @@ router.route('/:id').delete((req, res) =>
         .catch(err => res.status(400).json('Error: ' + err));
 });
 
-router.route('/update/:id').post((req, res) =>
+router.route('/update/:id').put((req, res) =>
 {
     Board.findById(req.params.id)
         .then(board =>

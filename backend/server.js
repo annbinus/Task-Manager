@@ -28,7 +28,7 @@ const boardRouter = require('./routes/board')
 app.use('/users', usersRouter);
 app.use('/subjects', subjectsRouter);
 app.use('/tasks', tasksRouter);
-app.use('/board', boardRouter)
+app.use('/boards', boardRouter)
 
 app.listen(port, () =>
 {

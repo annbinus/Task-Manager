@@ -8,7 +8,7 @@ router.route('/').get((req, res) =>
         .catch(err => res.status(400).json('Error: ' + err));
 });
 
-router.route('/:boardID').get((req, res) =>
+router.route('/byBoardID/:boardID').get((req, res) =>
 {
     Subject.find({userID: req.session.userID, boardID: req.params.boardID})
         .then(subjects => res.json(subjects))
@@ -28,7 +28,7 @@ router.route('/add').post((req, res) =>
         .catch(err => res.status(400).json('Error: ' + err));
 });
 
-router.route('/:id').get((req, res) =>
+router.route('/bySubjectID/:id').get((req, res) =>
 {
     Subject.findById(req.params.id)
         .then(subject => res.json(subject))
@@ -42,7 +42,7 @@ router.route('/:id').delete((req, res) =>
         .catch(err => res.status(400).json('Error: ' + err));
 });
 
-router.route('/update/:id').post((req, res) =>
+router.route('/update/:id').put((req, res) =>
 {
     Subject.findById(req.params.id)
         .then(subject =>

@@ -1,5 +1,4 @@
 const router = require('express').Router();
-const Subject = require('../models/subject.model');
 let Task = require('../models/task.model');
 
 router.route('/').get((req, res) =>
@@ -14,10 +13,11 @@ router.route('/add').post((req, res) =>
     const name = req.body.name;
     const start = req.body.start;
     const completed = req.body.completed;
+    const deadline = req.body.deadline;
     const subjectID = req.body.subjectID;
     const userID = req.session.userID
 
-    const newTask = new Task({ name, start, completed, subjectID, userID });
+    const newTask = new Task({ name, start, completed, deadline, subjectID, userID });
 
     newTask.save()
         .then(() => res.json('Task added!'))
@@ -38,7 +38,7 @@ router.route('/:id').delete((req, res) =>
         .catch(err => res.status(400).json('Error: ' + err));
 });
 
-router.route('/update/:id').post((req, res) =>
+router.route('/update/:id').put((req, res) =>
 {
     Task.findById(req.params.id)
         .then(task =>
@@ -55,7 +55,7 @@ router.route('/update/:id').post((req, res) =>
         .catch(err => res.status(400).json('Error: ' + err));
 });
 
-router.route('/move/:cardID/:subjectID').put((req, res) => {
+router.route('/move/:taskID/:subjectID').put((req, res) => {
 
     //Sets task to new subjectID
     Task.findById(req.params.cardID)

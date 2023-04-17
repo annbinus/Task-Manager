@@ -15,7 +15,7 @@ const taskSchema = new Schema({
         type: Date,
     },
     completed: {
-        type: String,
+        type: Boolean,
         required: true,
     },
     subjectID: {
