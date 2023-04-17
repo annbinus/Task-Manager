@@ -45,12 +45,24 @@ router.route('/update/:id').post((req, res) =>
         .then(user =>
         {
             user.username = req.body.username;
+            user.password = req.body.password;
 
             user.save()
                 .then(() => res.json('User updated!'))
                 .catch(err => res.status(400).json('Error: ' + err));
         })
         .catch(err => res.status(400).json('Error: ' + err));
+});
+
+router.route('/Login').post((req, res) =>
+{
+    User.find({username: req.body.username, password: req.body.password}, )
+        .then(user =>
+        {
+            req.session.userID = user[0].id;
+            res.status(200).send('Login succesful!');
+        })
+        .catch(err => res.status(404).json('Error: ' + err));
 });
 
 module.exports = router;
