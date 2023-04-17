@@ -4,7 +4,7 @@ let Task = require('../models/task.model');
 
 router.route('/').get((req, res) =>
 {
-    Task.find()
+    Task.find({userID: req.session.userID})
         .then(tasks => res.json(tasks))
         .catch(err => res.status(400).json('Error: ' + err));
 });
@@ -15,8 +15,9 @@ router.route('/add').post((req, res) =>
     const start = req.body.start;
     const completed = req.body.completed;
     const subjectID = req.body.subjectID;
+    const userID = req.session.userID
 
-    const newTask = new Task({ name, start, completed, subjectID });
+    const newTask = new Task({ name, start, completed, subjectID, userID });
 
     newTask.save()
         .then(() => res.json('Task added!'))
@@ -44,6 +45,7 @@ router.route('/update/:id').post((req, res) =>
         {
             task.name = req.body.name;
             task.start = req.body.start;
+            task.deadline = req.body.deadline;
             task.completed = req.body.completed;
 
             task.save()
@@ -53,13 +55,13 @@ router.route('/update/:id').post((req, res) =>
         .catch(err => res.status(400).json('Error: ' + err));
 });
 
-router.route('/move/:CardID/:ColumnID').put((req, res) => {
+router.route('/move/:cardID/:subjectID').put((req, res) => {
 
-    //Sets task to new columnID
-    Task.findById(req.params.CardID)
+    //Sets task to new subjectID
+    Task.findById(req.params.cardID)
     .then(task => {
 
-        task.subjectID = req.params.ColumnID;
+        task.subjectID = req.params.subjectID;
         task.save()
                 .then(() => res.json('Task updated!'))
                 .catch(err => res.status(400).json('Error: ' + err));
@@ -69,7 +71,7 @@ router.route('/move/:CardID/:ColumnID').put((req, res) => {
 
 router.route('/bySubject/:subjectID').get((req, res) => {
 
-    //Sets task to new columnID
+    //Gets tasks by subjectID
     Task.find({subjectID: req.params.subjectID})
     .then(tasks => res.json(tasks))
     .catch(err => res.status(400).json('Error: ' + err));

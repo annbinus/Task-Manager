@@ -8,8 +8,11 @@ const subjectSchema = new Schema({
         required: true,
         unique: true,
     },
-    userID:
-    {
+    boardID:{
+        type: String,
+        required: true,
+    },
+    userID:{
         type: String,
         required: true,
     }

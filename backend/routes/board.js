@@ -3,7 +3,7 @@ let Board = require('../models/board.model');
 
 router.route('/').get((req, res) =>
 {
-    Board.find()
+    Board.find({userID: req.session.userID})
         .then(boards => res.json(boards))
         .catch(err => res.status(400).json('Error: ' + err));
 });
@@ -11,8 +11,9 @@ router.route('/').get((req, res) =>
 router.route('/add').post((req, res) =>
 {
     const name = req.body.name;
+    const userID = req.body.userID;
 
-    const newSubject = new Board({ name });
+    const newSubject = new Board({ name, userID });
 
     newSubject.save()
         .then(() => res.json('Board added!'))
