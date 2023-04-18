@@ -28,21 +28,21 @@ function SignUp() {
                 <form>
                   <div className="flex flex-wrap -mx-3 mb-4">
                     <div className="w-full px-3">
-                      <label className="block text-gray-300 text-sm font-medium mb-1" htmlFor="full-name">Full Name <span className="text-red-600">*</span></label>
-                      <input id="full-name" type="text" className="form-input w-full text-gray-300" placeholder="First name and Last Name" required />
+                      <label className="block text-gray-300 text-sm font-medium mb-1" htmlFor="fullname">Full Name <span className="text-red-600">*</span></label>
+                      <input id="fullname" type="text" className="form-input w-full text-gray-300" placeholder="First name and Last Name" required />
                     </div>
                   </div>
                   <div className="flex flex-wrap -mx-3 mb-4">
                     <div className="w-full px-3">
-                      <label className="block text-gray-300 text-sm font-medium mb-1" htmlFor="company-name">Email<span className="text-red-600">*</span></label>
-                      <input id="company-name" type="text" className="form-input w-full text-gray-300" placeholder="you@yourcompany.com" required />
-                    </div>
+                      <label className="block text-gray-300 text-sm font-medium mb-1" htmlFor="email">Email<span className="text-red-600">*</span></label>
+                      <input id="email" type="email" className="form-input w-full text-gray-300" placeholder="you@yourcompany.com" required />
+                  </div>
                   </div>
                   <div className="flex flex-wrap -mx-3 mb-4">
                     <div className="w-full px-3">
-                      <label className="block text-gray-300 text-sm font-medium mb-1" htmlFor="email">Username <span className="text-red-600">*</span></label>
-                      <input id="email" type="email" className="form-input w-full text-gray-300" placeholder="Username" required />
-                    </div>
+                      <label className="block text-gray-300 text-sm font-medium mb-1" htmlFor="text">Username <span className="text-red-600">*</span></label>
+                      <input id="username" type="text" className="form-input w-full text-gray-300" placeholder="Username" required />
+                  </div>
                   </div>
                   <div className="flex flex-wrap -mx-3 mb-4">
                     <div className="w-full px-3">
@@ -58,16 +58,17 @@ function SignUp() {
                   </div>
                 </form>
                 <div className="text-gray-400 text-center mt-6">
-                  Already using "App Name?"? <Link to="signin" className="text-purple-600 hover:text-gray-200 transition duration-150 ease-in-out">Sign in</Link>
+                  Already using Score? <Link to="/signin" className="text-purple-600 hover:text-gray-200 transition duration-150 ease-in-out">Sign in</Link>
                 </div>
               </div>
 
             </div>
           </div>
+          
         </section>
 
       </main>
-
+      
     </div>
   );
 }
