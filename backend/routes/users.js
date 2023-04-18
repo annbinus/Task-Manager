@@ -1,16 +1,18 @@
 const router = require('express').Router();
 let User = require('../models/user.model');
 
+
 // GET endpoint for all users
 router.route('/').get((req, res) =>
 {
+    res.sendFile('/public/index.html');
     User.find()
         .then(users => res.json(users))
         .catch(err => res.status(400).json('Error: ' + err));
 });
 
 // POST endpoint for registering a new user
-router.route('/add').post((req, res) =>
+router.route('/signup').post((req, res) =>
 {
     const username = req.body.username;
     const password = req.body.password;
@@ -54,7 +56,7 @@ router.route('/update/:id').post((req, res) =>
         .catch(err => res.status(400).json('Error: ' + err));
 });
 
-router.route('/Login').post((req, res) =>
+router.route('/signin').post((req, res) =>
 {
     User.find({username: req.body.username, password: req.body.password}, )
         .then(user =>
