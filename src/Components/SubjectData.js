@@ -6,16 +6,16 @@ export const SubjectData = [
     {
         name: "Not Started",
         color: "#FFC680",
-        tasks: <Task />
+        tasks: <Task subjectIDFromSubject={1} />
     },
     {
         name: "In Progress",
         color: "#A4E8FF",
-        tasks: <Task />
+        tasks: <Task subjectIDFromSubject={2} />
     },
     {
         name: "Completed",
         color: "#ADFF92",
-        tasks: <Task />
+        tasks: <Task subjectIDFromSubject={3} />
     }
 ]

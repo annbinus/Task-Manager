@@ -12,7 +12,7 @@ function Sidebar() {
                     key={key} 
                     className='SidebarRow'
                     onClick={() => { 
-                        window.location.pathname = val.link; {/* Applies sidebar's button link */}
+                        window.location.pathname = val.link; /* Applies sidebar's button link */
                     }}
                     >
                         <div id='SidebarIcon'>{val.icon}</div> {/* Applies sidebar's button icon */}

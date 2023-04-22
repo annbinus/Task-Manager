@@ -2,11 +2,12 @@ import React from 'react'
 import '../AppMain.css'; // Two dots to go outside of the components folder
 import { TaskData } from './TaskData'; // Imports Task data
 
-function Task() {
+function Task(props) {
+    const { subjectIDFromSubject } = props; /* Passes in subjectIDFromSubject */
     return (
         <div className='Task'>
             <ul className='TaskList'> {/* Different tasks lists */}
-                {TaskData.map((val, key)=> {
+                {TaskData.filter(TaskData => TaskData.subjectID === subjectIDFromSubject).map((val, key) => {
                     return (
                         <li 
                         key={key} 
