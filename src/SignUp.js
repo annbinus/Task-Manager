@@ -33,7 +33,7 @@ function SignUp()
         .then(res => console.log(res.data)); // User added!
     } catch (err)
     {
-      console.log("Error signing up");
+      console.log(`Error signing up: ${err}`);
     }
   }
 
