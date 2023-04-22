@@ -13,7 +13,7 @@ function Task() {
                         className='TaskRow'
                         >
                             <div id='TaskName'>{val.name}</div> {/* Applies task's name */}
-                            <div id='TaskName'>{val.desc}</div> {/* Applies task's descripition */}
+                            <div id='TaskDesc'>{val.desc}</div> {/* Applies task's descripition */}
                         </li>
                     )
                 })}

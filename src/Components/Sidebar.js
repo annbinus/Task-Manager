@@ -16,7 +16,6 @@ function Sidebar() {
                     }}
                     >
                         <div id='SidebarIcon'>{val.icon}</div> {/* Applies sidebar's button icon */}
-                        <div id='SidebarName'>{val.name}</div> {/* Applies sidebar's button name */}
                     </li>
                 )
             })}

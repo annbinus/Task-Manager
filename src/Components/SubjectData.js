@@ -1,5 +1,5 @@
-import React from 'react'
-import Task from './Task'
+import React from "react"
+import Task from "./Task"
 
 // Data for subjects in array form containing objects
 export const SubjectData = [
@@ -19,4 +19,3 @@ export const SubjectData = [
         tasks: <Task />
     }
 ]
-
