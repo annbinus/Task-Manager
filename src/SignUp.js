@@ -2,51 +2,38 @@ import { useState } from "react";
 import React from 'react';
 import Navbar from "./Components/Navbar";
 import { Link } from 'react-router-dom';
+import axios from 'axios';
 
-function SignUp() {
-  
+function SignUp()
+{
+
   const [values, setValues] = useState({
     username: '',
     password: '',
     showPassword: false,
   })
 
-  const handleChange = (fieldName) => (event) => {
+  const handleChange = (fieldName) => (event) =>
+  {
     setValues({ ...values, [fieldName]: event.target.value })
   }
 
-  const handleSubmit = async (event) => {
+  const handleSubmit = async (event) =>
+  {
     event.preventDefault()
 
-    try {
-      const res = await fetch('/users/add', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          username: values.username,
-          password: values.password,
-        }),
-      })
+    const user = {
+      "username": values.username,
+      "password": values.password,
+    }
 
-      if (!res.ok) {
-        return console.log('fetch error')
-      }
-
-      const data = await res.json()
-      console.log({data})
-      // this is just a visual feedback for user for this demo
-      // this will not be an error, rather we will show a different UI or redirect user to dashboard
-      // ideally we also want a way to confirm their email or identity
-      setValues({
-        username: '',
-        password: '',
-        showPassword: false,
-      })
-      return
-    } catch (error) {
-      return console.log('fetch error')
+    try
+    {
+      axios.post('http://localhost:5000/users/add', user)
+        .then(res => console.log(res.data)); // User added!
+    } catch (err)
+    {
+      console.log("Error signing up");
     }
   }
 
@@ -59,7 +46,7 @@ function SignUp() {
       {/*  Page content */}
       <main className="grow font-inter antialiased text-gray-200 tracking-tight">
 
-    
+
 
         <section className="relative">
           <div className="max-w-6xl mx-auto px-4 sm:px-6">
@@ -83,14 +70,14 @@ function SignUp() {
                     <div className="w-full px-3">
                       <label className="block text-gray-300 text-sm font-medium mb-1" htmlFor="email">Email<span className="text-red-600">*</span></label>
                       <input id="email" type="email" className="form-input w-full text-gray-300" placeholder="you@yourcompany.com" required />
-                  </div>
+                    </div>
                   </div>
                   <div className="flex flex-wrap -mx-3 mb-4">
                     <div className="w-full px-3">
                       <label className="block text-gray-300 text-sm font-medium mb-1" htmlFor="text">Username <span className="text-red-600">*</span></label>
                       <input id="username" type="text" value={values.username} onChange={handleChange('username')} className="form-input w-full text-gray-300" placeholder="Username" required />
-                  </div>
-                  
+                    </div>
+
                   </div>
                   <div className="flex flex-wrap -mx-3 mb-4">
                     <div className="w-full px-3">
@@ -98,7 +85,7 @@ function SignUp() {
                       <input id="password" type="password" value={values.password} onChange={handleChange('password')} className="form-input w-full text-gray-300" placeholder="Password (at least 10 characters)" required />
                     </div>
                   </div>
-                  
+
                   <div className="flex flex-wrap -mx-3 mt-6">
                     <div className="w-full px-3">
                       <button className="btn text-white bg-purple-600 hover:bg-purple-700 w-full">Sign up</button>
@@ -112,11 +99,11 @@ function SignUp() {
 
             </div>
           </div>
-          
+
         </section>
 
       </main>
-      
+
     </div>
   );
 }
