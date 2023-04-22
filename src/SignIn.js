@@ -1,67 +1,54 @@
 import React, { useState } from 'react';
 import Navbar from "./Components/Navbar";
 import { Link } from 'react-router-dom';
+import axios from 'axios';
 
-const SignIn = () => {
+const SignIn = () =>
+{
 
-const [values, setValues] = useState({
-  username: '',
-  password: '',
-  showPassword: false,
-})
-
-
-const handleChange = (fieldName) => (event) => {
-  setValues({ ...values, [fieldName]: event.target.value })
-}
+  const [values, setValues] = useState({
+    username: '',
+    password: '',
+    showPassword: false,
+  })
 
 
-const handleSubmit = async (event) => {
-  event.preventDefault()
+  const handleChange = (fieldName) => (event) =>
+  {
+    setValues({ ...values, [fieldName]: event.target.value })
+  }
 
-  try {
-    const res = await fetch('/api/Login', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        username: values.username,
-        password: values.password,
-      }),
-    })
 
-    if (!res.ok) {
-      return console.log('error')
+  const handleSubmit = async (event) =>
+  {
+    event.preventDefault()
+
+    const user = {
+      "username": values.username,
+      "password": values.password,
     }
 
-    const data = await res.json()
-    console.log({ data })
-
-    // this is just a visual feedback for user for this demo
-    // this will not be an error, rather we will show a different UI or redirect user to dashboard
-    setValues({
-      username: '',
-      password: '',
-      showPassword: false,
-    })
-    return
-  } catch (error) {
-    return console.log('error')
+    try
+    {
+      axios.post('http://localhost:5000/users/signin', user)
+        .then(res => console.log(res.data));
+    } catch (err)
+    {
+      console.log(`Error signing up: ${err}`);
+    }
   }
-}
 
-       
+
   return (
     <div className="home-container">
-    {/*  Site header */}
-    <Navbar/>
+      {/*  Site header */}
+      <Navbar />
 
 
-    {/*  Page content */}
-    <main className="grow font-inter antialiased text-gray-200 tracking-tight">
+      {/*  Page content */}
+      <main className="grow font-inter antialiased text-gray-200 tracking-tight">
 
-    
+
 
         <section className="relative">
           <div className="max-w-6xl mx-auto px-4 sm:px-6">
@@ -74,8 +61,8 @@ const handleSubmit = async (event) => {
 
               {/* Form */}
               <div className="max-w-sm mx-auto">
-                
-                
+
+
                 <form className='signin' onSubmit={handleSubmit}>
                   <div className="flex flex-wrap -mx-3 mb-4">
                     <div className="w-full px-3">
