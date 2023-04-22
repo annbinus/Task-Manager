@@ -96,6 +96,8 @@ body {
   justify-content: center;
   align-items: center;
 
+  padding-bottom: 60px;
+
   /* Removes other aspects of a basic list */
   list-style-type: none;
 }
@@ -103,8 +105,8 @@ body {
 .Subject .SubjectRow {
   /* Size of subject */
   width: 300px;
-  height: 600px;
-
+  height: auto;
+  padding-bottom: 60px;
   margin-left: 1%;
   margin-top: 4%;
   border-radius: 50px;
