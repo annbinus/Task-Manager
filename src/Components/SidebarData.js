@@ -1,6 +1,6 @@
 import React from 'react'
 import SpaceDashboardIcon from '@mui/icons-material/SpaceDashboard';
-import PersonAddIcon from '@mui/icons-material/PersonAdd';
+import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 import SettingsIcon from '@mui/icons-material/Settings';
 import LogoutIcon from '@mui/icons-material/Logout';
 
@@ -11,8 +11,8 @@ export const SidebarData = [
         link: "/Dashboard"
     },
     {
-        icon: <PersonAddIcon />,
-        link: "/AddUsers"
+        icon: <CalendarMonthIcon />,
+        link: "/Calender"
     },
     {
         icon: <SettingsIcon />,
@@ -20,7 +20,7 @@ export const SidebarData = [
     },
     {
         icon: <LogoutIcon />,
-        link: "/SignIn"
+        link: "/SignOut"
     },
 ]
 
