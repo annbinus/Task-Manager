@@ -9,10 +9,20 @@ const taskSchema = new Schema({
         unique: true,
     },
     start: {
+        type: Date,
+    },
+    deadline:{
+        type: Date,
+    },
+    completed: {
+        type: Boolean,
+        required: true,
+    },
+    subjectID: {
         type: String,
         required: true,
     },
-    completed: {
+    userID:{
         type: String,
         required: true,
     }
