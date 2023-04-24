@@ -5,14 +5,13 @@ let User = require('../models/user.model');
 // GET endpoint for all users
 router.route('/').get((req, res) =>
 {
-    res.sendFile('/public/index.html');
     User.find()
         .then(users => res.json(users))
         .catch(err => res.status(400).json('Error: ' + err));
 });
 
 // POST endpoint for registering a new user
-router.route('/signup').post((req, res) =>
+router.route('/add').post((req, res) =>
 {
     const username = req.body.username;
     const password = req.body.password;

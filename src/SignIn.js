@@ -1,8 +1,57 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Navbar from "./Components/Navbar";
 import { Link } from 'react-router-dom';
 
 const SignIn = () => {
+
+const [values, setValues] = useState({
+  username: '',
+  password: '',
+  showPassword: false,
+})
+
+
+const handleChange = (fieldName) => (event) => {
+  setValues({ ...values, [fieldName]: event.target.value })
+}
+
+
+const handleSubmit = async (event) => {
+  event.preventDefault()
+
+  try {
+    const res = await fetch('/api/Login', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        username: values.username,
+        password: values.password,
+      }),
+    })
+
+    if (!res.ok) {
+      return console.log('error')
+    }
+
+    const data = await res.json()
+    console.log({ data })
+
+    // this is just a visual feedback for user for this demo
+    // this will not be an error, rather we will show a different UI or redirect user to dashboard
+    setValues({
+      username: '',
+      password: '',
+      showPassword: false,
+    })
+    return
+  } catch (error) {
+    return console.log('error')
+  }
+}
+
+       
   return (
     <div className="home-container">
     {/*  Site header */}
@@ -27,17 +76,17 @@ const SignIn = () => {
               <div className="max-w-sm mx-auto">
                 
                 
-                <form>
+                <form className='signin' onSubmit={handleSubmit}>
                   <div className="flex flex-wrap -mx-3 mb-4">
                     <div className="w-full px-3">
-                      <label className="block text-gray-300 text-sm font-medium mb-1" htmlFor="email">Username or Email</label>
-                      <input id="email" type="email" className="form-input w-full text-gray-300" placeholder="you@yourcompany.com" required />
+                      <label className="block text-gray-300 text-sm font-medium mb-1" htmlFor="email">Username</label>
+                      <input id="text" type="text" value={values.username} onChange={handleChange('username')} className="form-input w-full text-gray-300" placeholder="you@yourcompany.com" required />
                     </div>
                   </div>
                   <div className="flex flex-wrap -mx-3 mb-4">
                     <div className="w-full px-3">
                       <label className="block text-gray-300 text-sm font-medium mb-1" htmlFor="password">Password</label>
-                      <input id="password" type="password" className="form-input w-full text-gray-300" placeholder="Password (at least 10 characters)" required />
+                      <input id="password" type="password" value={values.password} onChange={handleChange('password')} className="form-input w-full text-gray-300" placeholder="Password (at least 10 characters)" required />
                     </div>
                   </div>
                   <div className="flex flex-wrap -mx-3 mb-4">
@@ -53,7 +102,7 @@ const SignIn = () => {
                   </div>
                   <div className="flex flex-wrap -mx-3 mt-6">
                     <div className="w-full px-3">
-                      <button className="btn text-white bg-purple-600 hover:bg-purple-700 w-full">Sign in</button>
+                      <button className="btn text-white bg-purple-600 hover:bg-purple-700 w-full" type='submit'>Sign in</button>
                     </div>
                   </div>
                 </form>
