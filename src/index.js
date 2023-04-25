@@ -13,9 +13,6 @@ root.render(
   <React.StrictMode>
     <BrowserRouter>
       <AppMain />
-      <App />
     </BrowserRouter>
   </React.StrictMode>
 );
-
-import reportWebVitals from './reportWebVitals';

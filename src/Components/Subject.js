@@ -5,6 +5,7 @@ import Task from './Task';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import CheckIcon from '@mui/icons-material/Check';
+import AddIcon from '@mui/icons-material/Add';
 
 function Subject() {
   const [buttonStates, setButtonStates] = useState(SubjectData.map(() => false));
@@ -31,6 +32,8 @@ function Subject() {
               </div>
               <div id='SubjectTasks'>{val.tasks(buttonsOpen)}</div>
               <div id='SubjectDeleteButton' style={{ display: buttonsOpen ? 'grid' : 'none' }}><DeleteIcon /></div>
+              <div id='SubjectAddButton' style={{ display: buttonsOpen ? 'grid' : 'none' }}><AddIcon /></div>
+              <div id='SubjectAddName' style={{ display: buttonsOpen ? 'grid' : 'none' }}>New Task</div>
             </li>
           )
         })}

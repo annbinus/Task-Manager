@@ -180,14 +180,44 @@ html, body {
   /* Makes button's positioning not effect other elements */
   position: absolute;
   
-  margin-left: 44.5%;
-  margin-top: 4%;
+  margin-left: 82.5%;
+  margin-top: 6%;
 
   /* Circle button css */
   height: 35px;
   width: 35px;
   border-radius: 50%;
 }
+
+.SubjectRow #SubjectAddButton {
+  /* Centers icon in button */
+  display: grid;
+  place-items: center start;
+
+  /* Makes button's positioning not effect other elements */
+  position: absolute;
+  
+  margin-left: 32.5%;
+  margin-top: -2.7%;
+
+  /* Circle button css */
+  height: 35px;
+  width: 110px;
+  border-radius: 50%;
+}
+
+.SubjectRow #SubjectAddName {
+  /* Centers text in button */
+  display: grid;
+  place-items: center;
+
+  /* Makes text's positioning not effect other elements */
+  position: absolute;
+  
+  margin-left: 42.5%;
+  margin-top: -1%;
+}
+
 
 .Task {
   width: 100%;
