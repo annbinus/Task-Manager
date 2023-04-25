@@ -108,7 +108,6 @@ html, body {
   width: 300px;
   height: auto;
   padding-bottom: 60px;
-  margin-left: 1%;
   margin-top: 4%;
   border-radius: 50px;
   justify-content: center;
@@ -183,7 +182,7 @@ html, body {
   border-radius: 50%;
 }
 
-.SubjectRow #SubjectAddButton {
+.SubjectRow #TaskAddButton {
   /* Centers icon in button */
   display: grid;
   place-items: center start;
@@ -200,7 +199,7 @@ html, body {
   border-radius: 50%;
 }
 
-.SubjectRow #SubjectAddName {
+.SubjectRow #TaskAddName {
   /* Centers text in button */
   display: grid;
   place-items: center;
@@ -215,16 +214,29 @@ html, body {
 .SubjectList #SubjectAddWrapper {
   /* Size of subject */
   width: 300px;
-  height: auto;
+  height: 75px;
   padding-bottom: 60px;
-  margin-left: 1%;
   margin-top: 4%;
   border-radius: 50px;
   justify-content: center;
   align-items: center;
-  border: 5px;
+  position: relative;
+
+  display: grid;
+  place-items: center;
+  background-color: white;
+  border-width: 5px;
 }
 
+.SubjectList #SubjectAddButton {
+  margin-left: -33%;
+  position: absolute;
+}
+
+.SubjectList #SubjectAddName {
+  margin-left: 7%;
+  position: absolute;
+}
 
 .Task {
   width: 100%;

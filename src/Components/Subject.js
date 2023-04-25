@@ -58,10 +58,10 @@ function Subject() {
             </li>
           )
         })}
-        <div id='SubjectAddWrapper'>
-          <div id='SubjectAddName'>New Task</div>
-          <button id='SubjectAddButton'><AddIcon /></button>
-        </div>
+        <button id='SubjectAddWrapper'>
+          <div id='SubjectAddName'>New Subject</div>
+          <div id='SubjectAddButton'><AddIcon /></div>
+        </button>
       </ul>
     </div>
   );
