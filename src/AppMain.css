@@ -220,6 +220,19 @@ html, body {
   margin-top: -1%;
 }
 
+.SubjectList #SubjectAddWrapper {
+  /* Size of subject */
+  width: 300px;
+  height: auto;
+  padding-bottom: 60px;
+  margin-left: 1%;
+  margin-top: 4%;
+  border-radius: 50px;
+  justify-content: center;
+  align-items: center;
+  border: 5px;
+}
+
 
 .Task {
   width: 100%;
