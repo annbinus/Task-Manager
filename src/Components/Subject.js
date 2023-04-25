@@ -6,12 +6,33 @@ import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import CheckIcon from '@mui/icons-material/Check';
 import AddIcon from '@mui/icons-material/Add';
+import { confirmAlert } from 'react-confirm-alert'; // Import
+import 'react-confirm-alert/src/react-confirm-alert.css'; // Import css
 
 function Subject() {
   const [buttonStates, setButtonStates] = useState(SubjectData.map(() => false));
 
   const toggleButtons = (subjectID) => {
     setButtonStates(buttonStates.map((state, index) => index === subjectID ? !state : state));
+  };
+
+  const handleDeleteClick = () => {
+    confirmAlert({
+      title: 'Confirm deletion',
+      message: 'Are you sure you want to delete this subject?',
+      buttons: [
+        {
+          label: 'Yes',
+          onClick: () => {
+            // Delete the subject here
+          }
+        },
+        {
+          label: 'No',
+          onClick: () => {}
+        }
+      ]
+    });
   };
 
   return (
@@ -28,12 +49,12 @@ function Subject() {
             >
               <div id='SubjectWrapper'>
                 <div id='SubjectName'>{val.name}</div>
-                <div id='SubjectButton' onClick={() => toggleButtons(subjectID)}>{buttonIcon}</div>
+                <button id='SubjectButton' onClick={() => toggleButtons(subjectID)}>{buttonIcon}</button>
               </div>
               <div id='SubjectTasks'>{val.tasks(buttonsOpen)}</div>
-              <div id='SubjectDeleteButton' style={{ display: buttonsOpen ? 'grid' : 'none' }}><DeleteIcon /></div>
-              <div id='SubjectAddButton' style={{ display: buttonsOpen ? 'grid' : 'none' }}><AddIcon /></div>
+              <button id='SubjectDeleteButton' style={{ display: buttonsOpen ? 'grid' : 'none' }} onClick={handleDeleteClick}><DeleteIcon /></button>
               <div id='SubjectAddName' style={{ display: buttonsOpen ? 'grid' : 'none' }}>New Task</div>
+              <button id='SubjectAddButton' style={{ display: buttonsOpen ? 'grid' : 'none' }}><AddIcon /></button>
             </li>
           )
         })}

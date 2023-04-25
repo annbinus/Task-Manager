@@ -211,6 +211,8 @@ html, body {
   display: grid;
   place-items: center;
 
+  user-select: none;
+
   /* Makes text's positioning not effect other elements */
   position: absolute;
   
