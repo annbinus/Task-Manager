@@ -255,6 +255,10 @@ html, body {
   padding: 8px;
 }
 
+.TaskRow #TaskDeletePopup {
+  background-color: blue;
+}
+
 .TaskRow #TaskDeleteButton {
   /* Centers icon in button */
   display: grid;

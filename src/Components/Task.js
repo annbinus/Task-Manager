@@ -1,7 +1,10 @@
 import React from 'react'
 import '../AppMain.css'; // Two dots to go outside of the components folder
 import { TaskData } from './TaskData'; // Imports Task data
+import axios from 'axios';
 import DeleteIcon from '@mui/icons-material/Delete';
+import { confirmAlert } from 'react-confirm-alert'; // Import
+import 'react-confirm-alert/src/react-confirm-alert.css'; // Import css
 
 function Task(props) {
     const { subjectIDFromSubject, buttonsOpen } = props; /* Passes in subjectIDFromSubject */
@@ -15,7 +18,48 @@ function Task(props) {
             };
         });
     };
+
+    const handleDeleteClick = () => {
+        confirmAlert({
+          title: 'Confirm deletion',
+          message: 'Are you sure you want to delete this task?',
+          buttons: [
+            {
+              label: 'Yes',
+              onClick: () => {
+                // Delete the task here
+              }
+            },
+            {
+              label: 'No',
+              onClick: () => {}
+            }
+          ]
+        });
+      };
     
+    /*
+    const handleDelete = async (event) =>
+  {
+    event.preventDefault()
+
+    const user = {
+      "username": values.username,
+      "password": values.password,
+    }
+
+    try
+    {
+      axios.post('http://localhost:5000/tasks/delete')
+        .then(res => console.log(res.data)); // User added!
+    } catch (err)
+    {
+      console.log(`Error deleting: ${err}`);
+    }
+  }
+  */
+
+
     return (
         <div className='Task'>
             <ul className='TaskList'>
@@ -31,7 +75,7 @@ function Task(props) {
                         >
                             <div id='TaskWrapper'>
                                 <div id='TaskName'>{val.name}</div>
-                                <div id='TaskDeleteButton' style={{ display: buttonsOpen ? 'grid' : 'none' }}><DeleteIcon /></div>
+                                <button id='TaskDeleteButton' style={{ display: buttonsOpen ? 'grid' : 'none' }} onClick={handleDeleteClick}><DeleteIcon /></button>
                             </div>
                             <div id='TaskDesc' style={{ display: taskOpen[taskId] ? 'block' : 'none' }}> {/* Changes display of taskOpen to none or block */}
                                 {val.desc}
@@ -42,6 +86,7 @@ function Task(props) {
             </ul>
         </div>
     );
+
 }
 
 export default Task;
