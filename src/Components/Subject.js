@@ -53,11 +53,15 @@ function Subject() {
               </div>
               <div id='SubjectTasks'>{val.tasks(buttonsOpen)}</div>
               <button id='SubjectDeleteButton' style={{ display: buttonsOpen ? 'grid' : 'none' }} onClick={handleDeleteClick}><DeleteIcon /></button>
-              <div id='SubjectAddName' style={{ display: buttonsOpen ? 'grid' : 'none' }}>New Task</div>
-              <button id='SubjectAddButton' style={{ display: buttonsOpen ? 'grid' : 'none' }}><AddIcon /></button>
+              <div id='TaskAddName' style={{ display: buttonsOpen ? 'grid' : 'none' }}>New Task</div>
+              <button id='TaskAddButton' style={{ display: buttonsOpen ? 'grid' : 'none' }}><AddIcon /></button>
             </li>
           )
         })}
+        <div id='SubjectAddWrapper'>
+          <div id='SubjectAddName'>New Task</div>
+          <button id='SubjectAddButton'><AddIcon /></button>
+        </div>
       </ul>
     </div>
   );

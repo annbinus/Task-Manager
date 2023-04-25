@@ -189,7 +189,7 @@ html, body {
   border-radius: 50%;
 }
 
-.SubjectRow #SubjectAddButton {
+.SubjectRow #TaskAddButton {
   /* Centers icon in button */
   display: grid;
   place-items: center start;
@@ -206,7 +206,7 @@ html, body {
   border-radius: 50%;
 }
 
-.SubjectRow #SubjectAddName {
+.SubjectRow #TaskAddName {
   /* Centers text in button */
   display: grid;
   place-items: center;
