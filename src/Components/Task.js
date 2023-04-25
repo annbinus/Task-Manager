@@ -74,12 +74,10 @@ function Task(props) {
                             }}
                         >
                             <div id='TaskWrapper'>
-                                <div id='TaskName'>{val.name}</div>
+                                <textarea disabled={!buttonsOpen} id='TaskName' initialvalue={val.name}></textarea>
                                 <button id='TaskDeleteButton' style={{ display: buttonsOpen ? 'grid' : 'none' }} onClick={handleDeleteClick}><DeleteIcon /></button>
                             </div>
-                            <div id='TaskDesc' style={{ display: taskOpen[taskId] ? 'block' : 'none' }}> {/* Changes display of taskOpen to none or block */}
-                                {val.desc}
-                            </div>
+                            <textarea disabled={!buttonsOpen} id='TaskDesc' style={{ display: taskOpen[taskId] ? 'block' : 'none' }} initialvalue={val.desc}></textarea>
                             <div id='TaskStart' style={{ display: taskOpen[taskId] ? 'block' : 'none' }}> {/* Changes display of taskOpen to none or block */}
                                 Start: {val.start}
                             </div>

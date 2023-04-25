@@ -27,6 +27,17 @@ html, body {
   overflow-x: hidden;
 }
 
+textarea {
+  padding: 0;
+  border: none;
+  outline: none;
+  resize: none !important;
+  font-family: inherit;
+  font-size: inherit;
+  line-height: inherit;
+  background-color: transparent;
+}
+
 .Sidebar {
   /* Size of sidebar */
   width: 100%;
@@ -259,6 +270,7 @@ html, body {
 }
 
 .TaskRow #TaskWrapper {
+  height: 40px;
   /* Makes name and button in row */
   display: flex;
   flex-direction: row;
