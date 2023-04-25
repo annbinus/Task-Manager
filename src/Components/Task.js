@@ -80,6 +80,12 @@ function Task(props) {
                             <div id='TaskDesc' style={{ display: taskOpen[taskId] ? 'block' : 'none' }}> {/* Changes display of taskOpen to none or block */}
                                 {val.desc}
                             </div>
+                            <div id='TaskStart' style={{ display: taskOpen[taskId] ? 'block' : 'none' }}> {/* Changes display of taskOpen to none or block */}
+                                Start: {val.start}
+                            </div>
+                            <div id='TaskDeadline' style={{ display: taskOpen[taskId] ? 'block' : 'none' }}> {/* Changes display of taskOpen to none or block */}
+                                End: {val.deadline}
+                            </div>
                         </li>
                     );
                 })}

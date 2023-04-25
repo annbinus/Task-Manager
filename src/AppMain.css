@@ -298,3 +298,12 @@ html, body {
   text-align: left;
   padding: 10px;
 }
+
+.TaskRow #TaskStart, #TaskDeadline {
+  text-align: left;
+  padding-left: 10px;
+}
+
+.TaskRow #TaskDeadline {
+  padding-bottom: 10px;
+}
