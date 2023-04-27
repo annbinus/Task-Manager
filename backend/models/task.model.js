@@ -11,7 +11,7 @@ const taskSchema = new Schema({
     start: {
         type: Date,
     },
-    deadline:{
+    deadline: {
         type: Date,
     },
     completed: {
@@ -22,7 +22,11 @@ const taskSchema = new Schema({
         type: String,
         required: true,
     },
-    userID:{
+    description: {
+        type: String,
+        required: true,
+    },
+    userID: {
         type: String,
         required: true,
     }
