@@ -85,16 +85,14 @@ function Subject() {
     });
   };
 
-  const handleAddTaskClick = async (event) =>
+  const handleAddTaskClick = async (subjectID) =>
   {
-    event.preventDefault()
-
     const task = {
       "name" : "test",
       "start" : "2023-4-16",
       "deadline" : "2023-4-26",
       "completed" : "false",
-      "subjectID" : "643d649a35e51f60444d697c"
+      "subjectID" : subjectID
     }
 
     try
@@ -106,7 +104,7 @@ function Subject() {
       console.log(`Error signing up: ${err}`);
     }
 
-    const newTask = { name: 'test', boardID: '' };
+    const newTask = { name: 'test', start: "", deadline: "", completed: "false", subjectID: subjectID };
     const updatedTasks = [...subjectData, newTask];
 
     setTaskData(updatedTasks);
@@ -162,7 +160,7 @@ function Subject() {
               <div id='SubjectTasks'><Task tasks={tasks} isOpen={buttonsOpen} /></div>
               <button id='SubjectDeleteButton' style={{ display: buttonsOpen ? 'grid' : 'none' }} onClick={() => handleDeleteClick(subjectID)}><DeleteIcon /></button>
               <div id='TaskAddName' style={{ display: buttonsOpen ? 'grid' : 'none' }}>New Task</div>
-              <button id='TaskAddButton' style={{ display: buttonsOpen ? 'grid' : 'none' }}><AddIcon /></button>
+              <button id='TaskAddButton' style={{ display: buttonsOpen ? 'grid' : 'none' }} onClick={() => handleAddTaskClick(subjectID)}><AddIcon /></button>
             </li>
           )
         })}
