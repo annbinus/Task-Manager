@@ -16,7 +16,6 @@ function Subject() {
     password: '',
     showPassword: false,
   })
-
   const [buttonStates, setButtonStates] = useState([]);
   const [subjectData, setSubjectData] = useState([]);
   const [taskData, setTaskData] = useState([]);
@@ -107,6 +106,9 @@ function Subject() {
     const newTask = { name: 'test', start: "", deadline: "", completed: "false", subjectID: subjectID };
     const updatedTasks = [...taskData, newTask];
 
+    //console.log(newTask)
+    console.log("SubjectID: " + subjectID)
+
     setTaskData(updatedTasks);
   }
 
@@ -161,7 +163,7 @@ function Subject() {
               <div id='SubjectTasks'><Task tasks={tasks} isOpen={buttonsOpen} /></div>
               <button id='SubjectDeleteButton' style={{ display: buttonsOpen ? 'grid' : 'none' }} onClick={() => handleDeleteClick(subjectID)}><DeleteIcon /></button>
               <div id='TaskAddName' style={{ display: buttonsOpen ? 'grid' : 'none' }}>New Task</div>
-              <button id='TaskAddButton' style={{ display: buttonsOpen ? 'grid' : 'none' }} onClick={() => handleAddTaskClick(subjectID)}><AddIcon /></button>
+              <button id='TaskAddButton' style={{ display: buttonsOpen ? 'grid' : 'none' }} onClick={() => handleAddTaskClick(val._id)}><AddIcon /></button>
             </li>
           )
         })}
