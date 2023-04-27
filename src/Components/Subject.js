@@ -89,6 +89,7 @@ function Subject() {
     const updatedSubjects = [...subjectData, newSubject];
 
     setSubjectData(updatedSubjects);
+    setButtonStates([...buttonStates, false]);
   }
 
   return (
