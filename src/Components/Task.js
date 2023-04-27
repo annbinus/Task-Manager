@@ -9,8 +9,6 @@ import 'react-confirm-alert/src/react-confirm-alert.css'; // Import css
 function Task({buttonsOpen, tasks}) {
     const TaskData = tasks; /* Passes in subjectIDFromSubject */
 
-    console.log(TaskData);
-
     const [taskOpen, setTaskOpen] = React.useState(false); /* Initializes taskOpen using useState */
     const toggleTask = (taskId) => { /* Function for toggling task*/
         setTaskOpen((prevState) => {
