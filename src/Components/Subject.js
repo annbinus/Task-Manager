@@ -63,7 +63,7 @@ function Subject() {
             <li 
               key={subjectID} 
               className='SubjectRow'
-              style={{ backgroundColor: '#7E7E7E' }} // A beautiful grey
+              style={{ backgroundColor: '#7E7E7E' }} // A beautiful grey - Caden
             >
               <div id='SubjectWrapper'>
                 <div id='SubjectName'>{val.name}</div>
