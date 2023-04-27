@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import Navbar from "./Components/Navbar";
 import { Link } from 'react-router-dom';
 import axios from 'axios';
+import { redirect } from "react-router-dom";
 
 const SignIn = () =>
 {
@@ -31,10 +32,21 @@ const SignIn = () =>
     try
     {
       axios.post('http://localhost:5000/users/signin', user)
-        .then(res => console.log(res.data));
+        .then(function (res)
+        {
+          console.log("Succesfuly logged in with userID " + res.data);
+          try
+          {
+            console.log("Redirecting");
+            redirect("/Home");
+          } catch (e)
+          {
+            console.log(`Error redirecting: ${e}`);
+          }
+        });
     } catch (err)
     {
-      console.log(`Error signing up: ${err}`);
+      console.log(`Error signing in: ${err}`);
     }
   }
 
