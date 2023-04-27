@@ -3,11 +3,13 @@ import '../AppMain.css'; // Two dots to go outside of the components folder
 import { TaskData } from './TaskData'; // Imports Task data
 import axios from 'axios';
 import DeleteIcon from '@mui/icons-material/Delete';
+import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
+import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
 import { confirmAlert } from 'react-confirm-alert'; // Import
 import 'react-confirm-alert/src/react-confirm-alert.css'; // Import css
 
 function Task(props) {
-    const { subjectIDFromSubject, buttonsOpen } = props; /* Passes in subjectIDFromSubject */
+    const { subjectIDFromSubject, buttonsOpen } = props; /* Passes in subjectIDFromSubject and buttonsOpen */
 
     const [taskOpen, setTaskOpen] = React.useState(false); /* Initializes taskOpen using useState */
     const toggleTask = (taskId) => { /* Function for toggling task*/
@@ -19,7 +21,43 @@ function Task(props) {
         });
     };
 
-    const handleDeleteClick = () => {
+    const handleMoveUpClick = (taskId) => {
+      // Parse the subject ID and task index from the taskId string
+      const [subjectID, taskIndex] = taskId.split('-').map(Number);
+      
+      // Find the task with matching taskId
+      const taskToUpdate = TaskData.find((task, index) => index === taskIndex && task.subjectID === subjectID);
+      
+      if (!taskToUpdate) {
+        console.log(`No task found with taskId ${taskId}`);
+        return;
+      }
+      
+      // Update the subjectID property of the matching task
+      taskToUpdate.subjectID -= 1;
+      
+      console.log(`Updated subjectID of task ${taskId}`);
+    };
+
+    const handleMoveDownClick = (taskId) => {
+      // Parse the subject ID and task index from the taskId string
+      const [subjectID, taskIndex] = taskId.split('-').map(Number);
+      
+      // Find the task with matching taskId
+      const taskToUpdate = TaskData.find((task, index) => index === taskIndex && task.subjectID === subjectID);
+      
+      if (!taskToUpdate) {
+        console.log(`No task found with taskId ${taskId}`);
+        return;
+      }
+      
+      // Update the subjectID property of the matching task
+      taskToUpdate.subjectID += 1;
+      
+      console.log(`Updated subjectID of task ${taskId}`);
+    };
+
+    const handleDeleteClick = (taskId) => {
         confirmAlert({
           title: 'Confirm deletion',
           message: 'Are you sure you want to delete this task?',
@@ -27,7 +65,16 @@ function Task(props) {
             {
               label: 'Yes',
               onClick: () => {
-                // Delete the task here
+                // Make HTTP DELETE request to delete task
+                axios.delete(`/tasks/${taskId}`)
+                .then(res => {
+                    // Task deleted successfully, handle the response here
+                    console.log(res.data);
+                })
+                .catch(err => {
+                    // Error occurred while deleting task, handle the error here
+                    console.log(err);
+                });
               }
             },
             {
@@ -79,7 +126,9 @@ function Task(props) {
                         >
                             <div id='TaskWrapper'>
                                 <textarea disabled={!buttonsOpen} onChange={handleEditChange} id='TaskName'>{val.name}</textarea>
-                                <button id='TaskDeleteButton' style={{ display: buttonsOpen ? 'grid' : 'none' }} onClick={handleDeleteClick}><DeleteIcon /></button>
+                                <button id='TaskMoveUpButton' style={{ display: !buttonsOpen ? 'grid' : 'none' }} onClick={() => handleMoveUpClick(taskId)}><ArrowUpwardIcon /></button>
+                                <button id='TaskMoveDownButton' style={{ display: !buttonsOpen ? 'grid' : 'none' }} onClick={() => handleMoveDownClick(taskId)}><ArrowDownwardIcon /></button>
+                                <button id='TaskDeleteButton' style={{ display: buttonsOpen ? 'grid' : 'none' }} onClick={() => handleDeleteClick(taskId)}><DeleteIcon /></button>
                             </div>
                             <textarea disabled={!buttonsOpen} onChange={handleEditChange} id='TaskDesc' style={{ display: taskOpen[taskId] ? 'block' : 'none' }}>{val.desc}</textarea>
                             <textarea disabled={!buttonsOpen} onChange={handleEditChange} id='TaskStart' style={{ display: taskOpen[taskId] ? 'block' : 'none' }}>{val.start}</textarea>
