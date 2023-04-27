@@ -20,17 +20,20 @@ function Subject() {
   const [buttonStates, setButtonStates] = useState([]);
   const [subjectData, setSubjectData] = useState([]);
 
+  // Here this is the actual fetch of the data to be shown
+  // we use useEffect because we don't want to write a class for it, and helps with asynch problems, - Caden
   useEffect(() => {
     async function fetchData() {
-      try {
-        const res = await axios.get('http://localhost:5000/subjects/');
-        setSubjectData(res.data);
-        setButtonStates(res.data.map(() => false));
-      } catch (err) {
+      try { // main try
+        const res = await axios.get('http://localhost:5000/subjects/'); // get from database asynchronously - Caden
+        setSubjectData(res.data); // Tasks information - Caden
+        setButtonStates(res.data.map(() => false)); // toggles between edit / view mode - Caden
+      } catch (err) { // error catch
         console.log(`Error getting subjects: ${err}`);
       }
     }
 
+    // actually perform it, - Caden
     fetchData();
   }, []);
 
@@ -98,7 +101,7 @@ function Subject() {
             <li 
               key={subjectID} 
               className='SubjectRow'
-              style={{ backgroundColor: val.color }}
+              style={{ backgroundColor: '#7E7E7E' }} // A beautiful grey - Caden
             >
               <div id='SubjectWrapper'>
                 <div id='SubjectName'>{val.name}</div>
