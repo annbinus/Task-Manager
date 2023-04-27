@@ -47,12 +47,14 @@ function Subject() {
     fetchTaskData();
   }, []);
 
-  const toggleButtons = (subjectID) => {
+  const toggleButtons = (subjectID, databaseID) => {
     setButtonStates(buttonStates.map((state, index) => index === subjectID ? !state : state));
-    updateTasks(subjectID);
+    updateTasks(databaseID);
   };
 
-  function updateTasks(subjectID) {
+  function updateTasks(subjectID, databaseID) {
+    console.log(subjectID)
+
     const updateTasks = taskData.filter((task) => task.subjectID === subjectID);
 
     console.log("Update Ran")
@@ -60,17 +62,17 @@ function Subject() {
 
     updateTasks.forEach((updateTask) => {
       const task = {
-        name: updateTask.name,
-        start: updateTask.start,
-        deadline: updateTask.deadline,
-        completed: updateTask.completed,
-        subjectID: updateTask.subjectID,
+        name: document.getElementById('TaskName').value,
+        start: document.getElementById('TaskStart').value,
+        deadline: document.getElementById('TaskDeadline').value,
+        completed: "false",
+        description: document.getElementById('TaskDesc').value
       };
 
-      console.log("task: " + task)
+      console.log(task)
 
       try {
-        axios.put('http://localhost:5000/tasks/' + updateTask._id, task).then((res) => console.log(res.data));
+        axios.put('http://localhost:5000/tasks/update/' + updateTask._id, task).then((res) => console.log(res.data));
       } catch (err) {
         console.log(`Error updating tasks: ${err}`);
       }
@@ -183,7 +185,7 @@ function Subject() {
             >
               <div id='SubjectWrapper'>
                 <div id='SubjectName'>{val.name}</div>
-                <button id='SubjectButton' onClick={() => toggleButtons(subjectID)}>{buttonIcon}</button>
+                <button id='SubjectButton' onClick={() => toggleButtons(subjectID, val._id)}>{buttonIcon}</button>
               </div>
               <div id='SubjectTasks'><Task tasks={tasks} isOpen={buttonsOpen} /></div>
               <button id='SubjectDeleteButton' style={{ display: buttonsOpen ? 'grid' : 'none' }} onClick={() => handleDeleteClick(subjectID)}><DeleteIcon /></button>
