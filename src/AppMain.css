@@ -5,9 +5,6 @@
   
   align-items: center;
 
-  /* Color of background */
-  background-color: white;
-
   /* Changes icon to be in row with the name */
   display: flex;
   flex-direction: row;
@@ -21,10 +18,24 @@
   font-weight: 500;
 }
 
-body {
+html, body {
   /* Gets rid of margins and padding on sides of screen */
   margin: 0;
   padding: 0;
+
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
+textarea {
+  padding: 0;
+  border: none;
+  outline: none;
+  resize: none !important;
+  font-family: inherit;
+  font-size: inherit;
+  line-height: inherit;
+  background-color: transparent;
 }
 
 .Sidebar {
@@ -33,9 +44,13 @@ body {
   bottom: 0%;
   
   position: fixed;
+  overflow: hidden;
 
   /* Color of sidebar */
   background-color: #323f52;
+
+  /* Makes sidebar in front of everything */
+  z-index:99;
 }
 
 .SidebarList {
@@ -83,9 +98,6 @@ body {
   /* Size of subject area */
   width: 100%;
   height: 100%;
-
-  /* Color of subject area */
-  background-color: white;
 }
 
 .SubjectList {
@@ -107,11 +119,22 @@ body {
   width: 300px;
   height: auto;
   padding-bottom: 60px;
-  margin-left: 1%;
   margin-top: 4%;
   border-radius: 50px;
   justify-content: center;
   align-items: center;
+
+  /* Makes delete button position absolute work */
+  position: relative;
+}
+
+.SubjectRow #SubjectWrapper {
+  /* Makes name and button in row */
+  display: flex;
+  flex-direction: row;
+
+  /* Makes button position absolute work */
+  position: relative;
 }
 
 .SubjectRow #SubjectName {
@@ -119,12 +142,31 @@ body {
   display: grid;
   place-items: center;
   margin-top: 3%;
+  margin-left: 15%;
+  width: 70%;
 
   /* Color of name*/
-  color: white;
+  color: black;
 
   font-size: xx-large;
-  font-weight: 1000;
+  font-weight: 7    00;
+}
+
+.SubjectRow #SubjectButton {
+  /* Centers icon in button */
+  display: grid;
+  place-items: center;
+
+  /* Makes button's positioning not effect other elements */
+  position: absolute;
+  
+  margin-left: 85%;
+  margin-top: 15px;
+
+  /* Circle button css */
+  height: 35px;
+  width: 35px;
+  border-radius: 50%;
 }
 
 .SubjectRow #SubjectTasks {
@@ -132,6 +174,79 @@ body {
   display: grid;
   place-items: center;
   margin-top: 3%;
+}
+
+.SubjectRow #SubjectDeleteButton {
+  /* Centers icon in button */
+  display: grid;
+  place-items: center;
+
+  /* Makes button's positioning not effect other elements */
+  position: absolute;
+  
+  margin-left: 82.5%;
+  margin-top: 6%;
+
+  /* Circle button css */
+  height: 35px;
+  width: 35px;
+  border-radius: 50%;
+}
+
+.SubjectRow #TaskAddButton {
+  /* Centers icon in button */
+  display: grid;
+  place-items: center start;
+
+  /* Makes button's positioning not effect other elements */
+  position: absolute;
+  
+  margin-left: 32.5%;
+  margin-top: -2.7%;
+
+  /* Circle button css */
+  height: 35px;
+  width: 110px;
+  border-radius: 50%;
+}
+
+.SubjectRow #TaskAddName {
+  /* Centers text in button */
+  display: grid;
+  place-items: center;
+
+  /* Makes text's positioning not effect other elements */
+  position: absolute;
+  
+  margin-left: 42.5%;
+  margin-top: -1%;
+}
+
+.SubjectList #SubjectAddWrapper {
+  /* Size of subject */
+  width: 300px;
+  height: 75px;
+  padding-bottom: 60px;
+  margin-top: 4%;
+  border-radius: 50px;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+
+  display: grid;
+  place-items: center;
+  background-color: white;
+  border-width: 5px;
+}
+
+.SubjectList #SubjectAddButton {
+  margin-left: -33%;
+  position: absolute;
+}
+
+.SubjectList #SubjectAddName {
+  margin-left: 7%;
+  position: absolute;
 }
 
 .Task {
@@ -154,13 +269,53 @@ body {
   background-color: white;
 }
 
+.TaskRow #TaskWrapper {
+  height: 40px;
+  /* Makes name and button in row */
+  display: flex;
+  flex-direction: row;
+
+  /* Makes button position absolute work */
+  position: relative;
+}
+
 .TaskRow #TaskName {
   font-size: medium;
   font-weight: 500;
-  text-align: center;
+  text-align: left;
   padding: 8px;
 }
 
+.TaskRow #TaskDeletePopup {
+  background-color: blue;
+}
+
+.TaskRow #TaskDeleteButton {
+  /* Centers icon in button */
+  display: grid;
+  place-items: center;
+
+  /* Makes button's positioning not effect other elements */
+  position: absolute;
+  padding-left: 5px;
+  margin-left: 88%;
+
+  /* Circle button css */
+  height: 35px;
+  width: 35px;
+  border-radius: 50%;
+}
+
 .TaskRow #TaskDesc {
+  text-align: left;
   padding: 10px;
+}
+
+.TaskRow #TaskStart, #TaskDeadline {
+  text-align: left;
+  padding-left: 10px;
+}
+
+.TaskRow #TaskDeadline {
+  padding-bottom: 10px;
 }

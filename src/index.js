@@ -6,16 +6,13 @@ import App from './App';
 import { BrowserRouter } from 'react-router-dom';
 
 import './AppMain.css';
-import './dist/output.css';
+//import './dist/output.css';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
     <BrowserRouter>
       <AppMain />
-      <App />
     </BrowserRouter>
   </React.StrictMode>
 );
-
-import reportWebVitals from './reportWebVitals';
