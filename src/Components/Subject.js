@@ -105,7 +105,7 @@ function Subject() {
     }
 
     const newTask = { name: 'test', start: "", deadline: "", completed: "false", subjectID: subjectID };
-    const updatedTasks = [...subjectData, newTask];
+    const updatedTasks = [...taskData, newTask];
 
     setTaskData(updatedTasks);
   }
