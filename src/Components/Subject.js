@@ -78,7 +78,7 @@ function Subject() {
         },
         {
           label: 'No',
-          onClick: () => {} // dont delte it! - Caden
+          onClick: () => {} // dont delete it! - Caden
         }
       ]
     });
