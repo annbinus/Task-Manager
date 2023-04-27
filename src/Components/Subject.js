@@ -41,18 +41,25 @@ function Subject() {
     setButtonStates(buttonStates.map((state, index) => index === subjectID ? !state : state));
   };
 
+  // Deleting on the edit concept
   const handleDeleteClick = (subjectID) => {
-    confirmAlert({
+    confirmAlert({ // check to make sure user is cleared to delete
       title: 'Confirm deletion',
       message: 'Are you sure you want to delete this subject?',
       buttons: [
         {
-          label: 'Yes',
+          label: 'Yes', // on yes
           onClick: () => {
             try {
+              
+              // Find the subject in DB, filter out the one with val & index. - Caden
               axios.delete('http://localhost:5000/subjects/'+subjectID)
                 .then(res => console.log(res.data));
+                
+              // returning the elements of the array that are NOT at given subjectID - Caden
               const updatedSubjects = subjectData.filter((val, index) => index !== subjectID);
+              
+              // update as needed - Caden
               setSubjectData(updatedSubjects);
             } catch (err) {
               console.log(`Error deleting subject: ${err}`);
@@ -61,7 +68,7 @@ function Subject() {
         },
         {
           label: 'No',
-          onClick: () => {}
+          onClick: () => {} // dont delte it! - Caden
         }
       ]
     });
