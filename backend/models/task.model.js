@@ -22,10 +22,6 @@ const taskSchema = new Schema({
         type: String,
         required: true,
     },
-    userID: {
-        type: String,
-        required: true,
-    },
     description: {
         type: String,
         required: true,
