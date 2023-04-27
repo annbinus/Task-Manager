@@ -6,8 +6,11 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import { confirmAlert } from 'react-confirm-alert'; // Import
 import 'react-confirm-alert/src/react-confirm-alert.css'; // Import css
 
-function Task({buttonsOpen, tasks}) {
+function Task({tasks, isOpen}) {
     const TaskData = tasks; /* Passes in subjectIDFromSubject */
+    const buttonsOpen = isOpen;
+    
+    console.log("buttonsOpen: " + buttonsOpen)
 
     const [taskOpen, setTaskOpen] = React.useState(false); /* Initializes taskOpen using useState */
     const toggleTask = (taskId) => { /* Function for toggling task*/
