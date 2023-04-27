@@ -52,7 +52,7 @@ function Task({buttonsOpen, tasks}) {
         <div className='Task'>
             <ul className='TaskList'>
                 {TaskData.map((val, key) => {
-                    const taskId = TaskData[10];
+                    const taskId = TaskData[TaskData.length - 1];
                     return (
                         <li
                             key={key}
