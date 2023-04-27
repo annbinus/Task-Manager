@@ -145,6 +145,7 @@ function Subject() {
       <ul className='SubjectList'>
         {subjectData.map((val, subjectID) => {
           const buttonsOpen = buttonStates[subjectID];
+          console.log(buttonsOpen);
           const buttonIcon = buttonsOpen ? <CheckIcon /> : <EditIcon />;
           const tasks = taskData.filter(
             (task) => task.subjectID === val._id
