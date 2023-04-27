@@ -10,6 +10,13 @@ import 'react-confirm-alert/src/react-confirm-alert.css'; // Import css
 import axios from 'axios';
 
 function Subject() {
+
+  const [values, setValues] = useState({
+    username: '',
+    password: '',
+    showPassword: false,
+  })
+
   const [buttonStates, setButtonStates] = useState([]);
   const [subjectData, setSubjectData] = useState([]);
 
@@ -31,7 +38,7 @@ function Subject() {
     setButtonStates(buttonStates.map((state, index) => index === subjectID ? !state : state));
   };
 
-  const handleDeleteClick = () => {
+  const handleDeleteClick = (subjectID) => {
     confirmAlert({
       title: 'Confirm deletion',
       message: 'Are you sure you want to delete this subject?',
@@ -39,7 +46,14 @@ function Subject() {
         {
           label: 'Yes',
           onClick: () => {
-            // Delete the subject here
+            try {
+              axios.delete('http://localhost:5000/subjects/'+subjectID)
+                .then(res => console.log(res.data));
+              const updatedSubjects = subjectData.filter((val, index) => index !== subjectID);
+              setSubjectData(updatedSubjects);
+            } catch (err) {
+              console.log(`Error deleting subject: ${err}`);
+            }
           }
         },
         {
@@ -49,6 +63,30 @@ function Subject() {
       ]
     });
   };
+
+  const handleAddClick = async (event) => 
+  {
+    event.preventDefault()
+
+    const subject = {
+      "name" : "test",
+      "boardID" : "643d5c4899b0d1975d321640"
+    }
+
+    try
+    {
+      axios.post('http://localhost:5000/subjects/add', subject)
+        .then(res => console.log(res.data));
+    } catch (err)
+    {
+      console.log(`Error signing up: ${err}`);
+    }
+
+    const newSubject = { name: 'test', boardID: '' };
+    const updatedSubjects = [...subjectData, newSubject];
+
+    setSubjectData(updatedSubjects);
+  }
 
   return (
     <div className='Subject'>
@@ -67,13 +105,13 @@ function Subject() {
                 <button id='SubjectButton' onClick={() => toggleButtons(subjectID)}>{buttonIcon}</button>
               </div>
               <div id='SubjectTasks'><Task tasks={val.tasks} isOpen={buttonsOpen} /></div>
-              <button id='SubjectDeleteButton' style={{ display: buttonsOpen ? 'grid' : 'none' }} onClick={handleDeleteClick}><DeleteIcon /></button>
+              <button id='SubjectDeleteButton' style={{ display: buttonsOpen ? 'grid' : 'none' }} onClick={() => handleDeleteClick(subjectID)}><DeleteIcon /></button>
               <div id='TaskAddName' style={{ display: buttonsOpen ? 'grid' : 'none' }}>New Task</div>
               <button id='TaskAddButton' style={{ display: buttonsOpen ? 'grid' : 'none' }}><AddIcon /></button>
             </li>
           )
         })}
-        <button id='SubjectAddWrapper'>
+        <button id='SubjectAddWrapper' onClick={handleAddClick}>
           <div id='SubjectAddName'>New Subject</div>
           <div id='SubjectAddButton'><AddIcon /></div>
         </button>
