@@ -8,9 +8,9 @@ import 'react-confirm-alert/src/react-confirm-alert.css'; // Import css
 
 function Task({tasks, isOpen}) {
     const TaskData = tasks; /* Passes in subjectIDFromSubject */
-    const buttonsOpen = isOpen;
+    const buttonsOpen = isOpen; // Fixed a bug where the deletion icons weren't deleting on tasks, was splitting up into buttonsOpen instead of isOpen - Caden
     
-    console.log("buttonsOpen: " + buttonsOpen)
+    // console.log("buttonsOpen: " + buttonsOpen) // for debugging purposes
 
     const [taskOpen, setTaskOpen] = React.useState(false); /* Initializes taskOpen using useState */
     const toggleTask = (taskId) => { /* Function for toggling task*/
