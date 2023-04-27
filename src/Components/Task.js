@@ -1,13 +1,15 @@
 import React from 'react'
 import '../AppMain.css'; // Two dots to go outside of the components folder
-import { TaskData } from './TaskData'; // Imports Task data
+//import { TaskData } from './TaskData'; // Imports Task data
 import axios from 'axios';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { confirmAlert } from 'react-confirm-alert'; // Import
 import 'react-confirm-alert/src/react-confirm-alert.css'; // Import css
 
-function Task(props) {
-    const { subjectIDFromSubject, buttonsOpen } = props; /* Passes in subjectIDFromSubject */
+function Task({buttonsOpen, tasks}) {
+    const TaskData = tasks; /* Passes in subjectIDFromSubject */
+
+    console.log(TaskData);
 
     const [taskOpen, setTaskOpen] = React.useState(false); /* Initializes taskOpen using useState */
     const toggleTask = (taskId) => { /* Function for toggling task*/
@@ -45,34 +47,12 @@ function Task(props) {
           ]
         });
       };
-    
-    /*
-    const handleDelete = async (event) =>
-  {
-    event.preventDefault()
-
-    const user = {
-      "username": values.username,
-      "password": values.password,
-    }
-
-    try
-    {
-      axios.post('http://localhost:5000/tasks/delete')
-        .then(res => console.log(res.data)); // User added!
-    } catch (err)
-    {
-      console.log(`Error deleting: ${err}`);
-    }
-  }
-  */
-
 
     return (
         <div className='Task'>
             <ul className='TaskList'>
-                {TaskData.filter(TaskData => TaskData.subjectID === subjectIDFromSubject).map((val, key) => {
-                    const taskId = `${subjectIDFromSubject}-${key}`;
+                {TaskData.map((val, key) => {
+                    const taskId = TaskData[10];
                     return (
                         <li
                             key={key}

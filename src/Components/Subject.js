@@ -122,7 +122,6 @@ function Subject() {
           const tasks = taskData.filter(
             (task) => task.subjectID === val._id
           );
-          console.log(tasks)
           return (
             <li 
               key={subjectID} 
