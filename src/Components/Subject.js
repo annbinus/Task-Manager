@@ -38,7 +38,7 @@ function Subject() {
         const taskres = await axios.get('http://localhost:5000/tasks/'); // get from database asynchronously - Caden
         setTaskData(taskres.data); // Tasks information - Caden
       } catch (err) { // error catch
-        console.log(`Error getting subjects: ${err}`);
+        console.log(`Error getting tasks: ${err}`);
       }
     }
 

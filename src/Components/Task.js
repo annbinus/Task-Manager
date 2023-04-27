@@ -36,6 +36,7 @@ function Task({tasks, isOpen}) {
                 {
                   axios.delete('http://localhost:5000/tasks/'+ taskId)
                        .then(res => console.log(res.data)); // task deleted!
+    
                 } catch (err)
                 {
                   console.log(`Error deleting: ${err}`);
