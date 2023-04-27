@@ -27,13 +27,12 @@ function Subject() {
   // }
   var buttonStates;
   var setButtonStates;
-  var Data;
   try
     {
       axios.get('http://localhost:5000/subjects/')
         .then(res => {
-          Data = res.data
-          getData();
+          console.log(res.data)
+          getData(res.data);
           //[buttonStates, setButtonStates] = useState(SubjectData.map(() => false))
         }); // User added!
     } catch (err)
@@ -65,11 +64,12 @@ function Subject() {
     });
   };
 
-  function getData(){
+  function getData(Data){
+    console.log(Data);
     return (
       <div className='Subject'>
         <ul className='SubjectList'>
-          {SubjectData.map((val, subjectID) => {
+          {Data.map((val, subjectID) => {
             const buttonsOpen = buttonStates[subjectID];
             const buttonIcon = buttonsOpen ? <CheckIcon /> : <EditIcon />;
             return (
