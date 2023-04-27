@@ -14,7 +14,7 @@ function Task(props) {
         setTaskOpen((prevState) => {
             return {
                 ...prevState,
-                [taskId]: !prevState[taskId],
+                [taskId]: buttonsOpen ? true : !prevState[taskId],
             };
         });
     };
@@ -37,6 +37,10 @@ function Task(props) {
           ]
         });
       };
+
+      const handleEditChange = (event) => {
+        console.log(event.target.value); // logs the updated value of the textarea
+      }
     
     /*
     const handleDelete = async (event) =>
@@ -74,16 +78,12 @@ function Task(props) {
                             }}
                         >
                             <div id='TaskWrapper'>
-                                <textarea disabled={!buttonsOpen} id='TaskName' initialvalue={val.name}></textarea>
+                                <textarea disabled={!buttonsOpen} onChange={handleEditChange} id='TaskName'>{val.name}</textarea>
                                 <button id='TaskDeleteButton' style={{ display: buttonsOpen ? 'grid' : 'none' }} onClick={handleDeleteClick}><DeleteIcon /></button>
                             </div>
-                            <textarea disabled={!buttonsOpen} id='TaskDesc' style={{ display: taskOpen[taskId] ? 'block' : 'none' }} initialvalue={val.desc}></textarea>
-                            <div id='TaskStart' style={{ display: taskOpen[taskId] ? 'block' : 'none' }}> {/* Changes display of taskOpen to none or block */}
-                                Start: {val.start}
-                            </div>
-                            <div id='TaskDeadline' style={{ display: taskOpen[taskId] ? 'block' : 'none' }}> {/* Changes display of taskOpen to none or block */}
-                                End: {val.deadline}
-                            </div>
+                            <textarea disabled={!buttonsOpen} onChange={handleEditChange} id='TaskDesc' style={{ display: taskOpen[taskId] ? 'block' : 'none' }}>{val.desc}</textarea>
+                            <textarea disabled={!buttonsOpen} onChange={handleEditChange} id='TaskStart' style={{ display: taskOpen[taskId] ? 'block' : 'none' }}>{val.start}</textarea>
+                            <textarea disabled={!buttonsOpen} onChange={handleEditChange} id='TaskDeadline' style={{ display: taskOpen[taskId] ? 'block' : 'none' }}>{val.deadline}</textarea>
                         </li>
                     );
                 })}
