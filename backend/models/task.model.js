@@ -11,7 +11,7 @@ const taskSchema = new Schema({
     start: {
         type: Date,
     },
-    deadline: {
+    deadline:{
         type: Date,
     },
     completed: {
