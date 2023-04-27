@@ -19,6 +19,7 @@ function Subject() {
 
   const [buttonStates, setButtonStates] = useState([]);
   const [subjectData, setSubjectData] = useState([]);
+  const [taskData, setTaskData] = useState([]);
 
   // Here this is the actual fetch of the data to be shown
   // we use useEffect because we don't want to write a class for it, and helps with asynch problems, - Caden
@@ -32,9 +33,19 @@ function Subject() {
         console.log(`Error getting subjects: ${err}`);
       }
     }
+    async function fetchTaskData()
+    {
+      try { // main try
+        const taskres = await axios.get('http://localhost:5000/tasks/'); // get from database asynchronously - Caden
+        setTaskData(taskres.data); // Tasks information - Caden
+      } catch (err) { // error catch
+        console.log(`Error getting subjects: ${err}`);
+      }
+    }
 
     // actually perform it, - Caden
     fetchData();
+    fetchTaskData();
   }, []);
 
   const toggleButtons = (subjectID) => {
@@ -108,6 +119,10 @@ function Subject() {
         {subjectData.map((val, subjectID) => {
           const buttonsOpen = buttonStates[subjectID];
           const buttonIcon = buttonsOpen ? <CheckIcon /> : <EditIcon />;
+          const tasks = taskData.filter(
+            (task) => task.subjectID === val._id
+          );
+          console.log(tasks)
           return (
             <li 
               key={subjectID} 
@@ -118,7 +133,7 @@ function Subject() {
                 <div id='SubjectName'>{val.name}</div>
                 <button id='SubjectButton' onClick={() => toggleButtons(subjectID)}>{buttonIcon}</button>
               </div>
-              <div id='SubjectTasks'><Task tasks={val.tasks} isOpen={buttonsOpen} /></div>
+              <div id='SubjectTasks'><Task tasks={tasks} isOpen={buttonsOpen} /></div>
               <button id='SubjectDeleteButton' style={{ display: buttonsOpen ? 'grid' : 'none' }} onClick={() => handleDeleteClick(subjectID)}><DeleteIcon /></button>
               <div id='TaskAddName' style={{ display: buttonsOpen ? 'grid' : 'none' }}>New Task</div>
               <button id='TaskAddButton' style={{ display: buttonsOpen ? 'grid' : 'none' }}><AddIcon /></button>
