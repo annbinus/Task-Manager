@@ -1,6 +1,6 @@
 import React from 'react'
 import '../AppMain.css'; // Two dots to go outside of the components folder
-//import { TaskData } from './TaskData'; // Imports Task data
+import { setTaskData } from './Task'; // Imports Task data
 import axios from 'axios';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { confirmAlert } from 'react-confirm-alert'; // Import
@@ -22,7 +22,7 @@ function Task({tasks, isOpen}) {
         });
     };
 
-    const handleDeleteClick = () => {
+    const handleDeleteClick = (taskID) => {
         confirmAlert({
           title: 'Confirm deletion',
           message: 'Are you sure you want to delete this task?',
@@ -31,13 +31,19 @@ function Task({tasks, isOpen}) {
               label: 'Yes',
               onClick: () => {
                 // Delete the task here
-                try
-                {
-                  //axios.delete('http://localhost:5000/tasks/'+ taskId)
-                    //.then(res => console.log(res.data)); // task deleted!
-                } catch (err)
-                {
-                  console.log(`Error deleting: ${err}`);
+                try {
+              
+                  // Find the subject in DB, filter out the one with val & index. - Caden
+                  axios.delete('http://localhost:5000/subjects/'+taskID)
+                    .then(res => console.log(res.data));
+                    
+                  // returning the elements of the array that are NOT at given subjectID - Caden
+                  const updatedTasks = taskID.filter((val, index) => index !== taskID);
+                  
+                  // update as needed - Caden
+                  setTaskData(updatedTasks);
+                } catch (err) {
+                  console.log(`Error deleting subject: ${err}`);
                 }
               }
             },
@@ -64,7 +70,7 @@ function Task({tasks, isOpen}) {
                         >
                             <div id='TaskWrapper'>
                                 <textarea disabled={!buttonsOpen} id='TaskName' defaultValue={val.name}></textarea>
-                                <button id='TaskDeleteButton' style={{ display: buttonsOpen ? 'grid' : 'none' }} onClick={handleDeleteClick}><DeleteIcon /></button>
+                                <button id='TaskDeleteButton' style={{ display: buttonsOpen ? 'grid' : 'none' }} onClick={() => handleDeleteClick(val._id)}><DeleteIcon /></button>
                             </div>
                             <textarea disabled={!buttonsOpen} id='TaskDesc' style={{ display: taskOpen[taskId] ? 'block' : 'none' }} defaultValue={val.desc}></textarea>
                             <div id='TaskStart' style={{ display: taskOpen[taskId] ? 'block' : 'none' }}> {/* Changes display of taskOpen to none or block */}
