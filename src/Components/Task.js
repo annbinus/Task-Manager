@@ -5,12 +5,13 @@ import axios from 'axios';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { confirmAlert } from 'react-confirm-alert'; // Import
 import 'react-confirm-alert/src/react-confirm-alert.css'; // Import css
+import Subject from './Subject'
 
 function Task({tasks, isOpen}) {
     const TaskData = tasks; /* Passes in subjectIDFromSubject */
     const buttonsOpen = isOpen; // Fixed a bug where the deletion icons weren't deleting on tasks, was splitting up into buttonsOpen instead of isOpen - Caden
     
-    // console.log("buttonsOpen: " + buttonsOpen) // for debugging purposes
+    // console.log("buttonsOpen: " + buttonsOpen) // for debugging purposes - Caden
 
     const [taskOpen, setTaskOpen] = React.useState(false); /* Initializes taskOpen using useState */
     const toggleTask = (taskId) => { /* Function for toggling task*/
@@ -22,7 +23,7 @@ function Task({tasks, isOpen}) {
         });
     };
 
-    const handleDeleteClick = () => {
+    const handleDeleteClick = (taskId) => {
         confirmAlert({
           title: 'Confirm deletion',
           message: 'Are you sure you want to delete this task?',
@@ -33,8 +34,8 @@ function Task({tasks, isOpen}) {
                 // Delete the task here
                 try
                 {
-                  //axios.delete('http://localhost:5000/tasks/'+ taskId)
-                    //.then(res => console.log(res.data)); // task deleted!
+                  axios.delete('http://localhost:5000/tasks/'+ taskId)
+                       .then(res => console.log(res.data)); // task deleted!
                 } catch (err)
                 {
                   console.log(`Error deleting: ${err}`);
@@ -64,7 +65,7 @@ function Task({tasks, isOpen}) {
                         >
                             <div id='TaskWrapper'>
                                 <textarea disabled={!buttonsOpen} id='TaskName' defaultValue={val.name}></textarea>
-                                <button id='TaskDeleteButton' style={{ display: buttonsOpen ? 'grid' : 'none' }} onClick={handleDeleteClick}><DeleteIcon /></button>
+                                <button id='TaskDeleteButton' style={{ display: buttonsOpen ? 'grid' : 'none' }} onClick={ () => handleDeleteClick(val._id)}><DeleteIcon /></button>
                             </div>
                             <textarea disabled={!buttonsOpen} id='TaskDesc' style={{ display: taskOpen[taskId] ? 'block' : 'none' }} defaultValue={val.desc}></textarea>
                             <div id='TaskStart' style={{ display: taskOpen[taskId] ? 'block' : 'none' }}> {/* Changes display of taskOpen to none or block */}
