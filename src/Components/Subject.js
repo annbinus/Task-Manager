@@ -96,6 +96,9 @@ function Subject() {
     const updatedSubjects = [...subjectData, newSubject];
 
     setSubjectData(updatedSubjects);
+
+    // quick fix to adding newly changed subjects that couldn't be deleted. 
+    // basically just set it's button states so it can be changed.
     setButtonStates([...buttonStates, false]);
   }
 
