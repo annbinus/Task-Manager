@@ -85,6 +85,33 @@ function Subject() {
     });
   };
 
+  const handleAddTaskClick = async (event) =>
+  {
+    event.preventDefault()
+
+    const task = {
+      "name" : "test",
+      "start" : "2023-4-16",
+      "deadline" : "2023-4-26",
+      "completed" : "false",
+      "subjectID" : "643d649a35e51f60444d697c"
+    }
+
+    try
+    {
+      axios.post('http://localhost:5000/tasks/add', task)
+        .then(res => console.log(res.data));
+    } catch (err)
+    {
+      console.log(`Error signing up: ${err}`);
+    }
+
+    const newTask = { name: 'test', boardID: '' };
+    const updatedTasks = [...subjectData, newTask];
+
+    setTaskData(updatedTasks);
+  }
+
   const handleAddClick = async (event) => 
   {
     event.preventDefault()

@@ -62,7 +62,7 @@ function Task({buttonsOpen, tasks}) {
                             }}
                         >
                             <div id='TaskWrapper'>
-                                <textarea disabled={!buttonsOpen} id='TaskName' initialvalue={val.name}></textarea>
+                                <textarea disabled={!buttonsOpen} id='TaskName' initialvalue={"New Task Name"}></textarea>
                                 <button id='TaskDeleteButton' style={{ display: buttonsOpen ? 'grid' : 'none' }} onClick={handleDeleteClick}><DeleteIcon /></button>
                             </div>
                             <textarea disabled={!buttonsOpen} id='TaskDesc' style={{ display: taskOpen[taskId] ? 'block' : 'none' }} initialvalue={val.desc}></textarea>
