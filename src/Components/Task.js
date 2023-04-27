@@ -6,6 +6,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import { confirmAlert } from 'react-confirm-alert'; // Import
 import 'react-confirm-alert/src/react-confirm-alert.css'; // Import css
 import Subject from './Subject'
+import fetchData from './Subject'
 
 function Task({tasks, isOpen}) {
     const TaskData = tasks; /* Passes in subjectIDFromSubject */
@@ -37,6 +38,7 @@ function Task({tasks, isOpen}) {
                   axios.delete('http://localhost:5000/tasks/'+ taskId)
                        .then(res => console.log(res.data)); // task deleted!
     
+                  fetchData();
                 } catch (err)
                 {
                   console.log(`Error deleting: ${err}`);
