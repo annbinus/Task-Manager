@@ -49,7 +49,33 @@ function Subject() {
 
   const toggleButtons = (subjectID) => {
     setButtonStates(buttonStates.map((state, index) => index === subjectID ? !state : state));
+    updateTasks(subjectID);
   };
+
+  function updateTasks(subjectID) {
+    const updateTasks = taskData.filter((task) => task.subjectID === subjectID);
+
+    console.log("Update Ran")
+    console.log(updateTasks)
+
+    updateTasks.forEach((updateTask) => {
+      const task = {
+        name: updateTask.name,
+        start: updateTask.start,
+        deadline: updateTask.deadline,
+        completed: updateTask.completed,
+        subjectID: updateTask.subjectID,
+      };
+
+      console.log("task: " + task)
+
+      try {
+        axios.put('http://localhost:5000/tasks/' + updateTask._id, task).then((res) => console.log(res.data));
+      } catch (err) {
+        console.log(`Error updating tasks: ${err}`);
+      }
+    });
+  }
 
   // Deleting on the edit concept
   const handleDeleteClick = (subjectID) => {
