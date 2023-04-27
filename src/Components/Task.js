@@ -28,6 +28,14 @@ function Task(props) {
               label: 'Yes',
               onClick: () => {
                 // Delete the task here
+                try
+                {
+                  //axios.delete('http://localhost:5000/tasks/'+ taskId)
+                    //.then(res => console.log(res.data)); // task deleted!
+                } catch (err)
+                {
+                  console.log(`Error deleting: ${err}`);
+                }
               }
             },
             {
