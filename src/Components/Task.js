@@ -3,6 +3,8 @@ import '../AppMain.css'; // Two dots to go outside of the components folder
 import { setTaskData } from './Task'; // Imports Task data
 import axios from 'axios';
 import DeleteIcon from '@mui/icons-material/Delete';
+import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
+import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
 import { confirmAlert } from 'react-confirm-alert'; // Import
 import 'react-confirm-alert/src/react-confirm-alert.css'; // Import css
 import Subject from './Subject'
@@ -18,9 +20,45 @@ function Task({tasks, isOpen}) {
         setTaskOpen((prevState) => {
             return {
                 ...prevState,
-                [taskId]: !prevState[taskId],
+                [taskId]: buttonsOpen ? true : !prevState[taskId],
             };
         });
+    };
+
+    const handleMoveUpClick = (taskId) => {
+      // Parse the subject ID and task index from the taskId string
+      const [subjectID, taskIndex] = taskId.split('-').map(Number);
+      
+      // Find the task with matching taskId
+      const taskToUpdate = TaskData.find((task, index) => index === taskIndex && task.subjectID === subjectID);
+      
+      if (!taskToUpdate) {
+        console.log(`No task found with taskId ${taskId}`);
+        return;
+      }
+      
+      // Update the subjectID property of the matching task
+      taskToUpdate.subjectID -= 1;
+      
+      console.log(`Updated subjectID of task ${taskId}`);
+    };
+
+    const handleMoveDownClick = (taskId) => {
+      // Parse the subject ID and task index from the taskId string
+      const [subjectID, taskIndex] = taskId.split('-').map(Number);
+      
+      // Find the task with matching taskId
+      const taskToUpdate = TaskData.find((task, index) => index === taskIndex && task.subjectID === subjectID);
+      
+      if (!taskToUpdate) {
+        console.log(`No task found with taskId ${taskId}`);
+        return;
+      }
+      
+      // Update the subjectID property of the matching task
+      taskToUpdate.subjectID += 1;
+      
+      console.log(`Updated subjectID of task ${taskId}`);
     };
 
     const handleDeleteClick = (taskId) => {
@@ -50,6 +88,32 @@ function Task({tasks, isOpen}) {
         });
       };
 
+      const handleEditChange = (event) => {
+        console.log(event.target.value); // logs the updated value of the textarea
+      }
+    
+    /*
+    const handleDelete = async (event) =>
+  {
+    event.preventDefault()
+
+    const user = {
+      "username": values.username,
+      "password": values.password,
+    }
+
+    try
+    {
+      axios.post('http://localhost:5000/tasks/delete')
+        .then(res => console.log(res.data)); // User added!
+    } catch (err)
+    {
+      console.log(`Error deleting: ${err}`);
+    }
+  }
+  */
+
+
     return (
         <div className='Task'>
             <ul className='TaskList'>
@@ -73,7 +137,14 @@ function Task({tasks, isOpen}) {
                             </div>
                             <div id='TaskDeadline' style={{ display: taskOpen[taskId] ? 'block' : 'none' }}> {/* Changes display of taskOpen to none or block */}
                                 End: {val.deadline}
+                                <textarea disabled={!buttonsOpen} onChange={handleEditChange} id='TaskName'>{val.name}</textarea>
+                                <button id='TaskMoveUpButton' style={{ display: !buttonsOpen ? 'grid' : 'none' }} onClick={() => handleMoveUpClick(taskId)}><ArrowUpwardIcon /></button>
+                                <button id='TaskMoveDownButton' style={{ display: !buttonsOpen ? 'grid' : 'none' }} onClick={() => handleMoveDownClick(taskId)}><ArrowDownwardIcon /></button>
+                                <button id='TaskDeleteButton' style={{ display: buttonsOpen ? 'grid' : 'none' }} onClick={() => handleDeleteClick(taskId)}><DeleteIcon /></button>
                             </div>
+                            <textarea disabled={!buttonsOpen} onChange={handleEditChange} id='TaskDesc' style={{ display: taskOpen[taskId] ? 'block' : 'none' }}>{val.desc}</textarea>
+                            <textarea disabled={!buttonsOpen} onChange={handleEditChange} id='TaskStart' style={{ display: taskOpen[taskId] ? 'block' : 'none' }}>{val.start}</textarea>
+                            <textarea disabled={!buttonsOpen} onChange={handleEditChange} id='TaskDeadline' style={{ display: taskOpen[taskId] ? 'block' : 'none' }}>{val.deadline}</textarea>
                         </li>
                     );
                 })}
