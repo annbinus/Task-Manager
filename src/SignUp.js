@@ -37,7 +37,7 @@ function SignUp()
         user
       );
 
-      console.log("User signed up on frontend");
+      console.log(res.data);
 
       // Log user in
       const loginRes = await axios.post(
