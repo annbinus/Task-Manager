@@ -61,6 +61,7 @@ router.route('/signin').post((req, res) =>
         .then(user =>
         {
             req.session.userID = user[0].id;
+            console.log('SESSION USERID: ' + req.session.userID);
             res.status(200).send('Login succesful!');
         })
         .catch(err => res.status(404).json('Error: ' + err));
