@@ -9,10 +9,10 @@ const taskSchema = new Schema({
         unique: true,
     },
     start: {
-        type: Date,
+        type: String,
     },
-    deadline: {
-        type: Date,
+    deadline:{
+        type: String,
     },
     completed: {
         type: Boolean,

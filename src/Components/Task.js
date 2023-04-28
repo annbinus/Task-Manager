@@ -16,45 +16,149 @@ function Task(props) {
         setTaskOpen((prevState) => {
             return {
                 ...prevState,
+                [taskId]: !prevState[taskId],
                 [taskId]: buttonsOpen ? true : !prevState[taskId],
             };
         });
     };
 
     const handleMoveUpClick = (taskId) => {
-      // Parse the subject ID and task index from the taskId string
-      const [subjectID, taskIndex] = taskId.split('-').map(Number);
-      
-      // Find the task with matching taskId
-      const taskToUpdate = TaskData.find((task, index) => index === taskIndex && task.subjectID === subjectID);
-      
-      if (!taskToUpdate) {
-        console.log(`No task found with taskId ${taskId}`);
-        return;
-      }
-      
-      // Update the subjectID property of the matching task
-      taskToUpdate.subjectID -= 1;
-      
-      console.log(`Updated subjectID of task ${taskId}`);
+      console.log('Moving task up: ' + taskId);
+      axios
+        .get('http://localhost:5000/tasks/' + taskId)
+        .then((res) => {
+          console.log(res.data);
+
+          const currentSubjectId = res.data.subjectID;
+    
+          console.log('Current subjectID: ' + currentSubjectId);
+          
+          
+          //try {
+          //  axios.put('http://localhost:5000/tasks/update/' + taskId, task).then((res) => console.log(res.data));
+          //} catch (err) {
+          //  console.log(`Error updating tasks: ${err}`);
+          //}
+        })
+        .catch((err) => {
+          console.log(`Error updating tasks: ${err}`);
+        });
     };
 
     const handleMoveDownClick = (taskId) => {
-      // Parse the subject ID and task index from the taskId string
-      const [subjectID, taskIndex] = taskId.split('-').map(Number);
-      
-      // Find the task with matching taskId
-      const taskToUpdate = TaskData.find((task, index) => index === taskIndex && task.subjectID === subjectID);
-      
-      if (!taskToUpdate) {
-        console.log(`No task found with taskId ${taskId}`);
-        return;
-      }
-      
-      // Update the subjectID property of the matching task
-      taskToUpdate.subjectID += 1;
-      
-      console.log(`Updated subjectID of task ${taskId}`);
+      console.log('Moving task down: ' + taskId);
+    };
+
+    const handleEditNameChange = (event, taskId) => {
+      console.log(event.target.value); // logs the updated value of the textarea
+      axios
+        .get('http://localhost:5000/tasks/' + taskId)
+        .then((res) => {
+          console.log(res.data);
+
+          const task = {
+            name: event.target.value,
+            start: res.data.start,
+            deadline: res.data.deadline,
+            completed: "false",
+            description: res.data.description
+          };
+    
+          console.log(task)
+    
+          try {
+            axios.put('http://localhost:5000/tasks/update/' + taskId, task).then((res) => console.log(res.data));
+          } catch (err) {
+            console.log(`Error updating tasks: ${err}`);
+          }
+        })
+        .catch((err) => {
+          console.log(`Error updating tasks: ${err}`);
+        });
+    };
+
+    const handleEditDescChange = (event, taskId) => {
+      console.log(event.target.value); // logs the updated value of the textarea
+      axios
+        .get('http://localhost:5000/tasks/' + taskId)
+        .then((res) => {
+          console.log(res.data);
+
+          const task = {
+            name: res.data.name,
+            start: res.data.start,
+            deadline: res.data.deadline,
+            completed: "false",
+            description: event.target.value
+          };
+    
+          console.log(task)
+    
+          try {
+            axios.put('http://localhost:5000/tasks/update/' + taskId, task).then((res) => console.log(res.data));
+          } catch (err) {
+            console.log(`Error updating tasks: ${err}`);
+          }
+        })
+        .catch((err) => {
+          console.log(`Error updating tasks: ${err}`);
+        });
+    };
+
+    const handleEditStartChange = (event, taskId) => {
+      console.log(event.target.value); // logs the updated value of the textarea
+      axios
+        .get('http://localhost:5000/tasks/' + taskId)
+        .then((res) => {
+          console.log(res.data);
+
+          const task = {
+            name: res.data.name,
+            start: event.target.value,
+            deadline: res.data.deadline,
+            completed: "false",
+            description: res.data.description
+          };
+    
+          console.log(task)
+    
+          try {
+            axios.put('http://localhost:5000/tasks/update/' + taskId, task).then((res) => console.log(res.data));
+          } catch (err) {
+            console.log(`Error updating tasks: ${err}`);
+          }
+        })
+        .catch((err) => {
+          console.log(`Error updating tasks: ${err}`);
+        });
+    };
+
+    const handleEditEndChange = (event, taskId) => {
+      console.log(event.target.value); // logs the updated value of the textarea
+      axios
+        .get('http://localhost:5000/tasks/' + taskId)
+        .then((res) => {
+          console.log(res.data);
+
+          const task = {
+            name: res.data.name,
+            start: res.data.start,
+            deadline: event.target.value,
+            completed: "false",
+            description: res.data.description
+          };
+    
+          console.log(task)
+    
+          try {
+            axios.put('http://localhost:5000/tasks/update/' + taskId, task).then((res) => console.log(res.data));
+          } catch (err) {
+            console.log(`Error updating tasks: ${err}`);
+          }
+        })
+        .catch((err) => {
+          console.log(`Error updating tasks: ${err}`);
+        });
     };
 
     const handleDeleteClick = (taskId) => {
@@ -134,14 +238,21 @@ function Task(props) {
                             }}
                         >
                             <div id='TaskWrapper'>
-                                <textarea disabled={!buttonsOpen} onChange={(event) => handleEditChange(event, val._id)} id='TaskName'>{val.name}</textarea>
-                                <button id='TaskMoveUpButton' style={{ display: !buttonsOpen ? 'grid' : 'none' }} onClick={() => handleMoveUpClick(taskId)}><ArrowUpwardIcon /></button>
-                                <button id='TaskMoveDownButton' style={{ display: !buttonsOpen ? 'grid' : 'none' }} onClick={() => handleMoveDownClick(taskId)}><ArrowDownwardIcon /></button>
-                                <button id='TaskDeleteButton' style={{ display: buttonsOpen ? 'grid' : 'none' }} onClick={() => handleDeleteClick(taskId)}><DeleteIcon /></button>
+                                <textarea disabled={!buttonsOpen} onChange={(event) => handleEditNameChange(event, val._id)} id='TaskName' defaultValue={val.name}></textarea>
+                                <button id='TaskMoveUpButton' style={{ display: !buttonsOpen ? 'grid' : 'none' }} onClick={() => handleMoveUpClick(val._id)}><ArrowUpwardIcon /></button>
+                                <button id='TaskMoveDownButton' style={{ display: !buttonsOpen ? 'grid' : 'none' }} onClick={() => handleMoveDownClick(val._id)}><ArrowDownwardIcon /></button>
+                                <button id='TaskDeleteButton' style={{ display: buttonsOpen ? 'grid' : 'none' }} onClick={ () => handleDeleteClick(val._id)}><DeleteIcon /></button>
                             </div>
-                            <textarea disabled={!buttonsOpen} onChange={handleEditChange} id='TaskDesc' style={{ display: taskOpen[taskId] ? 'block' : 'none' }}>{val.desc}</textarea>
-                            <textarea disabled={!buttonsOpen} onChange={handleEditChange} id='TaskStart' style={{ display: taskOpen[taskId] ? 'block' : 'none' }}>{val.start}</textarea>
-                            <textarea disabled={!buttonsOpen} onChange={handleEditChange} id='TaskDeadline' style={{ display: taskOpen[taskId] ? 'block' : 'none' }}>{val.deadline}</textarea>
+                            <textarea disabled={!buttonsOpen} onChange={(event) => handleEditDescChange(event, val._id)} id='TaskDesc' style={{ display: taskOpen[taskId] ? 'block' : 'none' }} defaultValue={val.description}></textarea>
+                            <div id='TaskStartWrapper'>
+                                <div id='TaskStartText' style={{ display: taskOpen[taskId] ? 'block' : 'none' }}>Start: </div>
+                                <textarea disabled={!buttonsOpen} id='TaskStart' onChange={(event) => handleEditStartChange(event, val._id)} style={{ display: taskOpen[taskId] ? 'block' : 'none' }} defaultValue={val.start}></textarea>
+                            </div>
+                            <div id='TaskEndWrapper'>
+                                <div id='TaskEndText' style={{ display: taskOpen[taskId] ? 'block' : 'none' }}>End: </div>
+                                <textarea disabled={!buttonsOpen} id='TaskDeadline' onChange={(event) => handleEditEndChange(event, val._id)} style={{ display: taskOpen[taskId] ? 'block' : 'none' }} defaultValue={val.deadline}></textarea>
+                            </div>
+                            <div id='TaskEndEnder' style={{ display: taskOpen[taskId] ? 'block' : 'none' }}></div>
                         </li>
                     );
                 })}
