@@ -26,7 +26,7 @@ function Subject() {
     async function fetchData() {
       try { // main try
         const res = await axios.get('http://localhost:5000/subjects/'); // get from database asynchronously - Caden
-        setSubjectData(res.data); // Tasks information - Caden
+        setSubjectData(res.data); // Subjects information - Caden
         setButtonStates(res.data.map(() => false)); // toggles between edit / view mode - Caden
       } catch (err) { // error catch
         console.log(`Error getting subjects: ${err}`);
