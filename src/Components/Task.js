@@ -33,7 +33,8 @@ function Task({ tasks, isOpen })
     });
   };
 
-  const handleMoveUpClick = (taskId) => {
+  const handleMoveUpClick = (taskId) =>
+  {
     console.log('Moving task up: ' + taskId);
     const userID = sessionStorage.getItem('userID'); // PASSES IN USERID FROM SESSIONSTORAGE
     let currentSubjectId;
@@ -41,14 +42,15 @@ function Task({ tasks, isOpen })
 
     axios
       .get(`http://localhost:5000/tasks/${taskId}`) // GETS ALL SUBJECTS AS "res"
-      .then((res) => {
+      .then((res) =>
+      {
         currentSubjectId = res.data.subjectID;
       });
 
     axios
       .get(`http://localhost:5000/subjects/?userID=${userID}`) // GETS ALL SUBJECTS AS "res"
-      .then((res) => {
-        console.log('SUBJECT ID BEING MOVED TO: ' + res.data[2]._id);
+      .then((res) =>
+      {
 
         const currentSubjectIndex = res.data.findIndex(subject => subject._id === currentSubjectId); // FINDS CURRENT SUBJECT INDEX
 
@@ -61,18 +63,20 @@ function Task({ tasks, isOpen })
 
         axios
           .put(`http://localhost:5000/tasks/move/${taskId}/${newSubjectId}`)
-          .then((res) => {
+          .then((res) =>
+          {
             console.log(res.data);
             // handle the response here if needed
           })
-          .catch((err) => {
+          .catch((err) =>
+          {
             console.log(`Error moving task: ${err}`);
           });
 
-          window.location.reload();
+        window.location.reload();
       });
   };
-  
+
 
   const handleMoveDownClick = (taskId) =>
   {
@@ -83,13 +87,15 @@ function Task({ tasks, isOpen })
 
     axios
       .get(`http://localhost:5000/tasks/${taskId}`) // GETS ALL SUBJECTS AS "res"
-      .then((res) => {
+      .then((res) =>
+      {
         currentSubjectId = res.data.subjectID;
       });
 
     axios
       .get(`http://localhost:5000/subjects/?userID=${userID}`) // GETS ALL SUBJECTS AS "res"
-      .then((res) => {
+      .then((res) =>
+      {
         console.log('SUBJECT ID BEING MOVED TO: ' + res.data[2]._id);
 
         const currentSubjectIndex = res.data.findIndex(subject => subject._id === currentSubjectId); // FINDS CURRENT SUBJECT INDEX
@@ -103,15 +109,17 @@ function Task({ tasks, isOpen })
 
         axios
           .put(`http://localhost:5000/tasks/move/${taskId}/${newSubjectId}`)
-          .then((res) => {
+          .then((res) =>
+          {
             console.log(res.data);
             // handle the response here if needed
           })
-          .catch((err) => {
+          .catch((err) =>
+          {
             console.log(`Error moving task: ${err}`);
           });
 
-          window.location.reload();
+        window.location.reload();
       });
   };
 
@@ -148,7 +156,7 @@ function Task({ tasks, isOpen })
       });
   };
 
-  
+
   const handleEditDescChange = (event, taskId) =>
   {
     console.log(event.target.value); // logs the updated value of the textarea
@@ -246,84 +254,84 @@ function Task({ tasks, isOpen })
   };
 
 
-    // Add task
-    const handleAddTaskClick = async (subjectID) =>
-    {
-      const task = {
-        "name": "New Task",
-        "start": "2023-4-16",
-        "deadline": "2023-4-26",
-        "completed": "false",
-        "description": "New Description",
-        "subjectID": subjectID,
-        "userID": sessionStorage.getItem('userID') // PASSES IN USERID FROM SESSIONSTORAGE
-      }
-  
-      try
-      {
-        axios.post('http://localhost:5000/tasks/add', task)
-          .then(res =>
-          {
-            console.log('Added a task. Here is res.data:');
-            console.log(res.data);
-            console.log('Newly created taskID: ' + res.data['._id']);
-          });
-      } catch (err)
-      {
-        console.log(`Error signing up: ${err}`);
-      }
-  
-      const newTask = { name: "New Task", start: "2023-4-16", deadline: "2023-4-26", completed: "false", description: "New Description", subjectID: subjectID, "userID": sessionStorage.getItem('userID') };
-      const updatedTasks = [...taskData, newTask];
-  
-      //console.log(newTask)
-      console.log("SubjectID: " + subjectID)
-  
-      setTaskData(updatedTasks);
+  // Add task
+  const handleAddTaskClick = async (subjectID) =>
+  {
+    const task = {
+      "name": "New Task",
+      "start": "2023-4-16",
+      "deadline": "2023-4-26",
+      "completed": "false",
+      "description": "New Description",
+      "subjectID": subjectID,
+      "userID": sessionStorage.getItem('userID') // PASSES IN USERID FROM SESSIONSTORAGE
     }
 
-   
+    try
+    {
+      axios.post('http://localhost:5000/tasks/add', task)
+        .then(res =>
+        {
+          console.log('Added a task. Here is res.data:');
+          console.log(res.data);
+          console.log('Newly created taskID: ' + res.data['._id']);
+        });
+    } catch (err)
+    {
+      console.log(`Error signing up: ${err}`);
+    }
 
-   const handleDeleteClick = (taskId) =>
-   {
-     console.log('taskId: '+taskId)
-     confirmAlert({
-       title: 'Confirm deletion',
-       message: 'Are you sure you want to delete this task?',
-       buttons: [
-         {
-           label: 'Yes',
-           onClick: () =>
-           {
-             // Make HTTP DELETE request to delete task
-             axios.delete(`http://localhost:5000/tasks/${taskId}`)
-               .then(res =>
-               {
-                 // Task deleted successfully, handle the response here
-                 console.log(res.data);
-                 const updatedTasks = taskData.filter((val, index) => index !== taskId);
+    const newTask = { name: "New Task", start: "2023-4-16", deadline: "2023-4-26", completed: "false", description: "New Description", subjectID: subjectID, "userID": sessionStorage.getItem('userID') };
+    const updatedTasks = [...taskData, newTask];
+
+    //console.log(newTask)
+    console.log("SubjectID: " + subjectID)
+
+    setTaskData(updatedTasks);
+  }
+
+
+
+  const handleDeleteClick = (taskId) =>
+  {
+    console.log('taskId: ' + taskId)
+    confirmAlert({
+      title: 'Confirm deletion',
+      message: 'Are you sure you want to delete this task?',
+      buttons: [
+        {
+          label: 'Yes',
+          onClick: () =>
+          {
+            // Make HTTP DELETE request to delete task
+            axios.delete(`http://localhost:5000/tasks/${taskId}`)
+              .then(res =>
+              {
+                // Task deleted successfully, handle the response here
+                console.log(res.data);
+                const updatedTasks = taskData.filter((val, index) => index !== taskId);
                 setTaskData(updatedTasks);
                 window.location.reload();
-               })
-               .catch(err =>
-               {
-                 // Error occurred while deleting task, handle the error here
-                 console.log(err);
-               });
-           }
-         },
-         {
-           label: 'No',
-           onClick: () => { }
-         }
-       ]
-     });
-   };
+              })
+              .catch(err =>
+              {
+                // Error occurred while deleting task, handle the error here
+                console.log(err);
+              });
+          }
+        },
+        {
+          label: 'No',
+          onClick: () => { }
+        }
+      ]
+    });
+  };
 
   return (
     <div className='Task'>
-      
-      
+
+
       <ul className='TaskList'>
         {TaskData.map((val, key) =>
         {
@@ -337,9 +345,9 @@ function Task({ tasks, isOpen })
                 toggleTask(taskId);
               }}
             >
-              
+
               <div id='TaskWrapper'>
-              
+
                 <textarea disabled={!buttonsOpen} onChange={(event) => handleEditNameChange(event, val._id)} id='TaskName' defaultValue={val.name}></textarea>
                 <button id='TaskMoveUpButton' style={{ display: !buttonsOpen ? 'grid' : 'none' }} onClick={() => handleMoveUpClick(val._id)}><ArrowUpwardIcon /></button>
                 <button id='TaskMoveDownButton' style={{ display: !buttonsOpen ? 'grid' : 'none' }} onClick={() => handleMoveDownClick(val._id)}><ArrowDownwardIcon /></button>
@@ -354,18 +362,18 @@ function Task({ tasks, isOpen })
                 <div id='TaskEndText' style={{ display: taskOpen[taskId] ? 'block' : 'none' }}>End: </div>
                 <textarea disabled={!buttonsOpen} id='TaskDeadline' onChange={(event) => handleEditEndChange(event, val._id)} style={{ display: taskOpen[taskId] ? 'block' : 'none' }} defaultValue={val.deadline}></textarea>
               </div>
-              
+
               <div id='TaskEndEnder' style={{ display: taskOpen[taskId] ? 'block' : 'none' }}></div>
             </li>
-            
+
           );
-          
+
         })}
       </ul>
-     
-      
+
+
     </div>
-    
+
   );
 }
 
