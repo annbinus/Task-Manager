@@ -141,9 +141,11 @@ function Subject()
   }
 
   // Add subject
-  const handleAddClick = async (event) => 
+  const handleAddClick = async () => 
   {
-    event.preventDefault()
+    // event.preventDefault()
+
+    // console.log(event);
 
     const subject = {
       "name": "New Subject",
@@ -177,6 +179,11 @@ function Subject()
       <ul className='SubjectList'>
         {subjectData.map((val, subjectID) =>
         {
+          console.log('subjectData cur val:');
+          console.log(val);
+
+          console.log('subjectData cur subjectID:');
+          console.log(subjectID);
           const buttonsOpen = buttonStates[subjectID];
           const buttonIcon = buttonsOpen ? <CheckIcon /> : <EditIcon />;
           const tasks = taskData.filter(

@@ -25,7 +25,7 @@ router.route('/add').post((req, res) =>
     console.log(newTask);
 
     newTask.save()
-        .then(() => res.json('Task added!'))
+        .then(() => res.json(newTask))
         .catch(err => res.status(400).json('Error: ' + err));
 });
 
