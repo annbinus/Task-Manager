@@ -9,7 +9,8 @@ import { confirmAlert } from 'react-confirm-alert'; // Import
 import 'react-confirm-alert/src/react-confirm-alert.css'; // Import css
 import axios from 'axios';
 
-function Subject() {
+function Subject()
+{
 
   const [values, setValues] = useState({
     username: '',
@@ -22,22 +23,28 @@ function Subject() {
 
   // Here this is the actual fetch of the data to be shown
   // we use useEffect because we don't want to write a class for it, and helps with asynch problems, - Caden
-  useEffect(() => {
-    async function fetchData() {
-      try { // main try
+  useEffect(() =>
+  {
+    async function fetchData()
+    {
+      try
+      { // main try
         const res = await axios.get('http://localhost:5000/subjects/'); // get from database asynchronously - Caden
         setSubjectData(res.data); // Tasks information - Caden
         setButtonStates(res.data.map(() => false)); // toggles between edit / view mode - Caden
-      } catch (err) { // error catch
+      } catch (err)
+      { // error catch
         console.log(`Error getting subjects: ${err}`);
       }
     }
     async function fetchTaskData()
     {
-      try { // main try
+      try
+      { // main try
         const taskres = await axios.get('http://localhost:5000/tasks/'); // get from database asynchronously - Caden
         setTaskData(taskres.data); // Tasks information - Caden
-      } catch (err) { // error catch
+      } catch (err)
+      { // error catch
         console.log(`Error getting tasks: ${err}`);
       }
     }
@@ -47,38 +54,43 @@ function Subject() {
     fetchTaskData();
   }, []);
 
-  const toggleButtons = (subjectID, databaseID) => {
+  const toggleButtons = (subjectID, databaseID) =>
+  {
     setButtonStates(buttonStates.map((state, index) => index === subjectID ? !state : state));
   };
 
   // Deleting on the edit concept
-  const handleDeleteClick = (subjectID) => {
+  const handleDeleteClick = (subjectID) =>
+  {
     confirmAlert({ // check to make sure user is cleared to delete
       title: 'Confirm deletion',
       message: 'Are you sure you want to delete this subject?',
       buttons: [
         {
           label: 'Yes', // on yes
-          onClick: () => {
-            try {
-              
+          onClick: () =>
+          {
+            try
+            {
+
               // Find the subject in DB, filter out the one with val & index. - Caden
-              axios.delete('http://localhost:5000/subjects/'+subjectID)
+              axios.delete('http://localhost:5000/subjects/' + subjectID)
                 .then(res => console.log(res.data));
-                
+
               // returning the elements of the array that are NOT at given subjectID - Caden
               const updatedSubjects = subjectData.filter((val, index) => index !== subjectID);
-              
+
               // update as needed - Caden
               setSubjectData(updatedSubjects);
-            } catch (err) {
+            } catch (err)
+            {
               console.log(`Error deleting subject: ${err}`);
             }
           }
         },
         {
           label: 'No',
-          onClick: () => {} // dont delete it! - Caden
+          onClick: () => { } // dont delete it! - Caden
         }
       ]
     });
@@ -87,12 +99,12 @@ function Subject() {
   const handleAddTaskClick = async (subjectID) =>
   {
     const task = {
-      "name" : "New Task",
-      "start" : "2023-4-16",
-      "deadline" : "2023-4-26",
-      "completed" : "false",
-      "description" : "Description",
-      "subjectID" : subjectID
+      "name": "New Task",
+      "start": "2023-4-16",
+      "deadline": "2023-4-26",
+      "completed": "false",
+      "description": "Description",
+      "subjectID": subjectID
     }
 
     try
@@ -118,8 +130,8 @@ function Subject() {
     event.preventDefault()
 
     const subject = {
-      "name" : "test",
-      "boardID" : "643d5c4899b0d1975d321640"
+      "name": "new subject",
+      "boardID": "643d5c4899b0d1975d321640"
     }
 
     try
@@ -144,15 +156,16 @@ function Subject() {
   return (
     <div className='Subject'>
       <ul className='SubjectList'>
-        {subjectData.map((val, subjectID) => {
+        {subjectData.map((val, subjectID) =>
+        {
           const buttonsOpen = buttonStates[subjectID];
           const buttonIcon = buttonsOpen ? <CheckIcon /> : <EditIcon />;
           const tasks = taskData.filter(
             (task) => task.subjectID === val._id
           );
           return (
-            <li 
-              key={subjectID} 
+            <li
+              key={subjectID}
               className='SubjectRow'
               style={{ backgroundColor: '#7E7E7E' }} // A beautiful grey - Caden
             >

@@ -3,14 +3,14 @@ let Subject = require('../models/subject.model');
 
 router.route('/').get((req, res) =>
 {
-    Subject.find({userID: req.session.userID})
+    Subject.find({ userID: req.session.userID })
         .then(subjects => res.json(subjects))
         .catch(err => res.status(400).json('Error: ' + err));
 });
 
 router.route('/byBoardID/:boardID').get((req, res) =>
 {
-    Subject.find({userID: req.session.userID, boardID: req.params.boardID})
+    Subject.find({ userID: req.session.userID, boardID: req.params.boardID })
         .then(subjects => res.json(subjects))
         .catch(err => res.status(400).json('Error: ' + err));
 });
@@ -21,7 +21,9 @@ router.route('/add').post((req, res) =>
     const boardID = req.body.boardID;
     const userID = req.session.userID;
 
-    const newSubject = new Subject({ name, boardID, userID});
+    console.log("Current userID in session: " + userID);
+
+    const newSubject = new Subject({ name, boardID, userID });
 
     newSubject.save()
         .then(() => res.json('Subject added!'))
