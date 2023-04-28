@@ -104,41 +104,27 @@ function Subject()
     });
   };
 
-  // Add task
-  const handleAddTaskClick = async (subjectID) =>
+ 
+
+  const handleEditNameChange = (event, subjectID) =>
   {
-    const task = {
-      "name": "New Task",
-      "start": "2023-4-16",
-      "deadline": "2023-4-26",
-      "completed": "false",
-      "description": "New Description",
-      "subjectID": subjectID,
-      "userID": sessionStorage.getItem('userID') // PASSES IN USERID FROM SESSIONSTORAGE
-    }
+    console.log("Editing subject")
+    console.log(subjectID)
+    console.log(event.target.value); // logs the updated value of the textarea
+
+    const subject = {
+      name: event.target.value
+    };
+
+    console.log(subject)
 
     try
     {
-      axios.post('http://localhost:5000/tasks/add', task)
-        .then(res =>
-        {
-          console.log('Added a task. Here is res.data:');
-          console.log(res.data);
-          console.log('Newly created taskID: ' + res.data['._id']);
-        });
-    } catch (err)
-    {
-      console.log(`Error signing up: ${err}`);
+      axios.put('http://localhost:5000/subjects/update/' + subjectID, subject).then((res) => console.log(res.data));
+    } catch (err){
+      console.log(`Error updating tasks: ${err}`);
     }
-
-    const newTask = { name: "New Task", start: "2023-4-16", deadline: "2023-4-26", completed: "false", description: "New Description", subjectID: subjectID, "userID": sessionStorage.getItem('userID') };
-    const updatedTasks = [...taskData, newTask];
-
-    //console.log(newTask)
-    console.log("SubjectID: " + subjectID)
-
-    setTaskData(updatedTasks);
-  }
+  };
 
   // Add subject
   const handleAddClick = async () => 
@@ -196,13 +182,11 @@ function Subject()
               style={{ backgroundColor: '#7E7E7E' }} // A beautiful grey - Caden
             >
               <div id='SubjectWrapper'>
-                <div id='SubjectName'>{val.name}</div>
+                <textarea disabled={!buttonsOpen} onChange={(event) => handleEditNameChange(event, val._id)} id='SubjectName' defaultValue={val.name}></textarea>
                 <button id='SubjectButton' onClick={() => toggleButtons(subjectID, val._id)}>{buttonIcon}</button>
               </div>
               <div id='SubjectTasks'><Task tasks={tasks} isOpen={buttonsOpen} /></div>
               <button id='SubjectDeleteButton' style={{ display: buttonsOpen ? 'grid' : 'none' }} onClick={() => handleDeleteClick(subjectID)}><DeleteIcon /></button>
-              <div id='TaskAddName' style={{ display: buttonsOpen ? 'grid' : 'none' }}>New Task</div>
-              <button id='TaskAddButton' style={{ display: buttonsOpen ? 'grid' : 'none' }} onClick={() => handleAddTaskClick(val._id)}><AddIcon /></button>
             </li>
           )
         })}

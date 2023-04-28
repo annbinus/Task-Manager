@@ -7,8 +7,10 @@ import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
 import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
 import { confirmAlert } from 'react-confirm-alert'; // Import
 import 'react-confirm-alert/src/react-confirm-alert.css'; // Import css
+import AddIcon from '@mui/icons-material/Add';
 import Subject from './Subject'
 import fetchData from './Subject'
+import { useState } from 'react';
 
 function Task({ tasks, isOpen })
 {
@@ -18,6 +20,7 @@ function Task({ tasks, isOpen })
   // console.log("buttonsOpen: " + buttonsOpen) // for debugging purposes - Caden
 
   const [taskOpen, setTaskOpen] = React.useState(false); /* Initializes taskOpen using useState */
+  const [taskData, setTaskData] = useState([]);
   const toggleTask = (taskId) =>
   { /* Function for toggling task*/
     setTaskOpen((prevState) =>
@@ -91,6 +94,7 @@ function Task({ tasks, isOpen })
       });
   };
 
+  
   const handleEditDescChange = (event, taskId) =>
   {
     console.log(event.target.value); // logs the updated value of the textarea
@@ -187,38 +191,80 @@ function Task({ tasks, isOpen })
       });
   };
 
-  const handleDeleteClick = (taskId) =>
-  {
-    confirmAlert({
-      title: 'Confirm deletion',
-      message: 'Are you sure you want to delete this task?',
-      buttons: [
-        {
-          label: 'Yes',
-          onClick: () =>
-          {
-            // Make HTTP DELETE request to delete task
-            axios.delete(`http://localhost:5000/tasks/${taskId}`)
-              .then(res =>
-              {
-                // Task deleted successfully, handle the response here
-                console.log(res.data);
-              })
-              .catch(err =>
-              {
-                // Error occurred while deleting task, handle the error here
-                console.log(err);
-              });
-          }
-        },
-        {
-          label: 'No',
-          onClick: () => { }
-        }
-      ]
-    });
-  };
 
+
+   // Add task
+   const handleAddTaskClick = async (subjectID) =>
+   {
+     const task = {
+       "name": "New Task",
+       "start": "2023-4-16",
+       "deadline": "2023-4-26",
+       "completed": "false",
+       "description": "New Description",
+       "subjectID": subjectID,
+       "userID": sessionStorage.getItem('userID') // PASSES IN USERID FROM SESSIONSTORAGE
+     }
+ 
+     try
+     {
+       axios.post('http://localhost:5000/tasks/add', task)
+         .then(res =>
+         {
+           console.log('Added a task. Here is res.data:');
+           console.log(res.data);
+           console.log('Newly created taskID: ' + res.data['._id']);
+         });
+     } catch (err)
+     {
+       console.log(`Error signing up: ${err}`);
+     }
+ 
+     const newTask = { name: "New Task", start: "2023-4-16", deadline: "2023-4-26", completed: "false", description: "New Description", subjectID: subjectID, "userID": sessionStorage.getItem('userID') };
+     const updatedTasks = [...taskData, newTask];
+ 
+     //console.log(newTask)
+     console.log("SubjectID: " + subjectID)
+ 
+     setTaskData(updatedTasks);
+   }
+   
+
+   const handleDeleteClick = (taskId) =>
+   {
+     console.log('taskId: '+taskId)
+     confirmAlert({
+       title: 'Confirm deletion',
+       message: 'Are you sure you want to delete this task?',
+       buttons: [
+         {
+           label: 'Yes',
+           onClick: () =>
+           {
+             // Make HTTP DELETE request to delete task
+             axios.delete(`http://localhost:5000/tasks/${taskId}`)
+               .then(res =>
+               {
+                 // Task deleted successfully, handle the response here
+                 console.log(res.data);
+                 const updatedTasks = taskData.filter((val, index) => index !== taskId);
+                setTaskData(updatedTasks);
+                window.location.reload();
+               })
+               .catch(err =>
+               {
+                 // Error occurred while deleting task, handle the error here
+                 console.log(err);
+               });
+           }
+         },
+         {
+           label: 'No',
+           onClick: () => { }
+         }
+       ]
+     });
+   };
 
   return (
     <div className='Task'>
@@ -236,6 +282,8 @@ function Task({ tasks, isOpen })
               }}
             >
               <div id='TaskWrapper'>
+              <div id='TaskAddName' style={{ display: buttonsOpen ? 'grid' : 'none' }}>New Task</div>
+              <button id='TaskAddButton' style={{ display: buttonsOpen ? 'grid' : 'none' }} onClick={() => handleAddTaskClick(val._id)}><AddIcon /></button>
                 <textarea disabled={!buttonsOpen} onChange={(event) => handleEditNameChange(event, val._id)} id='TaskName' defaultValue={val.name}></textarea>
                 <button id='TaskMoveUpButton' style={{ display: !buttonsOpen ? 'grid' : 'none' }} onClick={() => handleMoveUpClick(val._id)}><ArrowUpwardIcon /></button>
                 <button id='TaskMoveDownButton' style={{ display: !buttonsOpen ? 'grid' : 'none' }} onClick={() => handleMoveDownClick(val._id)}><ArrowDownwardIcon /></button>
