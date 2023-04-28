@@ -3,7 +3,8 @@ let Task = require('../models/task.model');
 
 router.route('/').get((req, res) =>
 {
-    Task.find({ userID: req.session.userID })
+    console.log('USER ID IN ROUTE: ' + req.query.userID); 
+    Task.find({ userID: req.query.userID })
         .then(tasks => res.json(tasks))
         .catch(err => res.status(400).json('Error: ' + err));
 });
