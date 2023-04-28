@@ -3,6 +3,8 @@ import '../AppMain.css'; // Two dots to go outside of the components folder
 import { setTaskData } from './Task'; // Imports Task data
 import axios from 'axios';
 import DeleteIcon from '@mui/icons-material/Delete';
+import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
+import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
 import { confirmAlert } from 'react-confirm-alert'; // Import
 import 'react-confirm-alert/src/react-confirm-alert.css'; // Import css
 import Subject from './Subject'
@@ -23,6 +25,33 @@ function Task({tasks, isOpen}) {
                 [taskId]: buttonsOpen ? true : !prevState[taskId],
             };
         });
+    };
+
+    const handleMoveUpClick = (taskId) => {
+      console.log('Moving task up: ' + taskId);
+      axios
+        .get('http://localhost:5000/tasks/' + taskId)
+        .then((res) => {
+          console.log(res.data);
+
+          const currentSubjectId = res.data.subjectID;
+    
+          console.log('Current subjectID: ' + currentSubjectId);
+          
+          
+          //try {
+          //  axios.put('http://localhost:5000/tasks/update/' + taskId, task).then((res) => console.log(res.data));
+          //} catch (err) {
+          //  console.log(`Error updating tasks: ${err}`);
+          //}
+        })
+        .catch((err) => {
+          console.log(`Error updating tasks: ${err}`);
+        });
+    };
+
+    const handleMoveDownClick = (taskId) => {
+      console.log('Moving task down: ' + taskId);
     };
 
     const handleEditNameChange = (event, taskId) => {
@@ -181,6 +210,8 @@ function Task({tasks, isOpen}) {
                         >
                             <div id='TaskWrapper'>
                                 <textarea disabled={!buttonsOpen} onChange={(event) => handleEditNameChange(event, val._id)} id='TaskName' defaultValue={val.name}></textarea>
+                                <button id='TaskMoveUpButton' style={{ display: !buttonsOpen ? 'grid' : 'none' }} onClick={() => handleMoveUpClick(val._id)}><ArrowUpwardIcon /></button>
+                                <button id='TaskMoveDownButton' style={{ display: !buttonsOpen ? 'grid' : 'none' }} onClick={() => handleMoveDownClick(val._id)}><ArrowDownwardIcon /></button>
                                 <button id='TaskDeleteButton' style={{ display: buttonsOpen ? 'grid' : 'none' }} onClick={ () => handleDeleteClick(val._id)}><DeleteIcon /></button>
                             </div>
                             <textarea disabled={!buttonsOpen} onChange={(event) => handleEditDescChange(event, val._id)} id='TaskDesc' style={{ display: taskOpen[taskId] ? 'block' : 'none' }} defaultValue={val.description}></textarea>

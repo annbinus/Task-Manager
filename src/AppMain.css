@@ -296,7 +296,7 @@ textarea {
   background-color: blue;
 }
 
-.TaskRow #TaskDeleteButton {
+.TaskRow #TaskDeleteButton, #TaskMoveUpButton, #TaskMoveDownButton {
   /* Centers icon in button */
   display: grid;
   place-items: center;
@@ -310,6 +310,10 @@ textarea {
   height: 35px;
   width: 35px;
   border-radius: 50%;
+}
+
+.TaskRow #TaskMoveUpButton {
+  margin-left: 79% !important;
 }
 
 .TaskRow #TaskDesc {
