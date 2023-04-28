@@ -122,14 +122,14 @@ function Subject() {
     const subject = {
       "name" : "New Subject",
       "boardID" : "644355f2ddb0c25db2015643",
-      "userID" : "644b3f88194e26d75458aa5c",
+      "userID" : sessionStorage.getItem('userID'),
     }
 
     try {
       axios.post('http://localhost:5000/subjects/add', subject).then((res) => {
         console.log(res.data);
   
-        const newSubject = { name: 'test', boardID: '' };
+        const newSubject = { name: 'New Subject', boardID: '' };
         const updatedSubjects = [...subjectData, newSubject];
   
         setSubjectData(updatedSubjects);

@@ -26,8 +26,12 @@ router.route('/add').post((req, res) =>
     const boardID = req.body.boardID;
     const userID = req.body.userID;
 
-    const newSubject = new Subject({ name, boardID, userID});
+    console.log('SUBJECT NAME IN ADD: ' + name);
+    console.log('SUBJECT BOARDID IN ADD: ' + boardID);
+    console.log('SUBJECT USERID IN ADD: ' + userID);
 
+    const newSubject = new Subject({ name, boardID, userID});
+    
     newSubject.save()
         .then(() => res.json('Subject added!'))
         .catch(err => res.status(400).json('Error: ' + err));
