@@ -30,31 +30,28 @@ function Task({ tasks, isOpen })
     });
   };
 
-  const handleMoveUpClick = (taskId) =>
-  {
+  const handleMoveUpClick = (taskId) => {
     console.log('Moving task up: ' + taskId);
+    const userID = sessionStorage.getItem('userID'); // PASSES IN USERID FROM SESSIONSTORAGE
     axios
-      .get('http://localhost:5000/tasks/' + taskId)
-      .then((res) =>
-      {
-        console.log(res.data);
+      .get(`http://localhost:5000/subjects/?userID=${userID}`) // GETS ALL SUBJECTS AS "res"
+      .then((res) => {
+        console.log('SUBJECT ID BEING MOVED TO: ' + res.data[2]._id);
+        const newSubjectId = res.data[2]._id; // set the new subject ID from the response
+        axios
+          .put(`http://localhost:5000/tasks/move/${taskId}/${newSubjectId}`)
+          .then((res) => {
+            console.log(res.data);
+            // handle the response here if needed
+          })
+          .catch((err) => {
+            console.log(`Error moving task: ${err}`);
+          });
 
-        const currentSubjectId = res.data.subjectID;
-
-        console.log('Current subjectID: ' + currentSubjectId);
-
-
-        //try {
-        //  axios.put('http://localhost:5000/tasks/update/' + taskId, task).then((res) => console.log(res.data));
-        //} catch (err) {
-        //  console.log(`Error updating tasks: ${err}`);
-        //}
-      })
-      .catch((err) =>
-      {
-        console.log(`Error updating tasks: ${err}`);
+          window.location.reload();
       });
   };
+  
 
   const handleMoveDownClick = (taskId) =>
   {
