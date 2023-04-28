@@ -193,6 +193,7 @@ function Subject()
       console.log("SubjectID: " + subjectID)
   
       setTaskData(updatedTasks);
+      window.location.reload();
     }
 
  
@@ -225,6 +226,7 @@ function Subject()
               <div>
               <div id='TaskAddName' style={{ display: buttonsOpen ? 'grid' : 'none' }}>New Task</div>
               <button id='TaskAddButton' style={{ display: buttonsOpen ? 'grid' : 'none' }} onClick={() => handleAddTaskClick(val._id)}><AddIcon /></button>
+              
               </div>
               <button id='SubjectDeleteButton' style={{ display: buttonsOpen ? 'grid' : 'none' }} onClick={() => handleDeleteClick(subjectID)}><DeleteIcon /></button>
             </li>
