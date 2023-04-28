@@ -201,7 +201,7 @@ function Task({ tasks, isOpen })
           onClick: () =>
           {
             // Make HTTP DELETE request to delete task
-            axios.delete(`/tasks/${taskId}`)
+            axios.delete(`http://localhost:5000/tasks/${taskId}`)
               .then(res =>
               {
                 // Task deleted successfully, handle the response here
