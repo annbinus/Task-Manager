@@ -8,19 +8,23 @@ import LogoutIcon from '@mui/icons-material/Logout';
 export const SidebarData = [
     {
         icon: <SpaceDashboardIcon />,
-        link: "/Subject"
+        link: "/main",
+        handler: () => { console.log("Clicked Logout") }
     },
     {
         icon: <CalendarMonthIcon />,
-        link: "/Calender"
+        link: "/main",
+        handler: () => { console.log("Clicked Logout") }
     },
     {
         icon: <SettingsIcon />,
-        link: "/Settings"
+        link: "/main",
+        handler: () => { console.log("Clicked Logout") }
     },
     {
         icon: <LogoutIcon />,
-        link: "/"
+        link: "/",
+        handler: () => { console.log("Clicked Logout") }
     },
 ]
 
