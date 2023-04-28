@@ -96,8 +96,9 @@ function Subject() {
       "start" : "2023-4-16",
       "deadline" : "2023-4-26",
       "completed" : "false",
-      "description" : "Description",
-      "subjectID" : subjectID
+      "description" : "New Description",
+      "subjectID" : subjectID,
+      "userID" : sessionStorage.getItem('userID') // PASSES IN USERID FROM SESSIONSTORAGE
     }
 
     try
@@ -109,7 +110,7 @@ function Subject() {
       console.log(`Error signing up: ${err}`);
     }
 
-    const newTask = { name: '', start: "", deadline: "", completed: "false", description: "", subjectID: subjectID };
+    const newTask = { name: "New Task", start: "2023-4-16", deadline: "2023-4-26", completed: "false", description: "New Description", subjectID: subjectID, "userID" : sessionStorage.getItem('userID') };
     const updatedTasks = [...taskData, newTask];
 
     //console.log(newTask)
@@ -128,23 +129,21 @@ function Subject() {
       "userID" : sessionStorage.getItem('userID'),
     }
 
-    try {
-      axios.post('http://localhost:5000/subjects/add', subject).then((res) => {
-        console.log(res.data);
-  
-        const newSubject = { name: 'New Subject', boardID: '' };
-        const updatedSubjects = [...subjectData, newSubject];
-  
-        setSubjectData(updatedSubjects);
-  
-        // quick fix to adding newly changed subjects that couldn't be deleted.
-        // basically just set it's button states so it can be changed. - Caden
-        setButtonStates([...buttonStates, false]);
-      });
-    } catch (err) {
+    try
+    {
+      axios.post('http://localhost:5000/subjects/add', subject)
+        .then(res => console.log(res.data));
+    } catch (err)
+    {
       console.log(`Error signing up: ${err}`);
     }
-  };
+    const newSubject = { name: 'test', boardID: '' };
+    const updatedSubjects = [...subjectData, newSubject];
+    setSubjectData(updatedSubjects);
+    // quick fix to adding newly changed subjects that couldn't be deleted. 
+    // basically just set it's button states so it can be changed. - Caden 
+    setButtonStates([...buttonStates, false]);
+  }
 
   return (
     <div className='Subject'>

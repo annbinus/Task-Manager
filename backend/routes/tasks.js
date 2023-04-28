@@ -16,9 +16,11 @@ router.route('/add').post((req, res) =>
     const deadline = req.body.deadline;
     const subjectID = req.body.subjectID;
     const description = req.body.description;
-    const userID = req.session.userID
+    const userID = req.body.userID
 
     const newTask = new Task({ name, start, completed, deadline, subjectID, description, userID });
+
+    console.log("NEW TASK IN ADD: " + newTask);
 
     newTask.save()
         .then(() => res.json('Task added!'))
