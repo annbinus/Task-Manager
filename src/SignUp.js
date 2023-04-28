@@ -46,7 +46,8 @@ function SignUp()
       );
 
       console.log("Succesfuly logged in with userID " + loginRes.data)
-      navigate('/signin');
+      sessionStorage.setItem('userID', loginRes.data);
+      navigate('/main');
     } catch (err)
     {
       console.log(`Error signing up: ${err}`);
