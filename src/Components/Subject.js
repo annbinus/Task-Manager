@@ -9,6 +9,9 @@ import { confirmAlert } from 'react-confirm-alert'; // Import
 import 'react-confirm-alert/src/react-confirm-alert.css'; // Import css
 import axios from 'axios';
 
+// For the sake of keeping track of things and operations, I'm pushing this to github as it was for reference. 
+// DO NOT DELETE THIS BRANCH
+
 function Subject() {
 
   const [values, setValues] = useState({
