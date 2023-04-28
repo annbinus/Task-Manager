@@ -1,5 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import '../AppMain.css';
+import { SubjectData } from './SubjectData';
 import Task from './Task';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
@@ -7,47 +8,11 @@ import CheckIcon from '@mui/icons-material/Check';
 import AddIcon from '@mui/icons-material/Add';
 import { confirmAlert } from 'react-confirm-alert'; // Import
 import 'react-confirm-alert/src/react-confirm-alert.css'; // Import css
-import axios from 'axios';
 
 function Subject() {
+  const [buttonStates, setButtonStates] = useState(SubjectData.map(() => false));
 
-  const [values, setValues] = useState({
-    username: '',
-    password: '',
-    showPassword: false,
-  })
-  const [buttonStates, setButtonStates] = useState([]);
-  const [subjectData, setSubjectData] = useState([]);
-  const [taskData, setTaskData] = useState([]);
-
-  // Here this is the actual fetch of the data to be shown
-  // we use useEffect because we don't want to write a class for it, and helps with asynch problems, - Caden
-  useEffect(() => {
-    async function fetchData() {
-      try { // main try
-        const res = await axios.get('http://localhost:5000/subjects/'); // get from database asynchronously - Caden
-        setSubjectData(res.data); // Tasks information - Caden
-        setButtonStates(res.data.map(() => false)); // toggles between edit / view mode - Caden
-      } catch (err) { // error catch
-        console.log(`Error getting subjects: ${err}`);
-      }
-    }
-    async function fetchTaskData()
-    {
-      try { // main try
-        const taskres = await axios.get('http://localhost:5000/tasks/'); // get from database asynchronously - Caden
-        setTaskData(taskres.data); // Tasks information - Caden
-      } catch (err) { // error catch
-        console.log(`Error getting tasks: ${err}`);
-      }
-    }
-
-    // actually perform it, - Caden
-    fetchData();
-    fetchTaskData();
-  }, []);
-
-  const toggleButtons = (subjectID, databaseID) => {
+  const toggleButtons = (subjectID) => {
     setButtonStates(buttonStates.map((state, index) => index === subjectID ? !state : state));
   };
 
@@ -58,31 +23,19 @@ function Subject() {
       message: 'Are you sure you want to delete this subject?',
       buttons: [
         {
-          label: 'Yes', // on yes
+          label: 'Yes',
           onClick: () => {
-            try {
-              
-              // Find the subject in DB, filter out the one with val & index. - Caden
-              axios.delete('http://localhost:5000/subjects/'+subjectID)
-                .then(res => console.log(res.data));
-                
-              // returning the elements of the array that are NOT at given subjectID - Caden
-              const updatedSubjects = subjectData.filter((val, index) => index !== subjectID);
-              
-              // update as needed - Caden
-              setSubjectData(updatedSubjects);
-            } catch (err) {
-              console.log(`Error deleting subject: ${err}`);
-            }
+            // Delete the subject here
           }
         },
         {
           label: 'No',
-          onClick: () => {} // dont delete it! - Caden
+          onClick: () => {}
         }
       ]
     });
   };
+
 
   const handleAddTaskClick = async (subjectID) =>
   {
@@ -144,30 +97,27 @@ function Subject() {
   return (
     <div className='Subject'>
       <ul className='SubjectList'>
-        {subjectData.map((val, subjectID) => {
+        {SubjectData.map((val, subjectID) => {
           const buttonsOpen = buttonStates[subjectID];
           const buttonIcon = buttonsOpen ? <CheckIcon /> : <EditIcon />;
-          const tasks = taskData.filter(
-            (task) => task.subjectID === val._id
-          );
           return (
             <li 
               key={subjectID} 
               className='SubjectRow'
-              style={{ backgroundColor: '#7E7E7E' }} // A beautiful grey - Caden
+              style={{ backgroundColor: val.color }}
             >
               <div id='SubjectWrapper'>
                 <div id='SubjectName'>{val.name}</div>
-                <button id='SubjectButton' onClick={() => toggleButtons(subjectID, val._id)}>{buttonIcon}</button>
+                <button id='SubjectButton' onClick={() => toggleButtons(subjectID)}>{buttonIcon}</button>
               </div>
-              <div id='SubjectTasks'><Task tasks={tasks} isOpen={buttonsOpen} /></div>
-              <button id='SubjectDeleteButton' style={{ display: buttonsOpen ? 'grid' : 'none' }} onClick={() => handleDeleteClick(subjectID)}><DeleteIcon /></button>
+              <div id='SubjectTasks'>{val.tasks(buttonsOpen)}</div>
+              <button id='SubjectDeleteButton' style={{ display: buttonsOpen ? 'grid' : 'none' }} onClick={handleDeleteClick}><DeleteIcon /></button>
               <div id='TaskAddName' style={{ display: buttonsOpen ? 'grid' : 'none' }}>New Task</div>
-              <button id='TaskAddButton' style={{ display: buttonsOpen ? 'grid' : 'none' }} onClick={() => handleAddTaskClick(val._id)}><AddIcon /></button>
+              <button id='TaskAddButton' style={{ display: buttonsOpen ? 'grid' : 'none' }}><AddIcon /></button>
             </li>
           )
         })}
-        <button id='SubjectAddWrapper' onClick={handleAddClick}>
+        <button id='SubjectAddWrapper'>
           <div id='SubjectAddName'>New Subject</div>
           <div id='SubjectAddButton'><AddIcon /></div>
         </button>
