@@ -20,7 +20,120 @@ function Task({tasks, isOpen}) {
             return {
                 ...prevState,
                 [taskId]: !prevState[taskId],
+                [taskId]: buttonsOpen ? true : !prevState[taskId],
             };
+        });
+    };
+
+    const handleEditNameChange = (event, taskId) => {
+      console.log(event.target.value); // logs the updated value of the textarea
+      axios
+        .get('http://localhost:5000/tasks/' + taskId)
+        .then((res) => {
+          console.log(res.data);
+
+          const task = {
+            name: event.target.value,
+            start: res.data.start,
+            deadline: res.data.deadline,
+            completed: "false",
+            description: res.data.description
+          };
+    
+          console.log(task)
+    
+          try {
+            axios.put('http://localhost:5000/tasks/update/' + taskId, task).then((res) => console.log(res.data));
+          } catch (err) {
+            console.log(`Error updating tasks: ${err}`);
+          }
+        })
+        .catch((err) => {
+          console.log(`Error updating tasks: ${err}`);
+        });
+    };
+
+    const handleEditDescChange = (event, taskId) => {
+      console.log(event.target.value); // logs the updated value of the textarea
+      axios
+        .get('http://localhost:5000/tasks/' + taskId)
+        .then((res) => {
+          console.log(res.data);
+
+          const task = {
+            name: res.data.name,
+            start: res.data.start,
+            deadline: res.data.deadline,
+            completed: "false",
+            description: event.target.value
+          };
+    
+          console.log(task)
+    
+          try {
+            axios.put('http://localhost:5000/tasks/update/' + taskId, task).then((res) => console.log(res.data));
+          } catch (err) {
+            console.log(`Error updating tasks: ${err}`);
+          }
+        })
+        .catch((err) => {
+          console.log(`Error updating tasks: ${err}`);
+        });
+    };
+
+    const handleEditStartChange = (event, taskId) => {
+      console.log(event.target.value); // logs the updated value of the textarea
+      axios
+        .get('http://localhost:5000/tasks/' + taskId)
+        .then((res) => {
+          console.log(res.data);
+
+          const task = {
+            name: res.data.name,
+            start: event.target.value,
+            deadline: res.data.deadline,
+            completed: "false",
+            description: res.data.description
+          };
+    
+          console.log(task)
+    
+          try {
+            axios.put('http://localhost:5000/tasks/update/' + taskId, task).then((res) => console.log(res.data));
+          } catch (err) {
+            console.log(`Error updating tasks: ${err}`);
+          }
+        })
+        .catch((err) => {
+          console.log(`Error updating tasks: ${err}`);
+        });
+    };
+
+    const handleEditEndChange = (event, taskId) => {
+      console.log(event.target.value); // logs the updated value of the textarea
+      axios
+        .get('http://localhost:5000/tasks/' + taskId)
+        .then((res) => {
+          console.log(res.data);
+
+          const task = {
+            name: res.data.name,
+            start: res.data.start,
+            deadline: event.target.value,
+            completed: "false",
+            description: res.data.description
+          };
+    
+          console.log(task)
+    
+          try {
+            axios.put('http://localhost:5000/tasks/update/' + taskId, task).then((res) => console.log(res.data));
+          } catch (err) {
+            console.log(`Error updating tasks: ${err}`);
+          }
+        })
+        .catch((err) => {
+          console.log(`Error updating tasks: ${err}`);
         });
     };
 
@@ -67,16 +180,12 @@ function Task({tasks, isOpen}) {
                             }}
                         >
                             <div id='TaskWrapper'>
-                                <textarea disabled={!buttonsOpen} id='TaskName' defaultValue={val.name}></textarea>
+                                <textarea disabled={!buttonsOpen} onChange={(event) => handleEditNameChange(event, val._id)} id='TaskName' defaultValue={val.name}></textarea>
                                 <button id='TaskDeleteButton' style={{ display: buttonsOpen ? 'grid' : 'none' }} onClick={ () => handleDeleteClick(val._id)}><DeleteIcon /></button>
                             </div>
-                            <textarea disabled={!buttonsOpen} id='TaskDesc' style={{ display: taskOpen[taskId] ? 'block' : 'none' }} defaultValue={val.desc}></textarea>
-                            <div id='TaskStart' style={{ display: taskOpen[taskId] ? 'block' : 'none' }}> {/* Changes display of taskOpen to none or block */}
-                                Start: {val.start}
-                            </div>
-                            <div id='TaskDeadline' style={{ display: taskOpen[taskId] ? 'block' : 'none' }}> {/* Changes display of taskOpen to none or block */}
-                                End: {val.deadline}
-                            </div>
+                            <textarea disabled={!buttonsOpen} onChange={(event) => handleEditDescChange(event, val._id)} id='TaskDesc' style={{ display: taskOpen[taskId] ? 'block' : 'none' }} defaultValue={val.description}></textarea>
+                            <textarea disabled={!buttonsOpen} id='TaskStart' onChange={(event) => handleEditStartChange(event, val._id)} style={{ display: taskOpen[taskId] ? 'block' : 'none' }} defaultValue={`Start: ${val.start}`}></textarea>
+                            <textarea disabled={!buttonsOpen} id='TaskDeadline' onChange={(event) => handleEditEndChange(event, val._id)} style={{ display: taskOpen[taskId] ? 'block' : 'none' }} defaultValue={`End: ${val.deadline}`}></textarea>
                         </li>
                     );
                 })}

@@ -49,36 +49,7 @@ function Subject() {
 
   const toggleButtons = (subjectID, databaseID) => {
     setButtonStates(buttonStates.map((state, index) => index === subjectID ? !state : state));
-    updateTasks(databaseID);
   };
-
-  function updateTasks(subjectID, databaseID) {
-    console.log(subjectID)
-
-    const updateTasks = taskData.filter((task) => task.subjectID === subjectID);
-
-    console.log("Update Ran")
-    console.log(updateTasks)
-
-    updateTasks.forEach((updateTask) => {
-      
-      const task = {
-        name: document.getElementById('TaskName').value,
-        start: document.getElementById('TaskStart').value,
-        deadline: document.getElementById('TaskDeadline').value,
-        completed: "false",
-        description: document.getElementById('TaskDesc').value
-      };
-
-      console.log(task)
-
-      try {
-        axios.put('http://localhost:5000/tasks/update/' + updateTask._id, task).then((res) => console.log(res.data));
-      } catch (err) {
-        console.log(`Error updating tasks: ${err}`);
-      }
-    });
-  }
 
   // Deleting on the edit concept
   const handleDeleteClick = (subjectID) => {
@@ -116,11 +87,11 @@ function Subject() {
   const handleAddTaskClick = async (subjectID) =>
   {
     const task = {
-      "name" : "",
+      "name" : "New Task",
       "start" : "2023-4-16",
       "deadline" : "2023-4-26",
       "completed" : "false",
-      "description" : "",
+      "description" : "Description",
       "subjectID" : subjectID
     }
 
