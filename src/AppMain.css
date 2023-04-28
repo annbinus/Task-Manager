@@ -32,10 +32,14 @@ textarea {
   border: none;
   outline: none;
   resize: none !important;
+  overflow: visible;
   font-family: inherit;
   font-size: inherit;
   line-height: inherit;
   background-color: transparent;
+
+  width: 280px;
+  height:auto;
 }
 
 .Sidebar {
@@ -265,6 +269,8 @@ textarea {
   margin-top: 6px;
   margin-bottom: 6px;
 
+  max-width: 294px;
+
   border-radius: 10px;
   background-color: white;
 }
@@ -307,14 +313,40 @@ textarea {
 }
 
 .TaskRow #TaskDesc {
+  min-height: 100px;
   text-align: left;
-  padding: 10px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  padding-left: 10px;
 }
 
 .TaskRow #TaskStart, #TaskDeadline {
   text-align: left;
   padding-left: 10px;
 }
+
+.TaskRow #TaskStartWrapper {
+  display: flex;
+  flex-direction: row;
+
+  max-height: 30px;
+}
+
+.TaskRow #TaskEndWrapper {
+  display: flex;
+  flex-direction: row;
+}
+
+.TaskRow #TaskStartText, #TaskEndText {
+  text-align: left;
+  padding-left: 10px;
+}
+
+/*
+.TaskRow #TaskEndEnder {
+  min-height: 25px;
+}
+*/
 
 .TaskRow #TaskDeadline {
   padding-bottom: 10px;

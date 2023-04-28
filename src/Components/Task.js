@@ -184,8 +184,15 @@ function Task({tasks, isOpen}) {
                                 <button id='TaskDeleteButton' style={{ display: buttonsOpen ? 'grid' : 'none' }} onClick={ () => handleDeleteClick(val._id)}><DeleteIcon /></button>
                             </div>
                             <textarea disabled={!buttonsOpen} onChange={(event) => handleEditDescChange(event, val._id)} id='TaskDesc' style={{ display: taskOpen[taskId] ? 'block' : 'none' }} defaultValue={val.description}></textarea>
-                            <textarea disabled={!buttonsOpen} id='TaskStart' onChange={(event) => handleEditStartChange(event, val._id)} style={{ display: taskOpen[taskId] ? 'block' : 'none' }} defaultValue={`Start: ${val.start}`}></textarea>
-                            <textarea disabled={!buttonsOpen} id='TaskDeadline' onChange={(event) => handleEditEndChange(event, val._id)} style={{ display: taskOpen[taskId] ? 'block' : 'none' }} defaultValue={`End: ${val.deadline}`}></textarea>
+                            <div id='TaskStartWrapper'>
+                                <div id='TaskStartText' style={{ display: taskOpen[taskId] ? 'block' : 'none' }}>Start: </div>
+                                <textarea disabled={!buttonsOpen} id='TaskStart' onChange={(event) => handleEditStartChange(event, val._id)} style={{ display: taskOpen[taskId] ? 'block' : 'none' }} defaultValue={val.start}></textarea>
+                            </div>
+                            <div id='TaskEndWrapper'>
+                                <div id='TaskEndText' style={{ display: taskOpen[taskId] ? 'block' : 'none' }}>End: </div>
+                                <textarea disabled={!buttonsOpen} id='TaskDeadline' onChange={(event) => handleEditEndChange(event, val._id)} style={{ display: taskOpen[taskId] ? 'block' : 'none' }} defaultValue={val.deadline}></textarea>
+                            </div>
+                            <div id='TaskEndEnder' style={{ display: taskOpen[taskId] ? 'block' : 'none' }}></div>
                         </li>
                     );
                 })}
