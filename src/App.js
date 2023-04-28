@@ -15,6 +15,7 @@ import "./dist/output.css";
 import AOS from 'aos';
 import ResetPassword from './ResetPassword';
 import Credits from './Credits';
+import Subject from './Components/Subject';
 
 function App() {
 
