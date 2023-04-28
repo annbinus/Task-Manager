@@ -63,11 +63,11 @@ function Subject() {
     updateTasks.forEach((updateTask) => {
       
       const task = {
-        name: document.getElementById('TaskName').value,
-        start: document.getElementById('TaskStart').value,
-        deadline: document.getElementById('TaskDeadline').value,
+        name: document.getElementById('TaskName' + updateTask._id).value,
+        start: document.getElementById('TaskStart' + updateTask._id).value,
+        deadline: document.getElementById('TaskDeadline' + updateTask._id).value,
         completed: "false",
-        description: document.getElementById('TaskDesc').value
+        description: document.getElementById('TaskDesc' + updateTask._id).value
       };
 
       console.log(task)
@@ -116,7 +116,7 @@ function Subject() {
   const handleAddTaskClick = async (subjectID) =>
   {
     const task = {
-      "name" : "",
+      "name" : "cry",
       "start" : "2023-4-16",
       "deadline" : "2023-4-26",
       "completed" : "false",
@@ -133,7 +133,7 @@ function Subject() {
       console.log(`Error signing up: ${err}`);
     }
 
-    const newTask = { name: '', start: "", deadline: "", completed: "false", description: "", subjectID: subjectID };
+    const newTask = { name: 'cry', start: "", deadline: "", completed: "false", description: "", subjectID: subjectID };
     const updatedTasks = [...taskData, newTask];
 
     //console.log(newTask)
