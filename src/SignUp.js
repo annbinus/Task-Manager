@@ -46,7 +46,7 @@ function SignUp()
       );
 
       console.log("Succesfuly logged in with userID " + loginRes.data)
-      navigate('/Subject');
+      navigate('/signin');
     } catch (err)
     {
       console.log(`Error signing up: ${err}`);
