@@ -61,18 +61,13 @@ function Subject() {
     console.log(updateTasks)
 
     updateTasks.forEach((updateTask) => {
-
-      const taskName = document.getElementById(`TaskName-${updateTask._id}`).value;
-      const taskStart = document.getElementById(`TaskStart-${updateTask._id}`).value;
-      const taskDeadline = document.getElementById(`TaskDeadline-${updateTask._id}`).value;
-      const taskDesc = document.getElementById(`TaskDesc-${updateTask._id}`).value;
-
+      
       const task = {
-        name: taskName,
-        start: taskStart,
-        deadline: taskDeadline,
+        name: document.getElementById('TaskName').value,
+        start: document.getElementById('TaskStart').value,
+        deadline: document.getElementById('TaskDeadline').value,
         completed: "false",
-        description: taskDesc
+        description: document.getElementById('TaskDesc').value
       };
 
       console.log(task)
