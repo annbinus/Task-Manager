@@ -27,7 +27,7 @@ connection.once('open', () =>
 const usersRouter = require('./routes/users');
 const subjectsRouter = require('./routes/subjects');
 const tasksRouter = require('./routes/tasks');
-const boardRouter = require('./routes/board');
+const boardRouter = require('./routes/board')
 
 app.use('/users', usersRouter);
 app.use('/subjects', subjectsRouter);

@@ -3,8 +3,7 @@ let Task = require('../models/task.model');
 
 router.route('/').get((req, res) =>
 {
-    //Task.find({userID: req.session.userID})
-    Task.find()
+    Task.find({ userID: req.session.userID })
         .then(tasks => res.json(tasks))
         .catch(err => res.status(400).json('Error: ' + err));
 });
@@ -17,9 +16,9 @@ router.route('/add').post((req, res) =>
     const deadline = req.body.deadline;
     const subjectID = req.body.subjectID;
     const description = req.body.description;
-    //const userID = req.session.userID
+    const userID = req.session.userID
 
-    const newTask = new Task({ name, start, completed, deadline, subjectID, description, /*userID*/ });
+    const newTask = new Task({ name, start, completed, deadline, subjectID, description, userID });
 
     newTask.save()
         .then(() => res.json('Task added!'))
