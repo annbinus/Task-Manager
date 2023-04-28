@@ -37,7 +37,9 @@ function Subject() {
     async function fetchTaskData()
     {
       try { // main try
-        const taskres = await axios.get('http://localhost:5000/tasks/'); // get from database asynchronously - Caden
+        const userID = sessionStorage.getItem('userID')
+        const taskres = await axios.get(`http://localhost:5000/tasks/?userID=${userID}`); // get from database asynchronously - Caden
+        console.log(taskres.data);
         setTaskData(taskres.data); // Tasks information - Caden
       } catch (err) { // error catch
         console.log(`Error getting tasks: ${err}`);
