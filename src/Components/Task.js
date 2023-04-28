@@ -37,7 +37,8 @@ function Task({ tasks, isOpen })
     console.log('Moving task up: ' + taskId);
     const userID = sessionStorage.getItem('userID'); // PASSES IN USERID FROM SESSIONSTORAGE
     let currentSubjectId;
-    
+    let newSubjectId;
+
     axios
       .get(`http://localhost:5000/tasks/${taskId}`) // GETS ALL SUBJECTS AS "res"
       .then((res) => {
@@ -51,11 +52,12 @@ function Task({ tasks, isOpen })
 
         const currentSubjectIndex = res.data.findIndex(subject => subject._id === currentSubjectId); // FINDS CURRENT SUBJECT INDEX
 
-        const newSubjectId = 0;
+        console.log('CURRENT SUBJECT INDEX IN MOVE: ' + currentSubjectIndex)
+
         if (currentSubjectIndex > 0)
           newSubjectId = res.data[currentSubjectIndex - 1]._id; // MOVE UP A SUBJECT BY -1
         else
-        newSubjectId = res.data[currentSubjectIndex]._id; // OUT OF BOUNDS DONT MOVE UP
+          newSubjectId = res.data[currentSubjectIndex]._id; // OUT OF BOUNDS DONT MOVE UP
 
         axios
           .put(`http://localhost:5000/tasks/move/${taskId}/${newSubjectId}`)
@@ -74,7 +76,43 @@ function Task({ tasks, isOpen })
 
   const handleMoveDownClick = (taskId) =>
   {
-    console.log('Moving task down: ' + taskId);
+    console.log('Moving task up: ' + taskId);
+    const userID = sessionStorage.getItem('userID'); // PASSES IN USERID FROM SESSIONSTORAGE
+    let currentSubjectId;
+    let newSubjectId;
+
+    axios
+      .get(`http://localhost:5000/tasks/${taskId}`) // GETS ALL SUBJECTS AS "res"
+      .then((res) => {
+        currentSubjectId = res.data.subjectID;
+      });
+
+    axios
+      .get(`http://localhost:5000/subjects/?userID=${userID}`) // GETS ALL SUBJECTS AS "res"
+      .then((res) => {
+        console.log('SUBJECT ID BEING MOVED TO: ' + res.data[2]._id);
+
+        const currentSubjectIndex = res.data.findIndex(subject => subject._id === currentSubjectId); // FINDS CURRENT SUBJECT INDEX
+
+        console.log('CURRENT SUBJECT INDEX IN MOVE: ' + currentSubjectIndex)
+
+        if (currentSubjectIndex < res.data.length)
+          newSubjectId = res.data[currentSubjectIndex + 1]._id; // MOVE DOWN A SUBJECT BY +1
+        else
+          newSubjectId = res.data[currentSubjectIndex]._id; // OUT OF BOUNDS DONT MOVE UP
+
+        axios
+          .put(`http://localhost:5000/tasks/move/${taskId}/${newSubjectId}`)
+          .then((res) => {
+            console.log(res.data);
+            // handle the response here if needed
+          })
+          .catch((err) => {
+            console.log(`Error moving task: ${err}`);
+          });
+
+          window.location.reload();
+      });
   };
 
   const handleEditNameChange = (event, taskId) =>
