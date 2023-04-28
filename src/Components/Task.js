@@ -207,41 +207,7 @@ function Task({ tasks, isOpen })
 
 
 
-   // Add task
-   const handleAddTaskClick = async (subjectID) =>
-   {
-     const task = {
-       "name": "New Task",
-       "start": "2023-4-16",
-       "deadline": "2023-4-26",
-       "completed": "false",
-       "description": "New Description",
-       "subjectID": subjectID,
-       "userID": sessionStorage.getItem('userID') // PASSES IN USERID FROM SESSIONSTORAGE
-     }
- 
-     try
-     {
-       axios.post('http://localhost:5000/tasks/add', task)
-         .then(res =>
-         {
-           console.log('Added a task. Here is res.data:');
-           console.log(res.data);
-           console.log('Newly created taskID: ' + res.data['._id']);
-         });
-     } catch (err)
-     {
-       console.log(`Error signing up: ${err}`);
-     }
- 
-     const newTask = { name: "New Task", start: "2023-4-16", deadline: "2023-4-26", completed: "false", description: "New Description", subjectID: subjectID, "userID": sessionStorage.getItem('userID') };
-     const updatedTasks = [...taskData, newTask];
- 
-     //console.log(newTask)
-     console.log("SubjectID: " + subjectID)
- 
-     setTaskData(updatedTasks);
-   }
+
    
 
    const handleDeleteClick = (taskId) =>
@@ -282,6 +248,7 @@ function Task({ tasks, isOpen })
 
   return (
     <div className='Task'>
+      
       <ul className='TaskList'>
         {TaskData.map((val, key) =>
         {
@@ -295,9 +262,9 @@ function Task({ tasks, isOpen })
                 toggleTask(taskId);
               }}
             >
+              
               <div id='TaskWrapper'>
-              <div id='TaskAddName' style={{ display: buttonsOpen ? 'grid' : 'none' }}>New Task</div>
-              <button id='TaskAddButton' style={{ display: buttonsOpen ? 'grid' : 'none' }} onClick={() => handleAddTaskClick(val._id)}><AddIcon /></button>
+              
                 <textarea disabled={!buttonsOpen} onChange={(event) => handleEditNameChange(event, val._id)} id='TaskName' defaultValue={val.name}></textarea>
                 <button id='TaskMoveUpButton' style={{ display: !buttonsOpen ? 'grid' : 'none' }} onClick={() => handleMoveUpClick(val._id)}><ArrowUpwardIcon /></button>
                 <button id='TaskMoveDownButton' style={{ display: !buttonsOpen ? 'grid' : 'none' }} onClick={() => handleMoveDownClick(val._id)}><ArrowDownwardIcon /></button>
@@ -312,11 +279,13 @@ function Task({ tasks, isOpen })
                 <div id='TaskEndText' style={{ display: taskOpen[taskId] ? 'block' : 'none' }}>End: </div>
                 <textarea disabled={!buttonsOpen} id='TaskDeadline' onChange={(event) => handleEditEndChange(event, val._id)} style={{ display: taskOpen[taskId] ? 'block' : 'none' }} defaultValue={val.deadline}></textarea>
               </div>
+              
               <div id='TaskEndEnder' style={{ display: taskOpen[taskId] ? 'block' : 'none' }}></div>
             </li>
           );
         })}
       </ul>
+      
     </div>
   );
 }
