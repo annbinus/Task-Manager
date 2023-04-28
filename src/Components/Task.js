@@ -35,7 +35,7 @@ function Task({tasks, isOpen}) {
                 // Delete the task here
                 try
                 {
-                  axios.delete('http://localhost:5000/tasks/'+ taskId)
+                  axios.delete('http://localhost:5000/tasks/' + taskId)
                        .then(res => console.log(res.data)); // task deleted!
     
                   fetchData();
