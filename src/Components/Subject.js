@@ -137,7 +137,7 @@ function Subject() {
     {
       console.log(`Error signing up: ${err}`);
     }
-    const newSubject = { name: 'test', boardID: '' };
+    const newSubject = { name: 'New Subject', boardID: '' }; // Changed from saying 'test' to 'New Subject' so the name doesn't change on refresh - Caden
     const updatedSubjects = [...subjectData, newSubject];
     setSubjectData(updatedSubjects);
     // quick fix to adding newly changed subjects that couldn't be deleted. 
