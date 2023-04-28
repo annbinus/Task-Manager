@@ -150,6 +150,7 @@ function Task({tasks, isOpen}) {
             start: res.data.start,
             deadline: event.target.value,
             completed: "false",
+            subjectID: res.subjectID,
             description: res.data.description
           };
     
@@ -193,27 +194,6 @@ function Task({tasks, isOpen}) {
           ]
         });
       };
-    
-    /*
-    const handleDelete = async (event) =>
-  {
-    event.preventDefault()
-
-    const user = {
-      "username": values.username,
-      "password": values.password,
-    }
-
-    try
-    {
-      axios.post('http://localhost:5000/tasks/delete')
-        .then(res => console.log(res.data)); // User added!
-    } catch (err)
-    {
-      console.log(`Error deleting: ${err}`);
-    }
-  }
-  */
 
 
     return (
