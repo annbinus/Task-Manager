@@ -10,7 +10,11 @@ const port = process.env.PORT || 5000;
 
 app.use(cors());
 app.use(express.json());
-app.use(session({secret: "Group 5"}))
+app.use(session({
+    secret: "Group 5",
+    resave: true,
+    saveUninitialized: true
+}));
 
 const uri = process.env.ATLAS_URI;
 mongoose.connect(uri, { dbName: 'Score' });
