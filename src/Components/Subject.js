@@ -61,12 +61,18 @@ function Subject() {
     console.log(updateTasks)
 
     updateTasks.forEach((updateTask) => {
+
+      const taskName = document.getElementById(`TaskName-${updateTask._id}`).value;
+      const taskStart = document.getElementById(`TaskStart-${updateTask._id}`).value;
+      const taskDeadline = document.getElementById(`TaskDeadline-${updateTask._id}`).value;
+      const taskDesc = document.getElementById(`TaskDesc-${updateTask._id}`).value;
+
       const task = {
-        name: document.getElementById('TaskName').value,
-        start: document.getElementById('TaskStart').value,
-        deadline: document.getElementById('TaskDeadline').value,
+        name: taskName,
+        start: taskStart,
+        deadline: taskDeadline,
         completed: "false",
-        description: document.getElementById('TaskDesc').value
+        description: taskDesc
       };
 
       console.log(task)
@@ -115,10 +121,11 @@ function Subject() {
   const handleAddTaskClick = async (subjectID) =>
   {
     const task = {
-      "name" : "test",
+      "name" : "",
       "start" : "2023-4-16",
       "deadline" : "2023-4-26",
       "completed" : "false",
+      "description" : "",
       "subjectID" : subjectID
     }
 
@@ -131,7 +138,7 @@ function Subject() {
       console.log(`Error signing up: ${err}`);
     }
 
-    const newTask = { name: 'test', start: "", deadline: "", completed: "false", subjectID: subjectID };
+    const newTask = { name: '', start: "", deadline: "", completed: "false", description: "", subjectID: subjectID };
     const updatedTasks = [...taskData, newTask];
 
     //console.log(newTask)

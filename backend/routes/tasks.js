@@ -16,7 +16,7 @@ router.route('/add').post((req, res) =>
     const completed = req.body.completed;
     const deadline = req.body.deadline;
     const subjectID = req.body.subjectID;
-    const description = req.body.description
+    const description = req.body.description;
     //const userID = req.session.userID
 
     const newTask = new Task({ name, start, completed, deadline, subjectID, description, /*userID*/ });
