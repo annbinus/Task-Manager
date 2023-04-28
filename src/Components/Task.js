@@ -85,9 +85,18 @@ function Task(props) {
         });
       };
 
-      const handleEditChange = (event) => {
+      const handleEditChange = (event, taskId) => {
         console.log(event.target.value); // logs the updated value of the textarea
-      }
+        console.log("TASKID: " + taskId);
+        axios
+          .get('http://localhost:5000/tasks/' + taskId)
+          .then((res) => {
+            console.log(res.data);
+          })
+          .catch((err) => {
+            console.log(`Error updating tasks: ${err}`);
+          });
+      };
     
     /*
     const handleDelete = async (event) =>
@@ -125,7 +134,7 @@ function Task(props) {
                             }}
                         >
                             <div id='TaskWrapper'>
-                                <textarea disabled={!buttonsOpen} onChange={handleEditChange} id='TaskName'>{val.name}</textarea>
+                                <textarea disabled={!buttonsOpen} onChange={(event) => handleEditChange(event, val._id)} id='TaskName'>{val.name}</textarea>
                                 <button id='TaskMoveUpButton' style={{ display: !buttonsOpen ? 'grid' : 'none' }} onClick={() => handleMoveUpClick(taskId)}><ArrowUpwardIcon /></button>
                                 <button id='TaskMoveDownButton' style={{ display: !buttonsOpen ? 'grid' : 'none' }} onClick={() => handleMoveDownClick(taskId)}><ArrowDownwardIcon /></button>
                                 <button id='TaskDeleteButton' style={{ display: buttonsOpen ? 'grid' : 'none' }} onClick={() => handleDeleteClick(taskId)}><DeleteIcon /></button>
