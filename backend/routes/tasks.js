@@ -38,6 +38,7 @@ router.route('/:id').get((req, res) =>
 
 router.route('/:id').delete((req, res) =>
 {
+    console.log(req.params.id)
     Task.findByIdAndDelete(req.params.id)
         .then(() => res.json('Task deleted.'))
         .catch(err => res.status(400).json('Error: ' + err));
