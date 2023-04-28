@@ -104,7 +104,10 @@ function Subject() {
     try
     {
       axios.post('http://localhost:5000/tasks/add', task)
-        .then(res => console.log(res.data));
+        .then(res => {
+          console.log(res.data);
+          console.log(task);
+        });
     } catch (err)
     {
       console.log(`Error signing up: ${err}`);
