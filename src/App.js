@@ -17,6 +17,7 @@ import ResetPassword from './ResetPassword';
 import Credits from './Credits';
 
 function App() {
+
     useEffect(() => {
         AOS.init({
           once: true,

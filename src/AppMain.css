@@ -32,10 +32,14 @@ textarea {
   border: none;
   outline: none;
   resize: none !important;
+  overflow: visible;
   font-family: inherit;
   font-size: inherit;
   line-height: inherit;
   background-color: transparent;
+
+  width: 280px;
+  height:auto;
 }
 
 .Sidebar {
@@ -290,7 +294,7 @@ textarea {
   background-color: blue;
 }
 
-.TaskRow #TaskDeleteButton {
+.TaskRow #TaskDeleteButton, #TaskMoveUpButton, #TaskMoveDownButton {
   /* Centers icon in button */
   display: grid;
   place-items: center;
@@ -306,7 +310,12 @@ textarea {
   border-radius: 50%;
 }
 
+.TaskRow #TaskMoveUpButton {
+  margin-left: 79% !important;
+}
+
 .TaskRow #TaskDesc {
+  min-height: 100px;
   text-align: left;
   padding: 10px;
 }
