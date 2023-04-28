@@ -1,4 +1,5 @@
 const router = require('express').Router();
+const session = require('express-session');
 let User = require('../models/user.model');
 
 
@@ -61,7 +62,7 @@ router.route('/signin').post((req, res) =>
         .then(user =>
         {
             req.session.userID = user[0].id;
-            res.status(200).send('Login succesful!');
+            res.status(200).send(req.session.userID);
         })
         .catch(err => res.status(404).json('Error: ' + err));
 });

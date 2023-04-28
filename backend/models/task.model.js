@@ -5,13 +5,11 @@ const Schema = mongoose.Schema;
 const taskSchema = new Schema({
     name: {
         type: String,
-        required: true,
-        unique: true,
     },
     start: {
         type: Date,
     },
-    deadline: {
+    deadline:{
         type: Date,
     },
     completed: {
@@ -22,13 +20,12 @@ const taskSchema = new Schema({
         type: String,
         required: true,
     },
-    userID: {
-        type: String,
-        required: true,
-    },
     description: {
         type: String,
-        required: true,
+    },
+    userID: {
+        type: String,
+        //required: true,
     }
 }, {
     timestamps: true,
