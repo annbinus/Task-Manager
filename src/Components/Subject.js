@@ -26,7 +26,8 @@ function Subject() {
     async function fetchData() {
       try { // main try
         const res = await axios.get('http://localhost:5000/subjects/'); // get from database asynchronously - Caden
-        setSubjectData(res.data); // Subjects information - Caden
+        console.log('RES.DATA: ' + res.data);
+        setSubjectData(res.data); // Tasks information - Caden
         setButtonStates(res.data.map(() => false)); // toggles between edit / view mode - Caden
       } catch (err) { // error catch
         console.log(`Error getting subjects: ${err}`);
@@ -118,28 +119,28 @@ function Subject() {
     event.preventDefault()
 
     const subject = {
-      "name" : "test",
-      "boardID" : "643d5c4899b0d1975d321640"
+      "name" : "New Subject",
+      "boardID" : "643d5c4892b0d1975d321640",
+      "userID" : "644b3f88194e26d75458aa5d",
     }
 
-    try
-    {
-      axios.post('http://localhost:5000/subjects/add', subject)
-        .then(res => console.log(res.data));
-    } catch (err)
-    {
+    try {
+      axios.post('http://localhost:5000/subjects/add', subject).then((res) => {
+        console.log(res.data);
+  
+        const newSubject = { name: 'test', boardID: '' };
+        const updatedSubjects = [...subjectData, newSubject];
+  
+        setSubjectData(updatedSubjects);
+  
+        // quick fix to adding newly changed subjects that couldn't be deleted.
+        // basically just set it's button states so it can be changed. - Caden
+        setButtonStates([...buttonStates, false]);
+      });
+    } catch (err) {
       console.log(`Error signing up: ${err}`);
     }
-
-    const newSubject = { name: 'test', boardID: '' };
-    const updatedSubjects = [...subjectData, newSubject];
-
-    setSubjectData(updatedSubjects);
-
-    // quick fix to adding newly changed subjects that couldn't be deleted. 
-    // basically just set it's button states so it can be changed. - Caden 
-    setButtonStates([...buttonStates, false]);
-  }
+  };
 
   return (
     <div className='Subject'>

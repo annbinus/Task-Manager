@@ -16,6 +16,7 @@ import AOS from 'aos';
 import ResetPassword from './ResetPassword';
 import Credits from './Credits';
 import Subject from './Components/Subject';
+import AppMain from './AppMain';
 
 function App() {
 
@@ -34,6 +35,7 @@ function App() {
         <Route exact path="/" element={<Home/>} />
         <Route path="/signin" element={<SignIn/>} />
         <Route path="/signup" element={<SignUp/>} />
+        <Route path="/main" element={<AppMain/>}/>
         <Route path="/reset-password" element={<ResetPassword/>} />
         <Route path="/credits" element={<Credits/>} />
       </Routes>

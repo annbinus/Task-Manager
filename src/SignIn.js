@@ -36,7 +36,7 @@ const SignIn = () =>
       );
 
       console.log("Succesfuly logged in with userID " + res.data)
-      navigate('/Subject');
+      navigate('/main');
     } catch (err)
     {
       console.log(`Error signing in: ${err}`);
