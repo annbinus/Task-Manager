@@ -31,7 +31,7 @@ router.route('/add').post((req, res) =>
     console.log('SUBJECT USERID IN ADD: ' + userID);
 
     const newSubject = new Subject({ name, boardID, userID});
-    
+
     newSubject.save()
         .then(() => res.json('Subject added!'))
         .catch(err => res.status(400).json('Error: ' + err));
@@ -46,6 +46,7 @@ router.route('/bySubjectID/:id').get((req, res) =>
 
 router.route('/:id').delete((req, res) =>
 {
+    console.log('SUBJECTID IN DELETE: ' + req.params.id);
     Subject.findByIdAndDelete(req.params.id)
         .then(() => res.json('Subject deleted.'))
         .catch(err => res.status(400).json('Error: ' + err));
