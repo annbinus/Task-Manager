@@ -5,16 +5,12 @@ let Subject = require('../models/subject.model');
 
 router.route('/').get((req, res) =>
 {
-    console.log('USER ID IN ROUTE: ' + req.cookies.userID); // console log the userID
-    console.log('req.session:', req.session);
-    Subject.find({userID: req.cookies.userID})
+    console.log('USER ID IN ROUTE: ' + req.query.userID); // console log the userID
+    Subject.find({userID: req.query.userID})
         .then(subjects => {
-            console.log('SUBJECTS IN ROUTE: ' + subjects); // console log the subjects
             res.json(subjects);
         })
         .catch(err => res.status(400).json('Error: ' + err));
-
-    console.log('USER ID IN ROUTE AFTER: ' + req.session.userID); // console log the userID
 });
 
 router.route('/byBoardID/:boardID').get((req, res) =>
@@ -29,6 +25,10 @@ router.route('/add').post((req, res) =>
     const name = req.body.name;
     const boardID = req.body.boardID;
     const userID = req.body.userID;
+
+    console.log('SUBJECT NAME IN ADD: ' + name);
+    console.log('SUBJECT BOARDID IN ADD: ' + boardID);
+    console.log('SUBJECT USERID IN ADD: ' + userID);
 
     const newSubject = new Subject({ name, boardID, userID});
 
@@ -46,6 +46,7 @@ router.route('/bySubjectID/:id').get((req, res) =>
 
 router.route('/:id').delete((req, res) =>
 {
+    console.log('SUBJECTID IN DELETE: ' + req.params.id);
     Subject.findByIdAndDelete(req.params.id)
         .then(() => res.json('Subject deleted.'))
         .catch(err => res.status(400).json('Error: ' + err));

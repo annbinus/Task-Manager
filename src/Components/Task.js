@@ -1,15 +1,20 @@
 import React from 'react'
 import '../AppMain.css'; // Two dots to go outside of the components folder
-import { TaskData } from './TaskData'; // Imports Task data
+import { setTaskData } from './Task'; // Imports Task data
 import axios from 'axios';
 import DeleteIcon from '@mui/icons-material/Delete';
 import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
 import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
 import { confirmAlert } from 'react-confirm-alert'; // Import
 import 'react-confirm-alert/src/react-confirm-alert.css'; // Import css
+import Subject from './Subject'
+import fetchData from './Subject'
 
-function Task(props) {
-    const { subjectIDFromSubject, buttonsOpen } = props; /* Passes in subjectIDFromSubject and buttonsOpen */
+function Task({tasks, isOpen}) {
+  const TaskData = tasks; /* Passes in subjectIDFromSubject */
+  const buttonsOpen = isOpen; // Fixed a bug where the deletion icons weren't deleting on tasks, was splitting up into buttonsOpen instead of isOpen - Caden
+  
+  // console.log("buttonsOpen: " + buttonsOpen) // for debugging purposes - Caden
 
     const [taskOpen, setTaskOpen] = React.useState(false); /* Initializes taskOpen using useState */
     const toggleTask = (taskId) => { /* Function for toggling task*/
@@ -188,19 +193,6 @@ function Task(props) {
           ]
         });
       };
-
-      const handleEditChange = (event, taskId) => {
-        console.log(event.target.value); // logs the updated value of the textarea
-        console.log("TASKID: " + taskId);
-        axios
-          .get('http://localhost:5000/tasks/' + taskId)
-          .then((res) => {
-            console.log(res.data);
-          })
-          .catch((err) => {
-            console.log(`Error updating tasks: ${err}`);
-          });
-      };
     
     /*
     const handleDelete = async (event) =>
@@ -227,8 +219,8 @@ function Task(props) {
     return (
         <div className='Task'>
             <ul className='TaskList'>
-                {TaskData.filter(TaskData => TaskData.subjectID === subjectIDFromSubject).map((val, key) => {
-                    const taskId = `${subjectIDFromSubject}-${key}`;
+                {TaskData.map((val, key) => {
+                    const taskId = TaskData[TaskData.length - 1];
                     return (
                         <li
                             key={key}

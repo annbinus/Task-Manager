@@ -36,6 +36,7 @@ const SignIn = () =>
       );
 
       console.log("Succesfuly logged in with userID " + res.data)
+      sessionStorage.setItem('userID', res.data);
       navigate('/main');
     } catch (err)
     {

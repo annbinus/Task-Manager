@@ -25,8 +25,9 @@ function Subject() {
   useEffect(() => {
     async function fetchData() {
       try { // main try
-        const res = await axios.get('http://localhost:5000/subjects/'); // get from database asynchronously - Caden
-        console.log('RES.DATA: ' + res.data);
+        const userID = sessionStorage.getItem('userID'); // PASSES IN USERID FROM SESSIONSTORAGE
+        console.log(userID);
+        const res = await axios.get(`http://localhost:5000/subjects/?userID=${userID}`); // PASSES IN USERID AS QUERY
         setSubjectData(res.data); // Tasks information - Caden
         setButtonStates(res.data.map(() => false)); // toggles between edit / view mode - Caden
       } catch (err) { // error catch
@@ -54,32 +55,35 @@ function Subject() {
 
   // Deleting on the edit concept
   const handleDeleteClick = (subjectID) => {
-    confirmAlert({ // check to make sure user is cleared to delete
+    confirmAlert({
       title: 'Confirm deletion',
       message: 'Are you sure you want to delete this subject?',
       buttons: [
         {
-          label: 'Yes', // on yes
+          label: 'Yes',
           onClick: () => {
-            try {
-              
-              // Find the subject in DB, filter out the one with val & index. - Caden
-              axios.delete('http://localhost:5000/subjects/'+subjectID)
-                .then(res => console.log(res.data));
-                
-              // returning the elements of the array that are NOT at given subjectID - Caden
-              const updatedSubjects = subjectData.filter((val, index) => index !== subjectID);
-              
-              // update as needed - Caden
-              setSubjectData(updatedSubjects);
-            } catch (err) {
-              console.log(`Error deleting subject: ${err}`);
-            }
+            const userID = sessionStorage.getItem('userID'); // PASSES IN USERID FROM SESSIONSTORAGE
+            axios.get(`http://localhost:5000/subjects/?userID=${userID}`) // PASSES IN USERID AS QUERY
+              .then(res => {
+                console.log("SUBJECT ID FROM GET: " + res.data[subjectID]._id);
+                axios.delete('http://localhost:5000/subjects/' + res.data[subjectID]._id)
+                  .then(res => {
+                    console.log(res.data);
+                    const updatedSubjects = subjectData.filter((val, index) => index !== subjectID);
+                    setSubjectData(updatedSubjects);
+                  })
+                  .catch(err => {
+                    console.log(`Error deleting subject: ${err}`);
+                  });
+              })
+              .catch(err => {
+                console.log(`Error getting subjects: ${err}`);
+              });
           }
         },
         {
           label: 'No',
-          onClick: () => {} // dont delete it! - Caden
+          onClick: () => { } // do nothing if 'No' button clicked
         }
       ]
     });
@@ -92,8 +96,9 @@ function Subject() {
       "start" : "2023-4-16",
       "deadline" : "2023-4-26",
       "completed" : "false",
-      "description" : "Description",
-      "subjectID" : subjectID
+      "description" : "New Description",
+      "subjectID" : subjectID,
+      "userID" : sessionStorage.getItem('userID') // PASSES IN USERID FROM SESSIONSTORAGE
     }
 
     try
@@ -105,7 +110,7 @@ function Subject() {
       console.log(`Error signing up: ${err}`);
     }
 
-    const newTask = { name: 'New Task', start: "", deadline: "", completed: "false", description: "", subjectID: subjectID };
+    const newTask = { name: "New Task", start: "2023-4-16", deadline: "2023-4-26", completed: "false", description: "New Description", subjectID: subjectID, "userID" : sessionStorage.getItem('userID') };
     const updatedTasks = [...taskData, newTask];
 
     //console.log(newTask)
@@ -121,26 +126,24 @@ function Subject() {
     const subject = {
       "name" : "New Subject",
       "boardID" : "644355f2ddb0c25db2015643",
-      "userID" : "644b3f88194e26d75458aa5c",
+      "userID" : sessionStorage.getItem('userID'),
     }
 
-    try {
-      axios.post('http://localhost:5000/subjects/add', subject).then((res) => {
-        console.log(res.data);
-  
-        const newSubject = { name: 'test', boardID: '' };
-        const updatedSubjects = [...subjectData, newSubject];
-  
-        setSubjectData(updatedSubjects);
-  
-        // quick fix to adding newly changed subjects that couldn't be deleted.
-        // basically just set it's button states so it can be changed. - Caden
-        setButtonStates([...buttonStates, false]);
-      });
-    } catch (err) {
+    try
+    {
+      axios.post('http://localhost:5000/subjects/add', subject)
+        .then(res => console.log(res.data));
+    } catch (err)
+    {
       console.log(`Error signing up: ${err}`);
     }
-  };
+    const newSubject = { name: 'test', boardID: '' };
+    const updatedSubjects = [...subjectData, newSubject];
+    setSubjectData(updatedSubjects);
+    // quick fix to adding newly changed subjects that couldn't be deleted. 
+    // basically just set it's button states so it can be changed. - Caden 
+    setButtonStates([...buttonStates, false]);
+  }
 
   return (
     <div className='Subject'>
