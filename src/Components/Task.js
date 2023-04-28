@@ -67,14 +67,14 @@ function Task({tasks, isOpen}) {
                             }}
                         >
                             <div id='TaskWrapper'>
-                                <textarea disabled={!buttonsOpen} id='TaskName' defaultValue={val.name}></textarea>
+                                <textarea disabled={!buttonsOpen} id={'TaskName' + val._id} defaultValue={val.name}></textarea>
                                 <button id='TaskDeleteButton' style={{ display: buttonsOpen ? 'grid' : 'none' }} onClick={ () => handleDeleteClick(val._id)}><DeleteIcon /></button>
                             </div>
-                            <textarea disabled={!buttonsOpen} id='TaskDesc' style={{ display: taskOpen[taskId] ? 'block' : 'none' }} defaultValue={val.desc}></textarea>
-                            <div id='TaskStart' style={{ display: taskOpen[taskId] ? 'block' : 'none' }}> {/* Changes display of taskOpen to none or block */}
+                            <textarea disabled={!buttonsOpen} id={'TaskDesc' + val._id} style={{ display: taskOpen[taskId] ? 'block' : 'none' }} defaultValue={val.desc}></textarea>
+                            <div id={'TaskStart' + val._id} style={{ display: taskOpen[taskId] ? 'block' : 'none' }}> {/* Changes display of taskOpen to none or block */}
                                 Start: {val.start}
                             </div>
-                            <div id='TaskDeadline' style={{ display: taskOpen[taskId] ? 'block' : 'none' }}> {/* Changes display of taskOpen to none or block */}
+                            <div id={'TaskDeadline' + val._id} style={{ display: taskOpen[taskId] ? 'block' : 'none' }}> {/* Changes display of taskOpen to none or block */}
                                 End: {val.deadline}
                             </div>
                         </li>
