@@ -36,11 +36,27 @@ function Task({ tasks, isOpen })
   const handleMoveUpClick = (taskId) => {
     console.log('Moving task up: ' + taskId);
     const userID = sessionStorage.getItem('userID'); // PASSES IN USERID FROM SESSIONSTORAGE
+    let currentSubjectId;
+    
+    axios
+      .get(`http://localhost:5000/tasks/${taskId}`) // GETS ALL SUBJECTS AS "res"
+      .then((res) => {
+        currentSubjectId = res.data.subjectID;
+      });
+
     axios
       .get(`http://localhost:5000/subjects/?userID=${userID}`) // GETS ALL SUBJECTS AS "res"
       .then((res) => {
         console.log('SUBJECT ID BEING MOVED TO: ' + res.data[2]._id);
-        const newSubjectId = res.data[2]._id; // set the new subject ID from the response
+
+        const currentSubjectIndex = res.data.findIndex(subject => subject._id === currentSubjectId); // FINDS CURRENT SUBJECT INDEX
+
+        const newSubjectId = 0;
+        if (currentSubjectIndex > 0)
+          newSubjectId = res.data[currentSubjectIndex - 1]._id; // MOVE UP A SUBJECT BY -1
+        else
+        newSubjectId = res.data[currentSubjectIndex]._id; // OUT OF BOUNDS DONT MOVE UP
+
         axios
           .put(`http://localhost:5000/tasks/move/${taskId}/${newSubjectId}`)
           .then((res) => {
