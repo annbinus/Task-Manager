@@ -3,7 +3,7 @@ let Task = require('../models/task.model');
 
 router.route('/').get((req, res) =>
 {
-    console.log('USER ID IN ROUTE: ' + req.query.userID); 
+    console.log('(tasks) User ID from req.query.userID: ' + req.query.userID);
     Task.find({ userID: req.query.userID })
         .then(tasks => res.json(tasks))
         .catch(err => res.status(400).json('Error: ' + err));
@@ -21,7 +21,8 @@ router.route('/add').post((req, res) =>
 
     const newTask = new Task({ name, start, completed, deadline, subjectID, description, userID });
 
-    console.log("NEW TASK IN ADD: " + newTask);
+    console.log("New task getting added: ")
+    console.log(newTask);
 
     newTask.save()
         .then(() => res.json('Task added!'))

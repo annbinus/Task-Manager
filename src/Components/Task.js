@@ -10,130 +10,147 @@ import 'react-confirm-alert/src/react-confirm-alert.css'; // Import css
 import Subject from './Subject'
 import fetchData from './Subject'
 
-function Task({tasks, isOpen}) {
+function Task({ tasks, isOpen })
+{
   const TaskData = tasks; /* Passes in subjectIDFromSubject */
   const buttonsOpen = isOpen; // Fixed a bug where the deletion icons weren't deleting on tasks, was splitting up into buttonsOpen instead of isOpen - Caden
-  
+
   // console.log("buttonsOpen: " + buttonsOpen) // for debugging purposes - Caden
 
-    const [taskOpen, setTaskOpen] = React.useState(false); /* Initializes taskOpen using useState */
-    const toggleTask = (taskId) => { /* Function for toggling task*/
-        setTaskOpen((prevState) => {
-            return {
-                ...prevState,
-                [taskId]: !prevState[taskId],
-                [taskId]: buttonsOpen ? true : !prevState[taskId],
-            };
-        });
-    };
+  const [taskOpen, setTaskOpen] = React.useState(false); /* Initializes taskOpen using useState */
+  const toggleTask = (taskId) =>
+  { /* Function for toggling task*/
+    setTaskOpen((prevState) =>
+    {
+      return {
+        ...prevState,
+        [taskId]: !prevState[taskId],
+        [taskId]: buttonsOpen ? true : !prevState[taskId],
+      };
+    });
+  };
 
-    const handleMoveUpClick = (taskId) => {
-      console.log('Moving task up: ' + taskId);
-      axios
-        .get('http://localhost:5000/tasks/' + taskId)
-        .then((res) => {
-          console.log(res.data);
+  const handleMoveUpClick = (taskId) =>
+  {
+    console.log('Moving task up: ' + taskId);
+    axios
+      .get('http://localhost:5000/tasks/' + taskId)
+      .then((res) =>
+      {
+        console.log(res.data);
 
-          const currentSubjectId = res.data.subjectID;
-    
-          console.log('Current subjectID: ' + currentSubjectId);
-          
-          
-          //try {
-          //  axios.put('http://localhost:5000/tasks/update/' + taskId, task).then((res) => console.log(res.data));
-          //} catch (err) {
-          //  console.log(`Error updating tasks: ${err}`);
-          //}
-        })
-        .catch((err) => {
+        const currentSubjectId = res.data.subjectID;
+
+        console.log('Current subjectID: ' + currentSubjectId);
+
+
+        //try {
+        //  axios.put('http://localhost:5000/tasks/update/' + taskId, task).then((res) => console.log(res.data));
+        //} catch (err) {
+        //  console.log(`Error updating tasks: ${err}`);
+        //}
+      })
+      .catch((err) =>
+      {
+        console.log(`Error updating tasks: ${err}`);
+      });
+  };
+
+  const handleMoveDownClick = (taskId) =>
+  {
+    console.log('Moving task down: ' + taskId);
+  };
+
+  const handleEditNameChange = (event, taskId) =>
+  {
+    console.log(event.target.value); // logs the updated value of the textarea
+    axios
+      .get('http://localhost:5000/tasks/' + taskId)
+      .then((res) =>
+      {
+        console.log(res.data);
+
+        const task = {
+          name: event.target.value,
+          start: res.data.start,
+          deadline: res.data.deadline,
+          completed: "false",
+          description: res.data.description
+        };
+
+        console.log(task)
+
+        try
+        {
+          axios.put('http://localhost:5000/tasks/update/' + taskId, task).then((res) => console.log(res.data));
+        } catch (err)
+        {
           console.log(`Error updating tasks: ${err}`);
-        });
-    };
+        }
+      })
+      .catch((err) =>
+      {
+        console.log(`Error updating tasks: ${err}`);
+      });
+  };
 
-    const handleMoveDownClick = (taskId) => {
-      console.log('Moving task down: ' + taskId);
-    };
+  const handleEditDescChange = (event, taskId) =>
+  {
+    console.log(event.target.value); // logs the updated value of the textarea
+    axios
+      .get('http://localhost:5000/tasks/' + taskId)
+      .then((res) =>
+      {
+        console.log(res.data);
 
-    const handleEditNameChange = (event, taskId) => {
-      console.log(event.target.value); // logs the updated value of the textarea
-      axios
-        .get('http://localhost:5000/tasks/' + taskId)
-        .then((res) => {
-          console.log(res.data);
+        const task = {
+          name: res.data.name,
+          start: res.data.start,
+          deadline: res.data.deadline,
+          completed: "false",
+          description: event.target.value
+        };
 
-          const task = {
-            name: event.target.value,
-            start: res.data.start,
-            deadline: res.data.deadline,
-            completed: "false",
-            description: res.data.description
-          };
-    
-          console.log(task)
-    
-          try {
-            axios.put('http://localhost:5000/tasks/update/' + taskId, task).then((res) => console.log(res.data));
-          } catch (err) {
-            console.log(`Error updating tasks: ${err}`);
-          }
-        })
-        .catch((err) => {
+        console.log(task)
+
+        try
+        {
+          axios.put('http://localhost:5000/tasks/update/' + taskId, task).then((res) => console.log(res.data));
+        } catch (err)
+        {
           console.log(`Error updating tasks: ${err}`);
-        });
-    };
+        }
+      })
+      .catch((err) =>
+      {
+        console.log(`Error updating tasks: ${err}`);
+      });
+  };
 
-    const handleEditDescChange = (event, taskId) => {
-      console.log(event.target.value); // logs the updated value of the textarea
-      axios
-        .get('http://localhost:5000/tasks/' + taskId)
-        .then((res) => {
-          console.log(res.data);
+  const handleEditStartChange = (event, taskId) =>
+  {
+    console.log(event.target.value); // logs the updated value of the textarea
+    axios
+      .get('http://localhost:5000/tasks/' + taskId)
+      .then((res) =>
+      {
+        console.log(res.data);
 
-          const task = {
-            name: res.data.name,
-            start: res.data.start,
-            deadline: res.data.deadline,
-            completed: "false",
-            description: event.target.value
-          };
-    
-          console.log(task)
-    
-          try {
-            axios.put('http://localhost:5000/tasks/update/' + taskId, task).then((res) => console.log(res.data));
-          } catch (err) {
-            console.log(`Error updating tasks: ${err}`);
-          }
-        })
-        .catch((err) => {
-          console.log(`Error updating tasks: ${err}`);
-        });
-    };
+        const task = {
+          name: res.data.name,
+          start: event.target.value,
+          deadline: res.data.deadline,
+          completed: "false",
+          description: res.data.description
+        };
 
-    const handleEditStartChange = (event, taskId) => {
-      console.log(event.target.value); // logs the updated value of the textarea
-      axios
-        .get('http://localhost:5000/tasks/' + taskId)
-        .then((res) => {
-          console.log(res.data);
+        console.log(task)
 
-          const task = {
-            name: res.data.name,
-            start: event.target.value,
-            deadline: res.data.deadline,
-            completed: "false",
-            description: res.data.description
-          };
-    
-          console.log(task)
-    
-          try {
-            axios.put('http://localhost:5000/tasks/update/' + taskId, task).then((res) => console.log(res.data));
-          } catch (err) {
-            console.log(`Error updating tasks: ${err}`);
-          }
-        })
-        .catch((err) => {
+        try
+        {
+          axios.put('http://localhost:5000/tasks/update/' + taskId, task).then((res) => console.log(res.data));
+        } catch (err)
+        {
           console.log(`Error updating tasks: ${err}`);
         });
     };
@@ -231,7 +248,6 @@ function Task({tasks, isOpen}) {
             </ul>
         </div>
     );
-
 }
 
 export default Task;
