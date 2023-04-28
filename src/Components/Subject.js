@@ -140,6 +140,26 @@ function Subject()
     setTaskData(updatedTasks);
   }
 
+  const handleEditNameChange = (event, subjectID) =>
+  {
+    console.log("Editing subject")
+    console.log(subjectID)
+    console.log(event.target.value); // logs the updated value of the textarea
+
+    const subject = {
+      name: event.target.value
+    };
+
+    console.log(subject)
+
+    try
+    {
+      axios.put('http://localhost:5000/subjects/update/' + subjectID, subject).then((res) => console.log(res.data));
+    } catch (err){
+      console.log(`Error updating tasks: ${err}`);
+    }
+  };
+
   // Add subject
   const handleAddClick = async () => 
   {
@@ -196,7 +216,7 @@ function Subject()
               style={{ backgroundColor: '#7E7E7E' }} // A beautiful grey - Caden
             >
               <div id='SubjectWrapper'>
-                <div id='SubjectName'>{val.name}</div>
+                <textarea disabled={!buttonsOpen} onChange={(event) => handleEditNameChange(event, val._id)} id='SubjectName' defaultValue={val.name}></textarea>
                 <button id='SubjectButton' onClick={() => toggleButtons(subjectID, val._id)}>{buttonIcon}</button>
               </div>
               <div id='SubjectTasks'><Task tasks={tasks} isOpen={buttonsOpen} /></div>
