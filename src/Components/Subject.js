@@ -104,41 +104,7 @@ function Subject()
     });
   };
 
-  // Add task
-  const handleAddTaskClick = async (subjectID) =>
-  {
-    const task = {
-      "name": "New Task",
-      "start": "2023-4-16",
-      "deadline": "2023-4-26",
-      "completed": "false",
-      "description": "New Description",
-      "subjectID": subjectID,
-      "userID": sessionStorage.getItem('userID') // PASSES IN USERID FROM SESSIONSTORAGE
-    }
-
-    try
-    {
-      axios.post('http://localhost:5000/tasks/add', task)
-        .then(res =>
-        {
-          console.log('Added a task. Here is res.data:');
-          console.log(res.data);
-          console.log('Newly created taskID: ' + res.data['._id']);
-        });
-    } catch (err)
-    {
-      console.log(`Error signing up: ${err}`);
-    }
-
-    const newTask = { name: "New Task", start: "2023-4-16", deadline: "2023-4-26", completed: "false", description: "New Description", subjectID: subjectID, "userID": sessionStorage.getItem('userID') };
-    const updatedTasks = [...taskData, newTask];
-
-    //console.log(newTask)
-    console.log("SubjectID: " + subjectID)
-
-    setTaskData(updatedTasks);
-  }
+ 
 
   // Add subject
   const handleAddClick = async () => 
@@ -201,8 +167,6 @@ function Subject()
               </div>
               <div id='SubjectTasks'><Task tasks={tasks} isOpen={buttonsOpen} /></div>
               <button id='SubjectDeleteButton' style={{ display: buttonsOpen ? 'grid' : 'none' }} onClick={() => handleDeleteClick(subjectID)}><DeleteIcon /></button>
-              <div id='TaskAddName' style={{ display: buttonsOpen ? 'grid' : 'none' }}>New Task</div>
-              <button id='TaskAddButton' style={{ display: buttonsOpen ? 'grid' : 'none' }} onClick={() => handleAddTaskClick(val._id)}><AddIcon /></button>
             </li>
           )
         })}
