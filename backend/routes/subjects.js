@@ -5,7 +5,7 @@ let Subject = require('../models/subject.model');
 
 router.route('/').get((req, res) =>
 {
-    console.log('User ID from req.query.userID: ' + req.query.userID); // console log the userID
+    console.log('(subjects) User ID from req.query.userID: ' + req.query.userID); // console log the userID
     Subject.find({ userID: req.query.userID })
         .then(subjects =>
         {
@@ -48,7 +48,7 @@ router.route('/bySubjectID/:id').get((req, res) =>
 
 router.route('/:id').delete((req, res) =>
 {
-    console.log('SUBJECTID IN DELETE: ' + req.params.id);
+    console.log('Deleting subject - subjectID: ' + req.params.id);
     Subject.findByIdAndDelete(req.params.id)
         .then(() => res.json('Subject deleted.'))
         .catch(err => res.status(400).json('Error: ' + err));
