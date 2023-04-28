@@ -35,7 +35,7 @@ router.route('/add').post((req, res) =>
     const newSubject = new Subject({ name, boardID, userID });
 
     newSubject.save()
-        .then(() => res.json('Subject added!'))
+        .then(() => res.json(newSubject))
         .catch(err => res.status(400).json('Error: ' + err));
 });
 

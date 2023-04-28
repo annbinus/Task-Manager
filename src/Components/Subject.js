@@ -104,6 +104,7 @@ function Subject()
     });
   };
 
+  // Add task
   const handleAddTaskClick = async (subjectID) =>
   {
     const task = {
@@ -121,8 +122,9 @@ function Subject()
       axios.post('http://localhost:5000/tasks/add', task)
         .then(res =>
         {
+          console.log('Added a task. Here is res.data:');
           console.log(res.data);
-          console.log(task);
+          console.log('Newly created taskID: ' + res.data['._id']);
         });
     } catch (err)
     {
@@ -138,6 +140,7 @@ function Subject()
     setTaskData(updatedTasks);
   }
 
+  // Add subject
   const handleAddClick = async (event) => 
   {
     event.preventDefault()
@@ -151,7 +154,12 @@ function Subject()
     try
     {
       axios.post('http://localhost:5000/subjects/add', subject)
-        .then(res => console.log(res.data));
+        .then(res =>
+        {
+          console.log('Added a subject. Here is res.data:');
+          console.log(res.data);
+          console.log('Newly created subjectID: ' + res.data['_id']);
+        });
     } catch (err)
     {
       console.log(`Error signing up: ${err}`);
