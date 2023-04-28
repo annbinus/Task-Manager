@@ -19,7 +19,7 @@ router.route('/add').post((req, res) =>
 {
     const name = req.body.name;
     const boardID = req.body.boardID;
-    const userID = req.session.userID;
+    const userID = req.body.userID;
 
     const newSubject = new Subject({ name, boardID, userID});
 
