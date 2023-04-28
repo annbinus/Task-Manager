@@ -9,10 +9,10 @@ const taskSchema = new Schema({
         unique: true,
     },
     start: {
-        type: Date,
+        type: String,
     },
     deadline:{
-        type: Date,
+        type: String,
     },
     completed: {
         type: Boolean,
@@ -22,9 +22,13 @@ const taskSchema = new Schema({
         type: String,
         required: true,
     },
-    userID:{
+    userID: {
         type: String,
         required: true,
+    },
+    description: {
+        type: String,
+        // required: true,
     }
 }, {
     timestamps: true,

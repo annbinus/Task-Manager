@@ -8,7 +8,7 @@ import LogoutIcon from '@mui/icons-material/Logout';
 export const SidebarData = [
     {
         icon: <SpaceDashboardIcon />,
-        link: "/Dashboard"
+        link: "/Subject"
     },
     {
         icon: <CalendarMonthIcon />,
@@ -20,7 +20,7 @@ export const SidebarData = [
     },
     {
         icon: <LogoutIcon />,
-        link: "/SignOut"
+        link: "/"
     },
 ]
 

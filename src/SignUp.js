@@ -3,9 +3,12 @@ import React from 'react';
 import Navbar from "./Components/Navbar";
 import { Link } from 'react-router-dom';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 function SignUp()
 {
+
+  const navigate = useNavigate();
 
   const [values, setValues] = useState({
     username: '',
@@ -29,13 +32,26 @@ function SignUp()
 
     try
     {
-      axios.post('http://localhost:5000/users/add', user)
-        .then(res => console.log(res.data)); // User added!
+      const res = await axios.post(
+        'http://localhost:5000/users/add',
+        user
+      );
+
+      console.log(res.data);
+
+      // Log user in
+      const loginRes = await axios.post(
+        'http://localhost:5000/users/signin',
+        user
+      );
+
+      console.log("Succesfuly logged in with userID " + loginRes.data)
+      navigate('/signin');
     } catch (err)
     {
       console.log(`Error signing up: ${err}`);
     }
-  }
+  };
 
   return (
     <div className="flex flex-col min-h-screen overflow-hidden">

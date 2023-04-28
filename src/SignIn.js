@@ -2,9 +2,11 @@ import React, { useState } from 'react';
 import Navbar from "./Components/Navbar";
 import { Link } from 'react-router-dom';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 const SignIn = () =>
 {
+  const navigate = useNavigate();
 
   const [values, setValues] = useState({
     username: '',
@@ -12,12 +14,10 @@ const SignIn = () =>
     showPassword: false,
   })
 
-
   const handleChange = (fieldName) => (event) =>
   {
     setValues({ ...values, [fieldName]: event.target.value })
   }
-
 
   const handleSubmit = async (event) =>
   {
@@ -30,14 +30,18 @@ const SignIn = () =>
 
     try
     {
-      axios.post('http://localhost:5000/users/signin', user)
-        .then(res => console.log(res.data));
+      const res = await axios.post(
+        'http://localhost:5000/users/signin',
+        user
+      );
+
+      console.log("Succesfuly logged in with userID " + res.data)
+      navigate('/main');
     } catch (err)
     {
-      console.log(`Error signing up: ${err}`);
+      console.log(`Error signing in: ${err}`);
     }
-  }
-
+  };
 
   return (
     <div className="home-container">

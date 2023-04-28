@@ -269,6 +269,8 @@ textarea {
   margin-top: 6px;
   margin-bottom: 6px;
 
+  max-width: 294px;
+
   border-radius: 10px;
   background-color: white;
 }
@@ -294,7 +296,7 @@ textarea {
   background-color: blue;
 }
 
-.TaskRow #TaskDeleteButton {
+.TaskRow #TaskDeleteButton, #TaskMoveUpButton, #TaskMoveDownButton {
   /* Centers icon in button */
   display: grid;
   place-items: center;
@@ -310,16 +312,45 @@ textarea {
   border-radius: 50%;
 }
 
+.TaskRow #TaskMoveUpButton {
+  margin-left: 79% !important;
+}
+
 .TaskRow #TaskDesc {
   min-height: 100px;
   text-align: left;
-  padding: 10px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  padding-left: 10px;
 }
 
 .TaskRow #TaskStart, #TaskDeadline {
   text-align: left;
   padding-left: 10px;
 }
+
+.TaskRow #TaskStartWrapper {
+  display: flex;
+  flex-direction: row;
+
+  max-height: 30px;
+}
+
+.TaskRow #TaskEndWrapper {
+  display: flex;
+  flex-direction: row;
+}
+
+.TaskRow #TaskStartText, #TaskEndText {
+  text-align: left;
+  padding-left: 10px;
+}
+
+/*
+.TaskRow #TaskEndEnder {
+  min-height: 25px;
+}
+*/
 
 .TaskRow #TaskDeadline {
   padding-bottom: 10px;
