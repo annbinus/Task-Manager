@@ -23,7 +23,7 @@ function Subject() {
   // Here this is the actual fetch of the data to be shown
   // we use useEffect because we don't want to write a class for it, and helps with asynch problems, - Caden
   useEffect(() => {
-    async function fetchData() {
+    async function fetchData() { // function to recieve and display subjects
       try { // main try
         const userID = sessionStorage.getItem('userID'); // PASSES IN USERID FROM SESSIONSTORAGE
         console.log(userID);
@@ -34,7 +34,7 @@ function Subject() {
         console.log(`Error getting subjects: ${err}`);
       }
     }
-    async function fetchTaskData()
+    async function fetchTaskData() // function to recieve and display tasks
     {
       try { // main try
         const taskres = await axios.get('http://localhost:5000/tasks/'); // get from database asynchronously - Caden
