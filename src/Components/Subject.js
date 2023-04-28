@@ -25,8 +25,9 @@ function Subject() {
   useEffect(() => {
     async function fetchData() {
       try { // main try
-        const res = await axios.get('http://localhost:5000/subjects/'); // get from database asynchronously - Caden
-        console.log('RES.DATA: ' + res.data);
+        const userID = sessionStorage.getItem('userID'); // PASSES IN USERID FROM SESSIONSTORAGE
+        console.log(userID);
+        const res = await axios.get(`http://localhost:5000/subjects/?userID=${userID}`); // PASSES IN USERID AS QUERY
         setSubjectData(res.data); // Tasks information - Caden
         setButtonStates(res.data.map(() => false)); // toggles between edit / view mode - Caden
       } catch (err) { // error catch

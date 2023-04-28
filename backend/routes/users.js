@@ -60,11 +60,9 @@ router.route('/signin').post((req, res) =>
     User.find({username: req.body.username, password: req.body.password}, )
         .then(user =>
         {
+            req.session.userID = user[0].id;
             console.log('user[0].id: ' + user[0].id);
-            res.cookie('userID', user[0].id);
-            console.log('SESSION USERID: ' + req.cookies.userID);
-            console.log('SESSION OBJECT: ' + req.session);
-            res.status(200).send('Login succesful!');
+            res.status(200).send(user[0].id);
         })
         .catch(err => res.status(404).json('Error: ' + err));
 });
