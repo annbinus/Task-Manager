@@ -9,7 +9,8 @@ import { confirmAlert } from 'react-confirm-alert'; // Import
 import 'react-confirm-alert/src/react-confirm-alert.css'; // Import css
 import axios from 'axios';
 
-function Subject() {
+function Subject()
+{
 
   const [values, setValues] = useState({
     username: '',
@@ -22,26 +23,31 @@ function Subject() {
 
   // Here this is the actual fetch of the data to be shown
   // we use useEffect because we don't want to write a class for it, and helps with asynch problems, - Caden
-  useEffect(() => {
-    async function fetchData() { // function to recieve and display subjects
-      try { // main try
+  useEffect(() =>
+  {
+    async function fetchData()
+    { // function to recieve and display subjects
+      try
+      { // main try
         const userID = sessionStorage.getItem('userID'); // PASSES IN USERID FROM SESSIONSTORAGE
-        console.log(userID);
         const res = await axios.get(`http://localhost:5000/subjects/?userID=${userID}`); // PASSES IN USERID AS QUERY
         setSubjectData(res.data); // Tasks information - Caden
         setButtonStates(res.data.map(() => false)); // toggles between edit / view mode - Caden
-      } catch (err) { // error catch
+      } catch (err)
+      { // error catch
         console.log(`Error getting subjects: ${err}`);
       }
     }
     async function fetchTaskData() // function to recieve and display tasks
     {
-      try { // main try
+      try
+      { // main try
         const userID = sessionStorage.getItem('userID')
         const taskres = await axios.get(`http://localhost:5000/tasks/?userID=${userID}`); // get from database asynchronously - Caden
         console.log(taskres.data);
         setTaskData(taskres.data); // Tasks information - Caden
-      } catch (err) { // error catch
+      } catch (err)
+      { // error catch
         console.log(`Error getting tasks: ${err}`);
       }
     }
@@ -51,34 +57,41 @@ function Subject() {
     fetchTaskData();
   }, []);
 
-  const toggleButtons = (subjectID, databaseID) => {
+  const toggleButtons = (subjectID, databaseID) =>
+  {
     setButtonStates(buttonStates.map((state, index) => index === subjectID ? !state : state));
   };
 
   // Deleting on the edit concept
-  const handleDeleteClick = (subjectID) => {
+  const handleDeleteClick = (subjectID) =>
+  {
     confirmAlert({
       title: 'Confirm deletion',
       message: 'Are you sure you want to delete this subject?',
       buttons: [
         {
           label: 'Yes',
-          onClick: () => {
+          onClick: () =>
+          {
             const userID = sessionStorage.getItem('userID'); // PASSES IN USERID FROM SESSIONSTORAGE
             axios.get(`http://localhost:5000/subjects/?userID=${userID}`) // PASSES IN USERID AS QUERY
-              .then(res => {
-                console.log("SUBJECT ID FROM GET: " + res.data[subjectID]._id);
+              .then(res =>
+              {
+                console.log("Within Subject.js, subjectID: " + res.data[subjectID]._id);
                 axios.delete('http://localhost:5000/subjects/' + res.data[subjectID]._id)
-                  .then(res => {
+                  .then(res =>
+                  {
                     console.log(res.data);
                     const updatedSubjects = subjectData.filter((val, index) => index !== subjectID);
                     setSubjectData(updatedSubjects);
                   })
-                  .catch(err => {
+                  .catch(err =>
+                  {
                     console.log(`Error deleting subject: ${err}`);
                   });
               })
-              .catch(err => {
+              .catch(err =>
+              {
                 console.log(`Error getting subjects: ${err}`);
               });
           }
@@ -94,19 +107,20 @@ function Subject() {
   const handleAddTaskClick = async (subjectID) =>
   {
     const task = {
-      "name" : "New Task",
-      "start" : "2023-4-16",
-      "deadline" : "2023-4-26",
-      "completed" : "false",
-      "description" : "New Description",
-      "subjectID" : subjectID,
-      "userID" : sessionStorage.getItem('userID') // PASSES IN USERID FROM SESSIONSTORAGE
+      "name": "New Task",
+      "start": "2023-4-16",
+      "deadline": "2023-4-26",
+      "completed": "false",
+      "description": "New Description",
+      "subjectID": subjectID,
+      "userID": sessionStorage.getItem('userID') // PASSES IN USERID FROM SESSIONSTORAGE
     }
 
     try
     {
       axios.post('http://localhost:5000/tasks/add', task)
-        .then(res => {
+        .then(res =>
+        {
           console.log(res.data);
           console.log(task);
         });
@@ -115,7 +129,7 @@ function Subject() {
       console.log(`Error signing up: ${err}`);
     }
 
-    const newTask = { name: "New Task", start: "2023-4-16", deadline: "2023-4-26", completed: "false", description: "New Description", subjectID: subjectID, "userID" : sessionStorage.getItem('userID') };
+    const newTask = { name: "New Task", start: "2023-4-16", deadline: "2023-4-26", completed: "false", description: "New Description", subjectID: subjectID, "userID": sessionStorage.getItem('userID') };
     const updatedTasks = [...taskData, newTask];
 
     //console.log(newTask)
@@ -129,9 +143,9 @@ function Subject() {
     event.preventDefault()
 
     const subject = {
-      "name" : "New Subject",
-      "boardID" : "644355f2ddb0c25db2015643",
-      "userID" : sessionStorage.getItem('userID'),
+      "name": "New Subject",
+      "boardID": "644355f2ddb0c25db2015643",
+      "userID": sessionStorage.getItem('userID'),
     }
 
     try
@@ -153,15 +167,16 @@ function Subject() {
   return (
     <div className='Subject'>
       <ul className='SubjectList'>
-        {subjectData.map((val, subjectID) => {
+        {subjectData.map((val, subjectID) =>
+        {
           const buttonsOpen = buttonStates[subjectID];
           const buttonIcon = buttonsOpen ? <CheckIcon /> : <EditIcon />;
           const tasks = taskData.filter(
             (task) => task.subjectID === val._id
           );
           return (
-            <li 
-              key={subjectID} 
+            <li
+              key={subjectID}
               className='SubjectRow'
               style={{ backgroundColor: '#7E7E7E' }} // A beautiful grey - Caden
             >
