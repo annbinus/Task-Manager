@@ -61,7 +61,7 @@ const SignIn = () =>
 
               {/* Page header */}
               <div className="max-w-3xl mx-auto text-center pb-12 md:pb-20">
-                <h1 className="h1" data-aos="fade-up">Welcome back.</h1>
+                <h1 className="h1" >Welcome back.</h1>
               </div>
 
               {/* Form */}
@@ -81,17 +81,7 @@ const SignIn = () =>
                       <input id="password" type="password" value={values.password} onChange={handleChange('password')} className="form-input w-full text-gray-300" placeholder="Password (at least 10 characters)" required />
                     </div>
                   </div>
-                  <div className="flex flex-wrap -mx-3 mb-4">
-                    <div className="w-full px-3">
-                      <div className="flex justify-between">
-                        <label className="flex items-center">
-                          <input type="checkbox" className="form-checkbox" />
-                          <span className="text-gray-400 ml-2">Keep me signed in</span>
-                        </label>
-                        <Link to="/reset-password" className="text-purple-600 hover:text-gray-200 transition duration-150 ease-in-out">Forgot Password?</Link>
-                      </div>
-                    </div>
-                  </div>
+          
                   <div className="flex flex-wrap -mx-3 mt-6">
                     <div className="w-full px-3">
                       <button className="btn text-white bg-purple-600 hover:bg-purple-700 w-full" type='submit'>Sign in</button>
