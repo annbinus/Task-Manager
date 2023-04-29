@@ -277,7 +277,11 @@ textarea {
   max-width: 294px;
 
   border-radius: 10px;
+
   background-color: rgb(206, 206, 206);
+
+  border-width: 2px;
+  border-color: black;
 }
 
 .TaskRow #TaskWrapper {
