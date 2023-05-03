@@ -64,9 +64,9 @@ router.route('/update/:id').put((req, res) =>
 
 router.route('/move/:taskID/:subjectID').put((req, res) =>
 {
-
+    // console.log(req.params.taskID)
     //Sets task to new subjectID
-    Task.findById(req.params.cardID)
+    Task.findById(req.params.taskID)
         .then(task =>
         {
 
