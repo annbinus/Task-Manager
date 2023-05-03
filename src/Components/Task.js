@@ -229,6 +229,7 @@ function Task({ tasks, isOpen })
         {TaskData.map((val, key) =>
         {
           const taskId = TaskData[TaskData.length - 1];
+          console.log(TaskData[TaskData.length - 1])
           return (
             <li
               key={key}
